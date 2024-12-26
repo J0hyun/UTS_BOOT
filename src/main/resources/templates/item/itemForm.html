@@ -76,15 +76,24 @@
                 reader.readAsDataURL(file);
             });
         }
+
+        $.ajax({
+            url: "/admin/item/subCategories?parentId=1",
+            method: "get",
+            dataType : "json",
+            success: function(result, status){
+                console.log(result);
+                $("#subcategory option:nth-of-type(1)").text(result[0].name);
+                $("#subcategory option:nth-of-type(2)").text(result[1].name);
+            }
+        });
+
     </script>
 </th:block>
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
-        .input-group {
-            margin-bottom : 15px
-        }
         .img-div {
             margin-bottom : 10px
         }
@@ -96,35 +105,51 @@
             flex-wrap: wrap;
         }
 
+        select {
+            width: 100px;
+        }
+
     </style>
 </th:block>
 
 <div class="container mt-5" layout:fragment="content">
 
     <form role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
-
-        <!--카테고리 시작-->
-
-
-
-
-        <!--카테고리 끝-->
-
         <p class="h2">
             <!-- 상품 등록 또는 상품 정보 표시 -->
             <span th:text="${itemFormDto.id != null ? '상품 정보' : '상품 등록'}"></span>
         </p>
-
         <input type="hidden" th:field="*{id}">
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             <select th:field="*{itemSellStatus}" class="custom-select">
                 <option value="SELL">판매중</option>
                 <option value="SOLD_OUT">품절</option>
             </select>
         </div>
 
-        <div class="form-group">
+        <!--카테고리 시작-->
+        <div class="form-group mb-3">
+            <label>카테고리</label><br>
+            <select id="category">
+                <option th:text="${parentCategories[0].name}"></option>
+                <option th:text="${parentCategories[1].name}"></option>
+            </select>
+            <span> &gt; </span>
+            <select id="subcategory">
+                <option></option>
+                <option></option>
+            </select>
+            <span> &gt; </span>
+            <select id="subcategory2">
+                <option></option>
+                <option></option>
+            </select>
+        </div>
+
+        <!--카테고리 끝-->
+
+        <div class="form-group mb-3">
             <label>상품 상태</label>
             <div th:field="*{itemStatus}">
                 <div class="form-check">
@@ -150,39 +175,31 @@
             </div>
         </div>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">상품명</span>
-            </div>
+        <div class="form-group mb-3">
+            <label>상품명</label>
             <input type="text" th:field="*{itemNm}" class="form-control" placeholder="상품명을 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">가격</span>
-            </div>
+        <div class="form-group mb-3">
+            <label>가격</label>
             <input type="number" th:field="*{price}" class="form-control" placeholder="상품의 가격을 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError">Incorrect data</p>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">재고</span>
-            </div>
+        <div class="form-group mb-3">
+            <label>재고</label>
             <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">
         </div>
         <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="fieldError">Incorrect data</p>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">상품 상세 내용</span>
-            </div>
+        <div class="form-group mb-3">
+            <label>상품 상세 내용</label>
             <textarea class="form-control" aria-label="With textarea" th:field="*{itemDetail}"></textarea>
         </div>
         <p th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}" class="fieldError">Incorrect data</p>
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             <label for="itemImgFiles">상품 이미지 (최대 12개)</label>
             <input type="file" id="itemImgFiles" class="form-control" name="itemImgFile" multiple>
             <small id="fileCount" class="form-text text-muted">0/12</small>
