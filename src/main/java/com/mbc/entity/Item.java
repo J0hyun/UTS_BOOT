@@ -38,7 +38,7 @@ public class Item extends BaseEntity {
     private ItemSellStatus itemSellStatus; //상품 판매 상태
 
     @Enumerated(EnumType.STRING)
-    private ItemStatus itemStatus; //상품 상태
+    private ItemStatus itemStatus; 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
