@@ -1,6 +1,7 @@
 package com.mbc.dto;
 
 import com.mbc.constant.ItemSellStatus;
+import com.mbc.constant.ItemStatus;
 import com.mbc.entity.Item;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -31,6 +32,8 @@ public class ItemFormDto {
     private Integer stockNumber;
 
     private ItemSellStatus itemSellStatus;
+
+    private ItemStatus itemStatus;
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
