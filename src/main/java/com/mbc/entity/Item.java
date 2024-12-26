@@ -1,6 +1,7 @@
 package com.mbc.entity;
 
 import com.mbc.constant.ItemSellStatus;
+import com.mbc.constant.ItemStatus;
 import com.mbc.dto.ItemFormDto;
 import exception.OutOfStockException;
 import jakarta.persistence.*;
@@ -35,6 +36,14 @@ public class Item extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; //상품 판매 상태
+
+    @Enumerated(EnumType.STRING)
+    private ItemStatus itemStatus; //상품 상태
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 
     //private LocalDateTime regTime;
     //private LocalDateTime updateTime;
