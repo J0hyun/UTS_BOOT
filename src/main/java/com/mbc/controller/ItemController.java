@@ -2,7 +2,9 @@ package com.mbc.controller;
 
 import com.mbc.dto.ItemFormDto;
 import com.mbc.dto.ItemSearchDto;
+import com.mbc.entity.Category;
 import com.mbc.entity.Item;
+import com.mbc.service.CategoryService;
 import com.mbc.service.ItemService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -13,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -27,15 +26,28 @@ import java.util.Optional;
 public class ItemController {
 
     private final ItemService itemService;
+    private final CategoryService categoryService;
 
-    public ItemController(ItemService itemService) {
+    public ItemController(ItemService itemService, CategoryService categoryService) {
         this.itemService = itemService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping(value = "/admin/item/new")
     public String itemForm(Model model) {
+        // 최상위 카테고리 목록을 가져와서 모델에 추가
+        List<Category> parentCategories = categoryService.getParentCategories();
         model.addAttribute("itemFormDto", new ItemFormDto());
+        model.addAttribute("parentCategories", parentCategories);
+
         return "/item/itemForm";
+    }
+
+    @GetMapping(value = "/admin/item/subCategories")
+    @ResponseBody
+    public List<Category> getSubCategories(@RequestParam Long parentId) {
+        // 선택한 부모 카테고리의 하위 카테고리 목록을 반환
+        return categoryService.getSubCategories(parentId);
     }
 
     @PostMapping(value = "/admin/item/new")
