@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div class="container mt-5" layout:fragment="content">
+    <h2 class="py-3">${ID} 상점</h2>
+
+    <div class="row">
+        <div class="col-3">
+            <img src="/img/unknown.jpg" alt="user" style="width:100%;">
+        </div>
+        <div class="col-9">
+            <h3 class="pb-2">아이디 : </h3>
+            <p>상점 오픈일 : </p>
+            <p>상품 판매 : </p>
+
+        </div>
+    </div>
+
+    <nav class="pt-5">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-sale-tab" data-bs-toggle="tab" data-bs-target="#nav-sale"
+                type="button" role="tab" aria-controls="nav-sale" aria-selected="true">판매내역</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-purchase"
+                type="button" role="tab" aria-controls="nav-purchase" aria-selected="false">구매내역</button>
+        <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-reviews"
+                type="button" role="tab" aria-controls="nav-reviews" aria-selected="false">리뷰정보</button>
+    </div>
+    </nav>
+
+    <div class="tab-content py-3" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-sale" role="tabpanel" aria-labelledby="nav-sale-tab"
+             tabindex="0">
+            <div class="d-flex justify-content-end mt-3">
+                <a href="" class="btn btn-sm btn-success mb-3">상품등록</a>
+            </div>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">이미지</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">가격</th>
+                    <th scope="col">등록일</th>
+                    <th scope="col">수정일</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">상품번호</th>
+                        <td class="pimg">
+                            <a href="">
+                                이미지
+                            </a>
+                        </td>
+                        <td><a href="">상품명</a></td>
+                        <td>가격</td>
+                        <td>등록일</td>
+                        <td>수정일</td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="text-center mt-5">판매 내역이 없습니다.</p>
+        </div>
+
+        <div class="tab-pane fade" id="nav-purchase" role="tabpanel" aria-labelledby="nav-purchase-tab" tabindex="0">
+            <p class="text-center mt-5">구매 내역이 없습니다.</p>
+        </div>
+
+        <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab" tabindex="0">
+            tkd
+
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">상품명</th>
+                    <th scope="col">작성자ID</th>
+                    <th scope="col">내용</th>
+                    <th scope="col">작성일</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <!-- 모델에서 전달된 리뷰 목록을 반복하여 표시 -->
+                    <tr>
+                        <th scope="row">리뷰 번호</th> <!-- 리뷰 번호 -->
+                        <td>상품명</td> <!-- 상품명 -->
+                        <td>작성자 ID</td> <!-- 작성자 ID -->
+                        <td><!-- 리뷰 내용 --></td> <!-- 리뷰 내용 -->
+                        <td>작성일</td> <!-- 작성일 -->
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="text-center mt-5">리뷰 정보가 없습니다.</p>
+
+        </div>
+    </div>
+</div>
+
+</html>

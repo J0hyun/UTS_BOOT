@@ -1,0 +1,40 @@
+.card {
+    overflow: hidden;
+}
+
+.card-body p {
+    overflow: hidden;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pagination .active {
+    background-color: #28a745 !important;
+    color: white !important;
+    border-color: #28a745 !important;
+}
+
+@media (max-width: 575px){
+    .item-img {
+        height: 50vw;
+        background-position: center;
+        background-size: cover;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 991px){
+    .item-img {
+        height: 30vw;
+        background-position: center;
+        background-size: cover;
+    }
+}
+
+@media (min-width: 992px) {
+    .item-img {
+        height: 15vw;
+        background-position: center;
+        background-size: cover;
+    }
+}
