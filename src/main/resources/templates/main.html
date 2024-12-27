@@ -11,6 +11,14 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
 </th:block>
 
+<th:block layout:fragment="script">
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Initialize Swiper -->
+    <script src="/js/swiper.js"></script>
+
+</th:block>
+
 <div layout:fragment="content">
 
     <!-- Swiper -->
@@ -74,29 +82,3 @@
     </div>
 
 </div>
-
-<th:block layout:fragment="script">
-    <!-- Swiper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    <!-- Initialize Swiper -->
-    <script>
-
-        let swiper = new Swiper(".slideSwiper", {
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                type: "fraction",
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
-    </script>
-
-</th:block>

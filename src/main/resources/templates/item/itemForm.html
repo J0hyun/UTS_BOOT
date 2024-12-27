@@ -9,6 +9,7 @@
     <script th:inline="javascript">
         $(document).ready(function(){
             var errorMessage = [[${errorMessage}]];
+            console.log(errorMessage)
             if(errorMessage != null){
                 alert(errorMessage);
             }
@@ -32,6 +33,85 @@
             });
         }
 
+
+        // 이미지 미리보기 함수
+        function previewImages(files) {
+            const previewContainer = $('#imagePreview');
+            previewContainer.empty(); // 기존 미리보기 지우기
+
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = $('<img />', {
+                        src: e.target.result,
+                        class: 'img-thumbnail',
+                        style: 'width: 100px; height: 100px; margin-right: 10px;'
+                    });
+                    previewContainer.append(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        $(function(){
+            // 카테고리 선택
+            $('.maincategory li').click(function(){
+                $('.maincategory li').removeClass('choice');
+                $(this).addClass('choice');
+                $('.subcategory2').empty().append('<li>소분류 선택</li>');
+                $('.text-success b').empty().append('<span>'+$(this).text()+'</span>');
+                $('input[name="categoryId"]').val('');
+
+                let id = $(this).attr('data-id');
+                //console.log(id)
+                let targetUrl = "/admin/item/subCategories?parentId=" + id;
+                //console.log(targetUrl)
+                $.ajax({
+                    url: targetUrl,
+                    method: "get",
+                    dataType : "json",
+                    async: false,
+                    success: function(result, status){
+                        //console.log(result);
+                        resArr = result;
+
+                        $('.subcategory1').empty();
+                        result.forEach(function(cate){
+                            $('.subcategory1').append(`<li data-id="${cate.id}">${cate.name}</li>`);
+                        });
+
+                        // 중분류 클릭시 소분류
+                        $('.subcategory1 li').click(function(){
+                            $('.subcategory1 li').removeClass('choice');
+                            $(this).addClass('choice');
+                            $('.text-success b span:not(:first-of-type)').empty();
+                            $('.text-success b').append('<span>  > ' + $(this).text() + '</span>');
+                            $('input[name="categoryId"]').val('');
+
+                            let idx = $(this).index();
+                            //console.log(resArr[idx].children);
+                            $('.subcategory2').empty();
+                            resArr[idx].children.forEach(function(cate){
+                                $('.subcategory2').append(`<li data-id="${cate.id}">${cate.name}</li>`);
+                            });
+
+                            // 소분류 클릭
+                            $('.subcategory2 li').click(function(){
+                                $('.subcategory2 li').removeClass('choice');
+                                $(this).addClass('choice');
+                                $('.text-success b span:nth-of-type(3)').empty();
+                                $('.text-success b').append('<span>  > ' + $(this).text() + '</span>');
+                                $('input[name="categoryId"]').val($(this).attr('data-id'));
+                            });
+                        });
+
+
+                    }
+                });
+            });
+        });
+
+
     </script>
 
 </th:block>
@@ -39,15 +119,40 @@
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
-        .input-group {
-            margin-bottom : 15px
-        }
         .img-div {
             margin-bottom : 10px
         }
-        .fieldError {
-            color: #bd2130;
+
+        #imagePreview, #IP {
+            display: flex;
+            flex-wrap: wrap;
         }
+
+        p, ul {
+            margin-bottom: 0;
+        }
+
+        .category {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .category p{
+            width: 100%;
+        }
+        .category ul {
+            width: 33.3%;
+            border: 1px solid #dee2e6;
+            padding-left: 0;
+            padding: 5px 10px;
+        }
+        .category ul li {
+            padding-left: 5px;
+        }
+        .category .choice {
+            background-color: #eee;
+        }
+
+
     </style>
 </th:block>
 
@@ -58,47 +163,85 @@
         <p class="h2">
             상품 등록
         </p>
-
         <input type="hidden" th:field="*{id}">
 
-        <div class="form-group">
+        <div class="form-group mb-3">
             <select th:field="*{itemSellStatus}" class="custom-select">
                 <option value="SELL">판매중</option>
                 <option value="SOLD_OUT">품절</option>
             </select>
         </div>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">상품명</span>
+
+        <!--카테고리 시작-->
+        <div class="category mb-3">
+            <p>카테고리</p>
+            <ul class="maincategory">
+                <li th:each="pCate , status: ${parentCategories}" th:data-id="${pCate.id}">[[${pCate.name}]]</li>
+            </ul>
+            <ul class="subcategory1">
+                <li>중분류 선택</li>
+            </ul>
+            <ul class="subcategory2">
+                <li>소분류 선택</li>
+            </ul>
+            <p class="text-success">선택한 카테고리 : <b></b></p>
+            <input type="hidden" th:field="*{categoryId}">
+            <p th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" class="error">Incorrect data</p>
+        </div>
+        <!--카테고리 끝-->
+
+        <div class="form-group mb-3">
+            <label>상품 상태</label>
+            <div th:field="*{itemStatus}">
+                <div class="form-check">
+                    <input type="radio" id="new" name="itemStatus" value="NEW" class="form-check-input">
+                    <label for="new" class="form-check-label">새 상품 (미사용)</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="unused" name="itemStatus" value="UNUSED" class="form-check-input">
+                    <label for="unused" class="form-check-label">사용감 없음</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="lightUse" name="itemStatus" value="LIGHT_USE" class="form-check-input">
+                    <label for="lightUse" class="form-check-label">사용감 적음</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="heavyUse" name="itemStatus" value="HEAVY_USE" class="form-check-input">
+                    <label for="heavyUse" class="form-check-label">사용감 많음</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" id="damaged" name="itemStatus" value="DAMAGED" class="form-check-input">
+                    <label for="damaged" class="form-check-label">고장/파손 상품</label>
+                </div>
             </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label>상품명</label>
+
             <input type="text" th:field="*{itemNm}" class="form-control" placeholder="상품명을 입력해주세요">
+            <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="error">Incorrect data</p>
         </div>
-        <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">가격</span>
-            </div>
+        <div class="form-group mb-3">
+            <label>가격</label>
             <input type="number" th:field="*{price}" class="form-control" placeholder="상품의 가격을 입력해주세요">
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error">Incorrect data</p>
         </div>
-        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError">Incorrect data</p>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">재고</span>
-            </div>
+        <div class="form-group mb-3">
+            <label>재고</label>
             <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">
+            <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="error">Incorrect data</p>
         </div>
-        <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="fieldError">Incorrect data</p>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">상품 상세 내용</span>
-            </div>
+        <div class="form-group mb-3">
+            <label>상품 상세 내용</label>
             <textarea class="form-control" aria-label="With textarea" th:field="*{itemDetail}"></textarea>
+            <p th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}" class="error">Incorrect data</p>
         </div>
-        <p th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}" class="fieldError">Incorrect data</p>
+
 
         <div th:if="${#lists.isEmpty(itemFormDto.itemImgDtoList)}">
             <div class="form-group" th:each="num: ${#numbers.sequence(1,5)}">
