@@ -28,13 +28,17 @@ public class SecurityConfig {
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
                         .defaultSuccessUrl("/")
-                        .usernameParameter("email")
+                        .usernameParameter("name")
                         .failureUrl("/login/error")
                 )
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
+                )
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/item/delete") // delete 요청에 대한 CSRF 보호 비활성화
                 );
+        ;
 
         return http.build();
     }

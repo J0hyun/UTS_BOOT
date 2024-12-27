@@ -12,12 +12,14 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,55 +35,50 @@ public class ItemController {
         this.categoryService = categoryService;
     }
 
+    // 공통 URL 액션 로직을 처리하는 메소드
+    private String getActionUrl(Principal principal) {
+        Authentication authentication = (Authentication) principal;
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+        return isAdmin ? "/admin/items/" : "/member/items/";
+    }
+
+    // 카테고리 설정을 위한 헬퍼 메소드
+    private void setCategoryAttributes(Model model) {
+        List<Category> parentCategories = categoryService.getParentCategories();
+        model.addAttribute("parentCategories", parentCategories);
+    }
+
     @GetMapping(value = "/member/item/new")
     public String itemForm(Model model) {
-        // 최상위 카테고리 목록을 가져와서 모델에 추가
-        List<Category> parentCategories = categoryService.getParentCategories();
+        setCategoryAttributes(model);
         model.addAttribute("itemFormDto", new ItemFormDto());
-        model.addAttribute("parentCategories", parentCategories);
-
         return "/item/itemForm";
     }
 
     @GetMapping(value = "/member/item/subCategories")
     @ResponseBody
     public List<Category> getSubCategories(@RequestParam Long parentId) {
-        // 선택한 부모 카테고리의 하위 카테고리 목록을 반환
         return categoryService.getSubCategories(parentId);
     }
 
     @PostMapping(value = "/member/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
-                          Model model, @RequestParam("itemImgFile")List<MultipartFile> itemImgFileList) {
+                          Model model, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList) {
 
-        if (itemFormDto.getCategoryId() == null) { // 카테고리 아이디를 폼데이터로 못받아오면
-            List<Category> parentCategories = categoryService.getParentCategories();
-            model.addAttribute("parentCategories", parentCategories);
-            return "/item/itemForm";
-        }
+            setCategoryAttributes(model);
 
-        if(itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null){
-            List<Category> parentCategories = categoryService.getParentCategories();
-            model.addAttribute("parentCategories", parentCategories);
+        if (itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null) {
             model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
             return "/item/itemForm";
         }
 
-        if (itemImgFileList.size() > 12) {
-            List<Category> parentCategories = categoryService.getParentCategories();
-            model.addAttribute("parentCategories", parentCategories);
-            model.addAttribute("errorMessage", "상품 이미지는 최대 12개까지만 등록 가능합니다.");
-            return "/item/itemForm";
-        }
-
         if (bindingResult.hasErrors()) {
-            List<Category> parentCategories = categoryService.getParentCategories();
-            model.addAttribute("parentCategories", parentCategories);
             model.addAttribute("errorMessage", "필수 입력값을 입력해주세요!");
             return "/item/itemForm";
         }
 
-        try{
+        try {
             itemService.saveItem(itemFormDto, itemImgFileList);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
@@ -93,8 +90,7 @@ public class ItemController {
 
     @GetMapping(value = "/member/item/{itemId}")
     public String itemDtl(@PathVariable("itemId") Long itemId, Model model) {
-
-        try{
+        try {
             ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
             model.addAttribute("itemFormDto", itemFormDto);
         } catch (EntityNotFoundException e) {
@@ -102,20 +98,18 @@ public class ItemController {
             model.addAttribute("itemFormDto", new ItemFormDto());
             return "/item/itemForm";
         }
-
         return "/item/itemForm";
     }
 
     @PostMapping(value = "/member/item/{itemId}")
-    public String itemUpdate(@Valid ItemFormDto itemFormDto,
-                             BindingResult bindingResult, @RequestParam("itemImgFile")
-                             List<MultipartFile> itemImgFileList, Model model) {
+    public String itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
+                             @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model) {
 
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "/item/itemForm";
         }
 
-        if(itemImgFileList.get(0).isEmpty()){
+        if (itemImgFileList.get(0).isEmpty()) {
             model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값입니다.");
             return "/item/itemForm";
         }
@@ -130,11 +124,35 @@ public class ItemController {
         return "redirect:/";
     }
 
-    @GetMapping(value = {"/member/items", "/member/items/{page}"})
-    public String itemManage(ItemSearchDto itemSearchDto,
-  @PathVariable("page") Optional<Integer> page, Model model){
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,5);
+    @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
+    public String adminItemManage(ItemSearchDto itemSearchDto,
+                                  @PathVariable("page") Optional<Integer> page,
+                                  Model model, Principal principal) {
+
+        String actionUrl = getActionUrl(principal);
+        log.info("actionUrl is {}", actionUrl);
+        model.addAttribute("actionUrl", actionUrl);
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 5);
         Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
+        model.addAttribute("items", items);
+        model.addAttribute("itemSearchDto", itemSearchDto);
+        model.addAttribute("maxPage", 5);
+        return "item/itemMng";
+    }
+
+    @GetMapping(value = {"/member/items", "/member/items/{page}"})
+    public String memberItemManage(ItemSearchDto itemSearchDto,
+                                   @PathVariable("page") Optional<Integer> page,
+                                   Model model, Principal principal) {
+
+        String actionUrl = getActionUrl(principal);
+        log.info("actionUrl is {}", actionUrl);
+        model.addAttribute("actionUrl", actionUrl);
+
+        String userEmail = principal.getName();
+        Pageable pageable = PageRequest.of(page.orElse(0), 5);
+        Page<Item> items = itemService.getUserItems(userEmail, itemSearchDto, pageable);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
         model.addAttribute("maxPage", 5);
@@ -148,4 +166,9 @@ public class ItemController {
         return "item/itemDtl";
     }
 
- }
+    @PostMapping("/item/delete")
+    public String deleteItem(@RequestParam("itemId") Long itemId) {
+        itemService.deleteItem(itemId);  // 아이템 삭제 처리
+        return "redirect:/";  // 홈 페이지로 리다이렉트
+    }
+}

@@ -1,5 +1,6 @@
 package com.mbc.repository;
 
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -69,17 +70,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
     @Override
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
-        /*
-            log.info("-------------------------------------------------------------------");
-            log.info("itemSearchDto : " + itemSearchDto);
-            log.info("pageable : " + pageable);
-            log.info(regDtsAfter(itemSearchDto.getSearchDateType()));
-            log.info(searchSellStatusEq(itemSearchDto.getSearchSellStatus()));
-            log.info(searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()));
-            log.info(pageable.getOffset());
-            log.info(pageable.getPageSize());
-            log.info("-------------------------------------------------------------------");
-        */
+
         List<Item> content = jpaQueryFactory
                 .selectFrom(QItem.item)
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
@@ -142,6 +133,40 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .where(itemImg.repimgYn.eq("Y"))
                 .where(itemNmLink(itemSearchDto.getSearchBy()))
                 .fetchOne();
+
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    @Override
+    public Page<Item> findItemsByUserEmail(String userEmail, ItemSearchDto itemSearchDto, Pageable pageable) {
+        QItem item = QItem.item;
+
+        // 조건 추가: 로그인한 사용자가 작성한 상품만 필터링
+        List<Item> content = jpaQueryFactory
+                .selectFrom(item)
+                .where(
+                        item.createdBy.eq(userEmail), // 유저 이메일로 필터링
+                        regDtsAfter(itemSearchDto.getSearchDateType()),
+                        searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery())
+                )
+                .orderBy(item.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long total = jpaQueryFactory
+                .select(Wildcard.count)
+                .from(item)
+                .where(
+                        item.createdBy.eq(userEmail), // 유저 이메일로 필터링
+                        regDtsAfter(itemSearchDto.getSearchDateType()),
+                        searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery())
+                )
+                .fetchOne();
+
+        log.info("Total items for user [{}]: {}", userEmail, total);
 
         return new PageImpl<>(content, pageable, total);
     }

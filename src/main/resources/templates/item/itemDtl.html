@@ -182,6 +182,14 @@
             <div th:unless="${item.itemSellStatus == T(com.mbc.constant.ItemSellStatus).SELL}" class="text-right">
                 <button type="button" class="btn btn-danger btn-lg">품절</button>
             </div>
+
+            <!-- 삭제 폼 추가 -->
+            <form action="/item/delete" method="post" style="display:inline;">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <input type="hidden" name="itemId" th:value="${item.id}">
+                <button type="submit" class="btn btn-danger btn-lg">삭제</button>
+            </form>
+
         </div>
     </div>
 
