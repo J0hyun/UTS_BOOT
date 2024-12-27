@@ -19,7 +19,11 @@ ul, ol, li {
 }
 
 .header {
+    background-color: #fff;
     border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 footer p {
