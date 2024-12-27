@@ -33,7 +33,7 @@ public class ItemController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping(value = "/admin/item/new")
+    @GetMapping(value = "/member/item/new")
     public String itemForm(Model model) {
         // 최상위 카테고리 목록을 가져와서 모델에 추가
         List<Category> parentCategories = categoryService.getParentCategories();
@@ -43,27 +43,41 @@ public class ItemController {
         return "/item/itemForm";
     }
 
-    @GetMapping(value = "/admin/item/subCategories")
+    @GetMapping(value = "/member/item/subCategories")
     @ResponseBody
     public List<Category> getSubCategories(@RequestParam Long parentId) {
         // 선택한 부모 카테고리의 하위 카테고리 목록을 반환
         return categoryService.getSubCategories(parentId);
     }
 
-    @PostMapping(value = "/admin/item/new")
+    @PostMapping(value = "/member/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
                           Model model, @RequestParam("itemImgFile")List<MultipartFile> itemImgFileList) {
-        if (bindingResult.hasErrors()) {
+
+        if (itemFormDto.getCategoryId() == null) { // 카테고리 아이디를 폼데이터로 못받아오면
+            List<Category> parentCategories = categoryService.getParentCategories();
+            model.addAttribute("parentCategories", parentCategories);
             return "/item/itemForm";
         }
 
         if(itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null){
-            model.addAttribute("errorMessage", "첫번쨰 상품 이미지는 필수 입력 값 입니다.");
+            List<Category> parentCategories = categoryService.getParentCategories();
+            model.addAttribute("parentCategories", parentCategories);
+            model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
             return "/item/itemForm";
         }
 
         if (itemImgFileList.size() > 12) {
+            List<Category> parentCategories = categoryService.getParentCategories();
+            model.addAttribute("parentCategories", parentCategories);
             model.addAttribute("errorMessage", "상품 이미지는 최대 12개까지만 등록 가능합니다.");
+            return "/item/itemForm";
+        }
+
+        if (bindingResult.hasErrors()) {
+            List<Category> parentCategories = categoryService.getParentCategories();
+            model.addAttribute("parentCategories", parentCategories);
+            model.addAttribute("errorMessage", "필수 입력값을 입력해주세요!");
             return "/item/itemForm";
         }
 
@@ -77,7 +91,7 @@ public class ItemController {
         return "redirect:/";
     }
 
-    @GetMapping(value = "/admin/item/{itemId}")
+    @GetMapping(value = "/member/item/{itemId}")
     public String itemDtl(@PathVariable("itemId") Long itemId, Model model) {
 
         try{
@@ -92,7 +106,7 @@ public class ItemController {
         return "/item/itemForm";
     }
 
-    @PostMapping(value = "/admin/item/{itemId}")
+    @PostMapping(value = "/member/item/{itemId}")
     public String itemUpdate(@Valid ItemFormDto itemFormDto,
                              BindingResult bindingResult, @RequestParam("itemImgFile")
                              List<MultipartFile> itemImgFileList, Model model) {
@@ -116,7 +130,7 @@ public class ItemController {
         return "redirect:/";
     }
 
-    @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
+    @GetMapping(value = {"/member/items", "/member/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto,
   @PathVariable("page") Optional<Integer> page, Model model){
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0,5);
@@ -131,7 +145,7 @@ public class ItemController {
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
         model.addAttribute("item", itemFormDto);
-        return "/item/itemDtl";
+        return "item/itemDtl";
     }
 
  }
