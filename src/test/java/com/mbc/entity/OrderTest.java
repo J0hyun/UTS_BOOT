@@ -1,10 +1,10 @@
 package com.mbc.entity;
 
-import com.shop.constant.ItemSellStatus;
-import com.shop.repository.ItemRepository;
-import com.shop.repository.MemberRepository;
-import com.shop.repository.OrderItemRepository;
-import com.shop.repository.OrderRepository;
+import com.mbc.constant.ItemSellStatus;
+import com.mbc.repository.ItemRepository;
+import com.mbc.repository.MemberRepository;
+import com.mbc.repository.OrderItemRepository;
+import com.mbc.repository.OrderRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
