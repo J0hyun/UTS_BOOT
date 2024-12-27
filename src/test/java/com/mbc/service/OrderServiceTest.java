@@ -1,15 +1,15 @@
 package com.mbc.service;
 
-import com.shop.constant.ItemSellStatus;
-import com.shop.constant.OrderStatus;
-import com.shop.dto.OrderDto;
-import com.shop.entity.Item;
-import com.shop.entity.Member;
-import com.shop.entity.Order;
-import com.shop.entity.OrderItem;
-import com.shop.repository.ItemRepository;
-import com.shop.repository.MemberRepository;
-import com.shop.repository.OrderRepository;
+import com.mbc.constant.ItemSellStatus;
+import com.mbc.constant.OrderStatus;
+import com.mbc.dto.OrderDto;
+import com.mbc.entity.Item;
+import com.mbc.entity.Member;
+import com.mbc.entity.Order;
+import com.mbc.entity.OrderItem;
+import com.mbc.repository.ItemRepository;
+import com.mbc.repository.MemberRepository;
+import com.mbc.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +18,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
