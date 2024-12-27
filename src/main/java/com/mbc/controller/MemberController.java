@@ -15,53 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/members")
 @RequiredArgsConstructor
+@RequestMapping("/member")
 @Log4j2
 public class MemberController {
 
-    private final MemberService memberService;
-    private final PasswordEncoder passwordEncoder;
-
-    @GetMapping(value = "/new")
-    public String memberForm(Model model) {
-        model.addAttribute("memberFormDto", new MemberFormDto());
-        return "member/memberForm";
-    }
-
-    @PostMapping(value = "/new")
-    public String memberForm(@Valid MemberFormDto memberFormdto,
-                             BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
-            return "member/memberForm";
-        }
-
-        try{
-            Member member = Member.createMember(memberFormdto, passwordEncoder);
-            memberService.saveMember(member);
-        } catch (IllegalStateException e) {
-            model.addAttribute("errorMessage", e.getMessage());
-            return "member/memberForm";
-        }
-
-        return "redirect:/";
-    }
-
-    @GetMapping(value = "/login")
-    public String login() {
-        return "/member/memberLoginForm";
-    }
-
-    @GetMapping(value = "/login/error")
-    public String loginError(Model model) {
-        model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해 주세요");
-        return "member/memberLoginForm";
-    }
-
-    @GetMapping(value = "/mystore")
+    @GetMapping(value = "/mystore") // 내 상점 페이지
     public String myStore(Model model) {
-
         return "/member/mystore";
     }
 }
-
