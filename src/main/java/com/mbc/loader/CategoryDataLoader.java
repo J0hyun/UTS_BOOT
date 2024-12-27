@@ -35,16 +35,27 @@ public class CategoryDataLoader {
 
         // 부모-자식 관계 설정
         for (Category category : categories) {
+            // 부모 카테고리가 이미 존재하는지 확인하고, 존재하면 부모를 설정
             if (category.getParent() != null) {
                 Long parentId = category.getParent().getId();
                 Category parentCategory = categoryMap.get(parentId);
                 category.setParent(parentCategory);
             }
 
-            // 카테고리 저장 및 맵에 추가
-            Category savedCategory = categoryRepository.save(category);
-            categoryMap.put(savedCategory.getId(), savedCategory);
-            System.out.println("카테고리 '" + category.getName() + "'가 저장되었습니다.");
+            // 카테고리 id로 존재하는지 확인
+            Category existingCategory = categoryRepository.findById(category.getId()).orElse(null);
+
+            if (existingCategory == null) {
+                // 카테고리가 존재하지 않으면 저장
+                Category savedCategory = categoryRepository.save(category);
+                categoryMap.put(savedCategory.getId(), savedCategory);
+                System.out.println("카테고리 '" + category.getName() + "'가 저장되었습니다.");
+            } else {
+                // 이미 존재하는 카테고리라면, 그 카테고리를 사용
+                category.setId(existingCategory.getId());
+                categoryMap.put(existingCategory.getId(), existingCategory);
+                System.out.println("카테고리 '" + category.getName() + "'는 이미 존재합니다.");
+            }
         }
     }
 }
