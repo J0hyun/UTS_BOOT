@@ -64,7 +64,7 @@
 
                 let id = $(this).attr('data-id');
                 //console.log(id)
-                let targetUrl = "/admin/item/subCategories?parentId=" + id;
+                let targetUrl = "/member/item/subCategories?parentId=" + id;
                 //console.log(targetUrl)
                 $.ajax({
                     url: targetUrl,
@@ -156,7 +156,7 @@
     </style>
 </th:block>
 
-<div layout:fragment="content">
+<div class="container mt-5" layout:fragment="content">
 
     <form role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
 
