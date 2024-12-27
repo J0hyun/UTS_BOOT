@@ -17,8 +17,11 @@
                         <a class="nav-link" href="/member/item/new">상품 등록</a>
                     </li>
                     <li class="nav-item"
-                        sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                        sec:authorize="hasAuthority('ROLE_USER')">
                         <a class="nav-link" href="/member/items">상품 관리</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                        <a class="nav-link" href="/admin/items">상품 관리</a>
                     </li>
                     <li class="nav-item"
                         sec:authorize="isAuthenticated()">
@@ -42,6 +45,11 @@
                         sec:authorize="isAuthenticated()">
                         <a class="nav-link" href="/member/logout">로그아웃</a>
                     </li>
+
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <span th:text=" ${#authentication.principal.username} + '님 환영합니다.'"></span>
+                    </li>
+
                 </ul>
                 <form class="d-flex" th:action="@{/}" method="get">
                     <input name="searchQuery" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

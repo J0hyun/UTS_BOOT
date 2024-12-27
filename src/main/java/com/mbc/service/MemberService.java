@@ -33,16 +33,16 @@ public class MemberService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         log.info("------loadUserByUsername 진입확인------");
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByname(name);
 
         if(member == null) {
-            throw new UsernameNotFoundException(email);
+            throw new UsernameNotFoundException(name);
         }
 
         return User.builder()
-                .username(member.getEmail())
+                .username(member.getName())
                 .password(member.getPassword())
                 .roles(member.getRole().toString())
                 .build();
