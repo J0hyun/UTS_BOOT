@@ -4,14 +4,11 @@
       layout:decorate="~{layouts/layout1}">
 
 <!-- 사용자 스크립트 추가 -->
-
-
-
-
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         $(document).ready(function(){
             var errorMessage = [[${errorMessage}]];
+            console.log(errorMessage)
             if(errorMessage != null){
                 alert(errorMessage);
             }
@@ -77,15 +74,62 @@
             });
         }
 
-        $.ajax({
-            url: "/admin/item/subCategories?parentId=1",
-            method: "get",
-            dataType : "json",
-            success: function(result, status){
-                console.log(result);
-                $("#subcategory option:nth-of-type(1)").text(result[0].name);
-                $("#subcategory option:nth-of-type(2)").text(result[1].name);
-            }
+        $(function(){
+            // 카테고리 선택
+            $('.maincategory li').click(function(){
+                $('.maincategory li').removeClass('choice');
+                $(this).addClass('choice');
+                $('.subcategory2').empty().append('<li>소분류 선택</li>');
+                $('.text-success b').empty().append('<span>'+$(this).text()+'</span>');
+                $('input[name="categoryId"]').val('');
+
+                let id = $(this).attr('data-id');
+                //console.log(id)
+                let targetUrl = "/admin/item/subCategories?parentId=" + id;
+                //console.log(targetUrl)
+                $.ajax({
+                    url: targetUrl,
+                    method: "get",
+                    dataType : "json",
+                    async: false,
+                    success: function(result, status){
+                        //console.log(result);
+                        resArr = result;
+
+                        $('.subcategory1').empty();
+                        result.forEach(function(cate){
+                            $('.subcategory1').append(`<li data-id="${cate.id}">${cate.name}</li>`);
+                        });
+
+                        // 중분류 클릭시 소분류
+                        $('.subcategory1 li').click(function(){
+                            $('.subcategory1 li').removeClass('choice');
+                            $(this).addClass('choice');
+                            $('.text-success b span:not(:first-of-type)').empty();
+                            $('.text-success b').append('<span>  > ' + $(this).text() + '</span>');
+                            $('input[name="categoryId"]').val('');
+
+                            let idx = $(this).index();
+                            //console.log(resArr[idx].children);
+                            $('.subcategory2').empty();
+                            resArr[idx].children.forEach(function(cate){
+                                $('.subcategory2').append(`<li data-id="${cate.id}">${cate.name}</li>`);
+                            });
+
+                            // 소분류 클릭
+                            $('.subcategory2 li').click(function(){
+                                $('.subcategory2 li').removeClass('choice');
+                                $(this).addClass('choice');
+                                $('.text-success b span:nth-of-type(3)').empty();
+                                $('.text-success b').append('<span>  > ' + $(this).text() + '</span>');
+                                $('input[name="categoryId"]').val($(this).attr('data-id'));
+                            });
+                        });
+
+
+                    }
+                });
+            });
         });
 
     </script>
@@ -97,16 +141,33 @@
         .img-div {
             margin-bottom : 10px
         }
-        .fieldError {
-            color: #bd2130;
-        }
         #imagePreview, #IP {
             display: flex;
             flex-wrap: wrap;
         }
 
-        select {
-            width: 100px;
+        p, ul {
+            margin-bottom: 0;
+        }
+
+        .category {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .category p{
+            width: 100%;
+        }
+        .category ul {
+            width: 33.3%;
+            border: 1px solid #dee2e6;
+            padding-left: 0;
+            padding: 5px 10px;
+        }
+        .category ul li {
+            padding-left: 5px;
+        }
+        .category .choice {
+            background-color: #eee;
         }
 
     </style>
@@ -129,24 +190,21 @@
         </div>
 
         <!--카테고리 시작-->
-        <div class="form-group mb-3">
-            <label>카테고리</label><br>
-            <select id="category">
-                <option th:text="${parentCategories[0].name}"></option>
-                <option th:text="${parentCategories[1].name}"></option>
-            </select>
-            <span> &gt; </span>
-            <select id="subcategory">
-                <option></option>
-                <option></option>
-            </select>
-            <span> &gt; </span>
-            <select id="subcategory2">
-                <option></option>
-                <option></option>
-            </select>
+        <div class="category mb-3">
+            <p>카테고리</p>
+            <ul class="maincategory">
+                <li th:each="pCate , status: ${parentCategories}" th:data-id="${pCate.id}">[[${pCate.name}]]</li>
+            </ul>
+            <ul class="subcategory1">
+                <li>중분류 선택</li>
+            </ul>
+            <ul class="subcategory2">
+                <li>소분류 선택</li>
+            </ul>
+            <p class="text-success">선택한 카테고리 : <b></b></p>
+            <input type="hidden" th:field="*{categoryId}">
+            <p th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" class="error">Incorrect data</p>
         </div>
-
         <!--카테고리 끝-->
 
         <div class="form-group mb-3">
@@ -178,26 +236,27 @@
         <div class="form-group mb-3">
             <label>상품명</label>
             <input type="text" th:field="*{itemNm}" class="form-control" placeholder="상품명을 입력해주세요">
+            <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="error">Incorrect data</p>
         </div>
-        <p th:if="${#fields.hasErrors('itemNm')}" th:errors="*{itemNm}" class="fieldError">Incorrect data</p>
 
         <div class="form-group mb-3">
             <label>가격</label>
             <input type="number" th:field="*{price}" class="form-control" placeholder="상품의 가격을 입력해주세요">
+            <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="error">Incorrect data</p>
         </div>
-        <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="fieldError">Incorrect data</p>
 
         <div class="form-group mb-3">
             <label>재고</label>
             <input type="number" th:field="*{stockNumber}" class="form-control" placeholder="상품의 재고를 입력해주세요">
+            <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="error">Incorrect data</p>
         </div>
-        <p th:if="${#fields.hasErrors('stockNumber')}" th:errors="*{stockNumber}" class="fieldError">Incorrect data</p>
 
         <div class="form-group mb-3">
             <label>상품 상세 내용</label>
             <textarea class="form-control" aria-label="With textarea" th:field="*{itemDetail}"></textarea>
+            <p th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}" class="error">Incorrect data</p>
         </div>
-        <p th:if="${#fields.hasErrors('itemDetail')}" th:errors="*{itemDetail}" class="fieldError">Incorrect data</p>
+
 
         <div class="form-group mb-3">
             <label for="itemImgFiles">상품 이미지 (최대 12개)</label>
