@@ -21,19 +21,18 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/css/**","/js/**","/img/**").permitAll()
-                        .requestMatchers("/","/members/**","/item/**","/images/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // admin 관련 URL 보호
-                        .anyRequest().authenticated() // 그 외 모든 요청 로그인 요구
+                        .requestMatchers("/member/**").hasAnyRole("ADMIN", "USER")
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .anyRequest().permitAll()
                 )
                 .formLogin(formLogin -> formLogin
-                        .loginPage("/members/login")
+                        .loginPage("/login")
                         .defaultSuccessUrl("/")
                         .usernameParameter("email")
-                        .failureUrl("/members/login/error")
+                        .failureUrl("/login/error")
                 )
                 .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
                 );
 
