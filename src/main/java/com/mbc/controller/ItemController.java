@@ -53,17 +53,31 @@ public class ItemController {
     @PostMapping(value = "/admin/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
                           Model model, @RequestParam("itemImgFile")List<MultipartFile> itemImgFileList) {
-        if (bindingResult.hasErrors()) {
+
+        if (itemFormDto.getCategoryId() == null) { // 카테고리 아이디를 폼데이터로 못받아오면
+            List<Category> parentCategories = categoryService.getParentCategories();
+            model.addAttribute("parentCategories", parentCategories);
             return "/item/itemForm";
         }
 
         if(itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null){
-            model.addAttribute("errorMessage", "첫번쨰 상품 이미지는 필수 입력 값 입니다.");
+            List<Category> parentCategories = categoryService.getParentCategories();
+            model.addAttribute("parentCategories", parentCategories);
+            model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
             return "/item/itemForm";
         }
 
         if (itemImgFileList.size() > 12) {
+            List<Category> parentCategories = categoryService.getParentCategories();
+            model.addAttribute("parentCategories", parentCategories);
             model.addAttribute("errorMessage", "상품 이미지는 최대 12개까지만 등록 가능합니다.");
+            return "/item/itemForm";
+        }
+
+        if (bindingResult.hasErrors()) {
+            List<Category> parentCategories = categoryService.getParentCategories();
+            model.addAttribute("parentCategories", parentCategories);
+            model.addAttribute("errorMessage", "필수 입력값을 입력해주세요!");
             return "/item/itemForm";
         }
 
