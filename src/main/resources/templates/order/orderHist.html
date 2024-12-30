@@ -10,7 +10,6 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
-
   <script th:inline="javascript">
     function cancelOrder(orderId) {
       var token = $("meta[name='_csrf']").attr("content");
@@ -81,12 +80,12 @@
 
 <div class="container mt-5" layout:fragment="content">
 
-  <h2 class="mb-4">
-    구매 이력
-  </h2>
+  <h2 class="pb-2 mb-4">구매 이력</h2>
+  <p th:if="${orders == null}">
+    구매 이력이 없습니다.
+  </p>
 
   <div th:each="order : ${orders.getContent()}">
-
     <div class="d-flex mb-3 align-self-center">
       <h4 th:text="${order.orderDate} + ' 주문'"></h4>
       <div class="ml-3">
