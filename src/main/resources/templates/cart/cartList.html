@@ -27,7 +27,7 @@
                 var count = $("#count_" + cartItemId).val();
                 orderTotalPrice += price * count;
             });
-            
+
             orderTotalPrice = orderTotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             $("#orderTotalPrice").html(orderTotalPrice+'원');
         }
