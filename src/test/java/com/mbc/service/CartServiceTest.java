@@ -1,13 +1,13 @@
 package com.mbc.service;
 
-import com.shop.constant.ItemSellStatus;
-import com.shop.dto.CartItemDto;
-import com.shop.entity.CartItem;
-import com.shop.entity.Item;
-import com.shop.entity.Member;
-import com.shop.repository.CartItemRepository;
-import com.shop.repository.ItemRepository;
-import com.shop.repository.MemberRepository;
+import com.mbc.constant.ItemSellStatus;
+import com.mbc.dto.CartItemDto;
+import com.mbc.entity.CartItem;
+import com.mbc.entity.Item;
+import com.mbc.entity.Member;
+import com.mbc.repository.CartItemRepository;
+import com.mbc.repository.ItemRepository;
+import com.mbc.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

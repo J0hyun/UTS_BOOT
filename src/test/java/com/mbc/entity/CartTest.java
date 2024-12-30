@@ -1,8 +1,8 @@
 package com.mbc.entity;
 
-import com.shop.dto.MemberFormDto;
-import com.shop.repository.CartRepository;
-import com.shop.repository.MemberRepository;
+import com.mbc.dto.MemberFormDto;
+import com.mbc.repository.CartRepository;
+import com.mbc.repository.MemberRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
