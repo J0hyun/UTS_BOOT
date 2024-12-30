@@ -12,4 +12,6 @@ public interface ItemRepositoryCustom {
 
     Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable);
 
+    Page<Item> findItemsByUserEmail(String userEmail, ItemSearchDto itemSearchDto, Pageable pageable);
+
 }

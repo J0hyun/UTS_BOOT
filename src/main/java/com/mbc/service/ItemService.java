@@ -107,4 +107,15 @@ public class ItemService {
                                              Pageable pageable) {
         return itemRepository.getMainItemPage(itemSearchDto, pageable);
     }
+
+    @Transactional(readOnly = true)
+    public Page<Item> getUserItems(String userEmail, ItemSearchDto itemSearchDto, Pageable pageable) {
+        return itemRepository.findItemsByUserEmail(userEmail, itemSearchDto, pageable);
+    }
+
+    public void deleteItem(Long itemId) {
+        itemRepository.deleteById(itemId);  // DB에서 아이템 삭제
+    }
+
+
 }
