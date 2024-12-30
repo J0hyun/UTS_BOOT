@@ -18,6 +18,10 @@ ul, ol, li {
     list-style: none;
 }
 
+h2 {
+    border-bottom: 3px solid #999;
+}
+
 .header {
     background-color: #fff;
     border-bottom: 1px solid #eee;
