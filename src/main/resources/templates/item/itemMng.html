@@ -15,6 +15,7 @@
 </th:block>
 
 <div class="container mt-5" layout:fragment="content">
+  <h2 class="pb-2 mb-4">상품 관리</h2>
 
   <form th:action="@{${actionUrl} + ${items.number}}" method="get" th:object="${itemSearchDto}">
     <table class="table">
