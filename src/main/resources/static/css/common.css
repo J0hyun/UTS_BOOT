@@ -18,8 +18,16 @@ ul, ol, li {
     list-style: none;
 }
 
+h2 {
+    border-bottom: 3px solid #999;
+}
+
 .header {
+    background-color: #fff;
     border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 footer p {

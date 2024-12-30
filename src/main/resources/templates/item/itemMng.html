@@ -1,33 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/layout1}">
 
-<!-- 사용자 스크립트 추가 -->
-<th:block layout:fragment="script">
-  <script th:inline="javascript">
 
-    $(document).ready(function(){
-      $("#searchBtn").on("click",function(e) {
-        e.preventDefault();
-        page(0);
-      });
-    });
-
-    function page(page){
-      var searchDateType = $("#searchDateType").val();
-      var searchSellStatus = $("#searchSellStatus").val();
-      var searchBy = $("#searchBy").val();
-      var searchQuery = $("#searchQuery").val();
-
-      location.href="/admin/items/" + page + "?searchDateType=" + searchDateType
-              + "&searchSellStatus=" + searchSellStatus
-              + "&searchBy=" + searchBy
-              + "&searchQuery=" + searchQuery;
-    }
-
-  </script>
-</th:block>
 
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
@@ -39,15 +15,16 @@
 </th:block>
 
 <div class="container mt-5" layout:fragment="content">
+  <h2 class="pb-2 mb-4">상품 관리</h2>
 
-  <form th:action="@{'/admin/items/' + ${items.number}}" role="form" method="get" th:object="${items}">
+  <form th:action="@{${actionUrl} + ${items.number}}" method="get" th:object="${itemSearchDto}">
     <table class="table">
       <thead>
       <tr>
         <td>상품아이디</td>
         <td>상품명</td>
         <td>상태</td>
-        <td>등록자</td>
+        <td sec:authorize="hasAuthority('ROLE_ADMIN')">등록자</td> <!-- ADMIN만 볼 수 있음 -->
         <td>등록일</td>
       </tr>
       </thead>
@@ -55,10 +32,10 @@
       <tr th:each="item, status: ${items.getContent()}">
         <td th:text="${item.id}"></td>
         <td>
-          <a th:href="'/admin/item/'+${item.id}" th:text="${item.itemNm}"></a>
+          <a th:href="'/member/item/'+${item.id}" th:text="${item.itemNm}"></a>
         </td>
         <td th:text="${item.itemSellStatus == T(com.mbc.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
-        <td th:text="${item.createdBy}"></td>
+        <td th:text="${item.createdBy}" sec:authorize="hasAuthority('ROLE_ADMIN')"></td> <!-- ADMIN만 볼 수 있음 -->
         <td th:text="${item.regTime}"></td>
       </tr>
       </tbody>
@@ -106,7 +83,7 @@
       </select>
       <select th:field="*{searchBy}" class="form-control" style="width:auto;">
         <option value="itemNm">상품명</option>
-        <option value="createdBy">등록자</option>
+        <option value="createdBy" sec:authorize="hasRole('ROLE_ADMIN')">등록자</option>
       </select>
       <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
       <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>

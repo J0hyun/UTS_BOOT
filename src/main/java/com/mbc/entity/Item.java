@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "item")
 @Getter
@@ -44,9 +47,9 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
-
-    //private LocalDateTime regTime;
-    //private LocalDateTime updateTime;
+    // OneToMany 관계 추가
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ItemImg> itemImgs = new ArrayList<>(); // 아이템 이미지 리스트
 
     public void updateItem(ItemFormDto itemFormDto) {
         this.itemNm = itemFormDto.getItemNm();

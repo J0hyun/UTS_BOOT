@@ -2,6 +2,7 @@
     overflow: hidden;
 }
 
+.card-body h4,
 .card-body p {
     overflow: hidden;
     width: 100%;
