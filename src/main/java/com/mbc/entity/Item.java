@@ -47,6 +47,21 @@ public class Item extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    // 추가된 필드들
+    @Column(nullable = false)
+    private String shipping; // 배송비 포함 여부 ("free" 또는 "separate")
+
+    @Column(nullable = false)
+    private Integer shippingPrice;
+
+    @Column(nullable = false)
+    private String tradeAvailable; // 직거래 가능 여부 ("possible" 또는 "impossible")
+
+    @Column(nullable = true)
+    private String tradeLocation; // 직거래 위치 정보
+
+
+
     // OneToMany 관계 추가
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemImg> itemImgs = new ArrayList<>(); // 아이템 이미지 리스트
