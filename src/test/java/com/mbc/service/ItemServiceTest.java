@@ -1,11 +1,11 @@
 package com.mbc.service;
 
-import com.shop.constant.ItemSellStatus;
-import com.shop.dto.ItemFormDto;
-import com.shop.entity.Item;
-import com.shop.entity.ItemImg;
-import com.shop.repository.ItemImgRepository;
-import com.shop.repository.ItemRepository;
+import com.mbc.constant.ItemSellStatus;
+import com.mbc.dto.ItemFormDto;
+import com.mbc.entity.Item;
+import com.mbc.entity.ItemImg;
+import com.mbc.repository.ItemImgRepository;
+import com.mbc.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.DisplayName;
