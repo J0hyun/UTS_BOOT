@@ -32,11 +32,11 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
     private final OrderService orderService;
 
-    public Long addCart(CartItemDto cartItemDto, String email) {
+    public Long addCart(CartItemDto cartItemDto, String name) {
 
         Item item = itemRepository.findById(cartItemDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByname(name);
 
         Cart cart = cartRepository.findByMemberId(member.getId());
         if (cart == null) {
@@ -57,11 +57,11 @@ public class CartService {
     }
 
     @Transactional(readOnly = true)
-    public List<CartDetailDto> getCartList(String email) {
+    public List<CartDetailDto> getCartList(String name) {
 
         List<CartDetailDto> cartDetailDtoList = new ArrayList<>();
 
-        Member member = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByname(name);
         Cart cart = cartRepository.findByMemberId(member.getId());
         if (cart == null) {
             return cartDetailDtoList;
@@ -74,13 +74,13 @@ public class CartService {
     }
 
     @Transactional(readOnly = true)
-    public boolean validateCartItem(Long cartItemId, String email) {
-        Member curMember = memberRepository.findByEmail(email);
+    public boolean validateCartItem(Long cartItemId, String name) {
+        Member curMember = memberRepository.findByname(name);
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(EntityNotFoundException::new);
         Member savedMember = cartItem.getCart().getMember();
 
-        if(!StringUtils.equals(curMember.getEmail(), savedMember.getEmail())) {
+        if(!StringUtils.equals(curMember.getName(), savedMember.getName())) {
             return false;
         }
 
@@ -100,7 +100,7 @@ public class CartService {
         cartItemRepository.delete(cartItem);
     }
 
-    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String email) {
+    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String name) {
         List<OrderDto> orderDtoList = new ArrayList<>();
         for (CartOrderDto cartOrderDto : cartOrderDtoList) {
             CartItem cartItem = cartItemRepository
@@ -113,7 +113,7 @@ public class CartService {
             orderDtoList.add(orderDto);
         }
 
-        Long orderId = orderService.orders(orderDtoList, email);
+        Long orderId = orderService.orders(orderDtoList, name);
 
         for(CartOrderDto cartOrderDto : cartOrderDtoList) {
             CartItem cartItem = cartItemRepository
