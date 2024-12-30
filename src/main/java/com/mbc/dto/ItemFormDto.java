@@ -38,6 +38,18 @@ public class ItemFormDto {
     @NotNull(message = "카테고리는 필수 입력 값입니다.")
     private Long categoryId;
 
+    public String shipping; // 배송
+
+    public Integer shippingPrice=0; //배송비
+
+    // 직거래 가능 여부
+    public String tradeAvailable; // "possible" 또는 "impossible"
+
+    // 직거래 위치
+    public String tradeLocation;  // 직거래 위치 정보
+
+
+
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
     private List<Long> itemImgIds = new ArrayList<>();
