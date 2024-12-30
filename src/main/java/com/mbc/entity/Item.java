@@ -41,11 +41,26 @@ public class Item extends BaseEntity {
     private ItemSellStatus itemSellStatus; //상품 판매 상태
 
     @Enumerated(EnumType.STRING)
-    private ItemStatus itemStatus; //상품 상태
+    private ItemStatus itemStatus; 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    // 추가된 필드들
+    @Column(nullable = false)
+    private String shipping; // 배송비 포함 여부 ("free" 또는 "separate")
+
+    @Column(nullable = false)
+    private Integer shippingPrice;
+
+    @Column(nullable = false)
+    private String tradeAvailable; // 직거래 가능 여부 ("possible" 또는 "impossible")
+
+    @Column(nullable = true)
+    private String tradeLocation; // 직거래 위치 정보
+
+
 
     // OneToMany 관계 추가
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)

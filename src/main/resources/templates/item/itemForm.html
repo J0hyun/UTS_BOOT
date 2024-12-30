@@ -7,6 +7,9 @@
 <th:block layout:fragment="script">
 
     <script th:inline="javascript">
+
+
+
         $(document).ready(function(){
             var errorMessage = [[${errorMessage}]];
             if(errorMessage != null){
@@ -108,6 +111,49 @@
                     }
                 });
             });
+        });
+
+
+        $(document).ready(function(){
+            // 페이지 로드 시 기본 상태 설정
+            updateShippingPriceDiv();  // 배송비 입력란 상태 설정
+            updateTradeLocationDiv();  // 직거래 위치 입력란 상태 설정
+
+            // "배송비 별도"를 선택했을 때 배송비 입력란을 보이게 하고, "배송비 포함"을 선택했을 때 숨깁니다.
+            $('#shippingSeparate').on('change', function() {
+                updateShippingPriceDiv();
+            });
+
+            $('#shippingFree').on('change', function() {
+                updateShippingPriceDiv();
+            });
+
+            // "직거래 가능"을 선택했을 때 위치 입력란을 보이게 하고, "직거래 불가"를 선택했을 때 숨깁니다.
+            $('#tradePossible').on('change', function() {
+                updateTradeLocationDiv();
+            });
+
+            $('#tradeImpossible').on('change', function() {
+                updateTradeLocationDiv();
+            });
+
+            // 배송비 입력란을 표시하거나 숨기는 함수
+            function updateShippingPriceDiv() {
+                if ($('#shippingSeparate').is(':checked')) {
+                    $('#shippingPriceDiv').show(); // "배송비 별도" 선택 시 보이기
+                } else {
+                    $('#shippingPriceDiv').hide(); // "배송비 포함" 선택 시 숨기기
+                }
+            }
+
+            // 직거래 위치 입력란을 표시하거나 숨기는 함수
+            function updateTradeLocationDiv() {
+                if ($('#tradePossible').is(':checked')) {
+                    $('#tradeLocationDiv').show(); // "직거래 가능" 선택 시 보이기
+                } else {
+                    $('#tradeLocationDiv').hide(); // "직거래 불가" 선택 시 숨기기
+                }
+            }
         });
 
 
@@ -258,6 +304,35 @@
                 </div>
             </div>
         </div>
+
+        <!-- 배송비 선택 -->
+        <label>배송비</label>
+        <input type="radio" id="shippingFree" name="shipping" value="free" th:checked="${itemFormDto.shipping == 'free'}">
+        <label for="shippingFree">배송비 포함 (무료배송)</label>
+
+        <input type="radio" id="shippingSeparate" name="shipping" value="separate" th:checked="${itemFormDto.shipping == 'separate'}">
+        <label for="shippingSeparate">배송비 별도</label>
+
+        <!-- 배송비 별도일 경우 가격 입력 -->
+        <div id="shippingPriceDiv" >
+            <label for="shippingPrice">배송비:</label>
+            <input type="number" id="shippingPrice" name="shippingPrice" th:value="${itemFormDto.shippingPrice}">
+        </div>
+
+        <!-- 직거래 가능 여부 -->
+        <label>직거래</label>
+        <input type="radio" id="tradePossible" name="tradeAvailable" value="possible" th:checked="${itemFormDto.tradeAvailable == 'possible'}">
+        <label for="tradePossible">가능</label>
+
+        <input type="radio" id="tradeImpossible" name="tradeAvailable" value="impossible" th:checked="${itemFormDto.tradeAvailable == 'impossible'}">
+        <label for="tradeImpossible">불가</label>
+
+        <!-- 직거래 가능일 경우 위치 정보 입력 -->
+        <div id="tradeLocationDiv">
+            <label for="tradeLocation">직거래 위치:</label>
+            <input type="text" id="tradeLocation" name="tradeLocation" th:value="${itemFormDto.tradeLocation}">
+        </div>
+
 
         <div th:if="${#strings.isEmpty(itemFormDto.id)}" style="text-align: center">
             <button th:formaction="@{/member/item/new}" type="submit" class="btn btn-success">등록하기</button>
