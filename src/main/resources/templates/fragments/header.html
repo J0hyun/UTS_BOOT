@@ -46,9 +46,9 @@
                         <a class="nav-link" href="/member/logout">로그아웃</a>
                     </li>
 
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <span th:text=" ${#authentication.principal.username} + '님 환영합니다.'"></span>
-                    </li>
+<!--                    <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--                        <span th:text=" ${#authentication.principal.username} + '님 환영합니다.'"></span>-->
+<!--                    </li>-->
 
                 </ul>
                 <form class="d-flex" th:action="@{/}" method="get">
