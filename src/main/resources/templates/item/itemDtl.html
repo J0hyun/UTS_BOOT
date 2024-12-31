@@ -152,6 +152,19 @@
                 <h3 name="totalPrice" id="totalPrice" class="text-end"></h3>
             </div>
 
+            <h4>
+                배송비:
+                <span th:if="${item.shipping == 'free'}">무료배송</span>
+                <span th:if="${item.shipping == 'separate'}"> <span th:text="${item.shippingPrice}"></span> 원</span>
+            </h4>
+
+
+            <h4 th:if="${item.tradeAvailable == 'possible'}">
+                직거래 위치: <span th:text="${item.tradeLocation}"></span>
+            </h4>
+
+
+
             <div th:if="${item.itemSellStatus == T(com.mbc.constant.ItemSellStatus).SELL}" class="text-end mt-3">
                 <button type="button" class="btn btn-outline-success btn-lg" onclick="addCart()">장바구니 담기</button>
                 <button type="button" class="btn btn-success btn-lg" onclick="order()">주문하기</button>
