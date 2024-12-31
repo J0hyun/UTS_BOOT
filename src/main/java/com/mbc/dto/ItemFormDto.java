@@ -31,8 +31,9 @@ public class ItemFormDto {
     @NotNull(message = "재고수량은 필수 입력 값입니다.")
     private Integer stockNumber;
 
-    private ItemSellStatus itemSellStatus;
+    private ItemSellStatus itemSellStatus = ItemSellStatus.SELL;
 
+    @NotNull(message = "상품상태는 필수 입력 값입니다.")
     private ItemStatus itemStatus;
 
     @NotNull(message = "카테고리는 필수 입력 값입니다.")
@@ -41,17 +42,18 @@ public class ItemFormDto {
     // 카테고리 계층을 추가하는 필드
     private String categoryHierarchy;
 
+    @NotNull(message = "배송비 설정은 필수 입력 값입니다.")
     public String shipping; // 배송
 
     public Integer shippingPrice=0; //배송비
 
-    // 직거래 가능 여부
+    @NotNull(message = "직거래 가능여부는 필수 입력 값입니다.")
     public String tradeAvailable; // "possible" 또는 "impossible"
 
     // 직거래 위치
     public String tradeLocation;  // 직거래 위치 정보
 
-
+    private String userName; // 상품을 등록한 유저의 이름
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
@@ -67,6 +69,8 @@ public class ItemFormDto {
         ItemFormDto itemFormDto = modelMapper.map(item, ItemFormDto.class);
         // 카테고리 계층을 설정
         itemFormDto.setCategoryHierarchy(item.getCategoryHierarchy());
+        // 유저의 이름을 가져와 설정
+        itemFormDto.setUserName(item.getCreatedBy());
         return itemFormDto;
     }
 
@@ -74,6 +78,7 @@ public class ItemFormDto {
     // itemStatus를 한글로 반환하는 메서드
     public String getItemStatusDescription() {
         return (itemStatus != null) ? itemStatus.getDescription() : "상품 상태 정보 없음";
+
     }
 
 }

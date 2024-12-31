@@ -1,5 +1,6 @@
 package com.mbc.controller;
 
+import com.mbc.constant.ItemSellStatus;
 import com.mbc.dto.ItemFormDto;
 import com.mbc.dto.ItemSearchDto;
 import com.mbc.entity.Category;
@@ -18,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.util.List;
@@ -178,19 +180,49 @@ public class ItemController {
     }
 
     @GetMapping(value = "/item/{itemId}")
-    public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
-        // 상품 상세 정보를 가져옵니다.
+
+    public String itemDtl(Model model, @PathVariable("itemId") Long itemId, Principal principal) {
+
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
 
         // 모델에 아이템과 카테고리 경로를 추가합니다.
         model.addAttribute("item", itemFormDto);
 
-        return "item/itemDtl";  // 상세 페이지로 이동
+        boolean isDeletable = false; // 기본적으로 삭제 버튼은 비활성화
+
+        if (principal != null) {
+            // 로그인한 사용자 정보를 Authentication 객체로 가져오기
+            Authentication authentication = (Authentication) principal;
+
+            // 관리자 권한 체크
+            boolean isAdmin = authentication.getAuthorities().stream()
+                    .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
+
+            // 상품을 등록한 사용자 이메일 가져오기
+            String userEmail = authentication.getName(); // principal.getName()으로 로그인한 이메일을 가져옴
+
+            // 상품 등록자와 로그인한 사용자가 일치하는지 확인
+            boolean isOwner = userEmail.equals(itemFormDto.getUserName());
+
+            // 관리자나 상품 소유자만 삭제 버튼을 표시
+            isDeletable = isAdmin || isOwner;
+        }
+
+        model.addAttribute("isDeletable", isDeletable);
+
+        return "item/itemDtl";
     }
 
     @PostMapping("/item/delete")
-    public String deleteItem(@RequestParam("itemId") Long itemId) {
-        itemService.deleteItem(itemId);  // 아이템 삭제 처리
+    public String deleteItem(@RequestParam("itemId") Long itemId, RedirectAttributes redirectAttributes) {
+        try {
+            itemService.deleteItem(itemId);  // 아이템 삭제 처리
+            redirectAttributes.addFlashAttribute("successMessage", "아이템이 성공적으로 삭제되었습니다.");  // 성공 메시지 추가
+        } catch (Exception e) {
+            System.out.println("삭제 실패: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("errorMessage", "삭제에 실패하였습니다. 다른 사용자에 의해 장바구니에 담겼거나 주문된 상품입니다.");  // 실패 메시지 추가
+        }
+
         return "redirect:/";  // 홈 페이지로 리다이렉트
     }
 }
