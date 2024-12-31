@@ -55,35 +55,32 @@
             });
         }
 
-        $(function(){
+        $(function() {
             // 카테고리 선택
-            $('.maincategory li').click(function(){
+            $('.maincategory li').click(function() {
                 $('.maincategory li').removeClass('choice');
                 $(this).addClass('choice');
                 $('.subcategory2').empty().append('<li>소분류 선택</li>');
-                $('.text-success b').empty().append('<span>'+$(this).text()+'</span>');
+                $('.text-success b').empty().append('<span>' + $(this).text() + '</span>');
                 $('input[name="categoryId"]').val('');
 
                 let id = $(this).attr('data-id');
-                //console.log(id)
                 let targetUrl = "/member/item/subCategories?parentId=" + id;
-                //console.log(targetUrl)
+
                 $.ajax({
                     url: targetUrl,
                     method: "get",
                     dataType : "json",
                     async: false,
-                    success: function(result, status){
-                        //console.log(result);
+                    success: function(result) {
                         resArr = result;
-
                         $('.subcategory1').empty();
-                        result.forEach(function(cate){
+                        result.forEach(function(cate) {
                             $('.subcategory1').append(`<li data-id="${cate.id}">${cate.name}</li>`);
                         });
 
                         // 중분류 클릭시 소분류
-                        $('.subcategory1 li').click(function(){
+                        $('.subcategory1 li').click(function() {
                             $('.subcategory1 li').removeClass('choice');
                             $(this).addClass('choice');
                             $('.text-success b span:not(:first-of-type)').empty();
@@ -91,14 +88,13 @@
                             $('input[name="categoryId"]').val('');
 
                             let idx = $(this).index();
-                            //console.log(resArr[idx].children);
                             $('.subcategory2').empty();
-                            resArr[idx].children.forEach(function(cate){
+                            resArr[idx].children.forEach(function(cate) {
                                 $('.subcategory2').append(`<li data-id="${cate.id}">${cate.name}</li>`);
                             });
 
                             // 소분류 클릭
-                            $('.subcategory2 li').click(function(){
+                            $('.subcategory2 li').click(function() {
                                 $('.subcategory2 li').removeClass('choice');
                                 $(this).addClass('choice');
                                 $('.text-success b span:nth-of-type(3)').empty();
@@ -106,11 +102,81 @@
                                 $('input[name="categoryId"]').val($(this).attr('data-id'));
                             });
                         });
-
-
                     }
                 });
             });
+
+            // 스크립트에서 categoryId를 가져와 사용
+            let categoryId = document.getElementById('categoryId').value;
+            console.log("카테고리 ID 값:", categoryId); // 카테고리 ID 출력
+            let parentCategoryId = document.getElementById('parentCategoryId').value;
+            console.log("부모카테고리 ID 값:", parentCategoryId); // 카테고리 ID 출력
+            let grandparentCategoryId = document.getElementById('grandparentCategoryId').value;
+            console.log("조부모카테고리 ID 값:", grandparentCategoryId); // 카테고리 ID 출력
+
+            // categoryHierarchy 값 가져오기
+           // let categoryHierarchy = document.getElementById("input[name='categoryHierarchy']").value;
+
+            // 페이지 로드 시 기본적으로 '남성의류 -> 상의 -> 반팔 티셔츠' 선택하기
+            function setDefaultCategory() {
+                let defaultCategoryId = grandparentCategoryId;  // '남성의류' 대분류 ID
+                let defaultSubcategoryId = parentCategoryId;  // '상의' 중분류 ID
+                let defaultSubsubCategoryId = categoryId;  // '반팔 티셔츠' 소분류 ID
+                let defaultCategoryText = "남성의류";  // 대분류 이름
+                let defaultSubcategoryText = "상의";  // 중분류 이름
+                let defaultSubsubCategoryText = "반팔 티셔츠";  // 소분류 이름
+
+                // 대분류 (남성의류) 선택
+                $('.maincategory li').each(function() {
+                    if ($(this).attr('data-id') == defaultCategoryId) {
+                        $(this).addClass('choice');
+                        $('.text-success b').html('<span>' + defaultCategoryText + '</span>');
+                        $('input[name="categoryId"]').val(defaultCategoryId);
+
+                        // 중분류 로딩
+                        let targetUrl = "/member/item/subCategories?parentId=" + defaultCategoryId;
+                        $.ajax({
+                            url: targetUrl,
+                            method: "get",
+                            dataType: "json",
+                            success: function(result) {
+                                resArr = result;
+                                $('.subcategory1').empty();
+                                result.forEach(function(cate) {
+                                    $('.subcategory1').append(`<li data-id="${cate.id}">${cate.name}</li>`);
+                                });
+
+                                // 중분류 (상의) 선택
+                                $('.subcategory1 li').each(function() {
+                                    if ($(this).attr('data-id') == defaultSubcategoryId) {
+                                        $(this).addClass('choice');
+                                        $('.text-success b').append('<span>  > ' + defaultSubcategoryText + '</span>');
+
+                                        // 소분류 로딩
+                                        let idx = $(this).index();
+                                        $('.subcategory2').empty();
+                                        resArr[idx].children.forEach(function(cate) {
+                                            $('.subcategory2').append(`<li data-id="${cate.id}">${cate.name}</li>`);
+                                        });
+
+                                        // 소분류 (반팔 티셔츠) 선택
+                                        $('.subcategory2 li').each(function() {
+                                            if ($(this).attr('data-id') == defaultSubsubCategoryId) {
+                                                $(this).addClass('choice');
+                                                $('.text-success b').append('<span>  > ' + defaultSubsubCategoryText + '</span>');
+                                                $('input[name="categoryId"]').val(defaultSubsubCategoryId);
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+
+            // 페이지 로드 시 기본 카테고리 설정 함수 호출
+            setDefaultCategory();
         });
 
 
@@ -198,7 +264,10 @@
 
     <form role="form" method="post" enctype="multipart/form-data" th:object="${itemFormDto}">
 
-        <h2 class="pb-2 mb-4">상품 등록</h2>
+        <h2 class="pb-2 mb-4">
+            <span th:text="${itemFormDto.itemNm != null and itemFormDto.itemNm != '' ? '상품 수정' : '상품 등록'}"></span>
+        </h2>
+
         <input type="hidden" th:field="*{id}">
 
 
@@ -223,6 +292,8 @@
             </ul>
             <p class="text-success">선택한 카테고리 : <b></b></p>
             <input type="hidden" th:field="*{categoryId}">
+            <input type="hidden" th:field="*{parentCategoryId}" />
+            <input type="hidden" th:field="*{grandparentCategoryId}" />
             <p th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" class="error">Incorrect data</p>
         </div>
         <!--카테고리 끝-->
@@ -231,23 +302,28 @@
             <label>상품 상태</label>
             <div th:field="*{itemStatus}">
                 <div class="form-check">
-                    <input type="radio" id="new" name="itemStatus" value="NEW" class="form-check-input" checked>
+                    <input type="radio" id="new" name="itemStatus" value="NEW" class="form-check-input"
+                           th:checked="${itemFormDto.itemStatus == T(com.mbc.constant.ItemStatus).NEW}">
                     <label for="new" class="form-check-label">새 상품 (미사용)</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="unused" name="itemStatus" value="UNUSED" class="form-check-input">
+                    <input type="radio" id="unused" name="itemStatus" value="UNUSED" class="form-check-input"
+                           th:checked="${itemFormDto.itemStatus == T(com.mbc.constant.ItemStatus).UNUSED}">
                     <label for="unused" class="form-check-label">사용감 없음</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="lightUse" name="itemStatus" value="LIGHT_USE" class="form-check-input">
+                    <input type="radio" id="lightUse" name="itemStatus" value="LIGHT_USE" class="form-check-input"
+                           th:checked="${itemFormDto.itemStatus == T(com.mbc.constant.ItemStatus).LIGHT_USE}">
                     <label for="lightUse" class="form-check-label">사용감 적음</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="heavyUse" name="itemStatus" value="HEAVY_USE" class="form-check-input">
+                    <input type="radio" id="heavyUse" name="itemStatus" value="HEAVY_USE" class="form-check-input"
+                           th:checked="${itemFormDto.itemStatus == T(com.mbc.constant.ItemStatus).HEAVY_USE}">
                     <label for="heavyUse" class="form-check-label">사용감 많음</label>
                 </div>
                 <div class="form-check">
-                    <input type="radio" id="damaged" name="itemStatus" value="DAMAGED" class="form-check-input">
+                    <input type="radio" id="damaged" name="itemStatus" value="DAMAGED" class="form-check-input"
+                           th:checked="${itemFormDto.itemStatus == T(com.mbc.constant.ItemStatus).DAMAGED}">
                     <label for="damaged" class="form-check-label">고장/파손 상품</label>
                 </div>
             </div>
@@ -318,6 +394,7 @@
                 <div id="tradeLocationDiv">
                     <label for="tradeLocation">직거래 위치:</label>
                     <input type="text" id="tradeLocation" class="form-control" name="tradeLocation" th:value="${itemFormDto.tradeLocation}">
+                    <div class="text-danger" th:if="${#fields.hasErrors('tradeLocation')}" th:errors="*{tradeLocation}"></div>
                 </div>
             </div>
 

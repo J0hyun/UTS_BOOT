@@ -47,4 +47,13 @@ public class MemberService implements UserDetailsService {
                 .roles(member.getRole().toString())
                 .build();
     }
+
+    public String getStoreMember(Long id) {
+        Member member = memberRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
+        log.info(member);
+
+        return member.getName();
+    }
 }
