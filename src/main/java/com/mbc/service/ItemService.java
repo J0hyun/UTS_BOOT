@@ -54,20 +54,29 @@ public class ItemService {
     }
 
     @Transactional(readOnly = true)
-    public ItemFormDto getItemDtl(Long itemId){
+    public ItemFormDto getItemDtl(Long itemId) {
 
-        List<ItemImg> itemImgList =
-               itemImgRepository.findByItemIdOrderByIdAsc(itemId);
+        // 상품 이미지 목록을 가져오기
+        List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
         List<ItemImgDto> itemImgDtoList = new ArrayList<>();
         for (ItemImg itemImg : itemImgList) {
             ItemImgDto itemImgDto = ItemImgDto.of(itemImg);
             itemImgDtoList.add(itemImgDto);
         }
 
+        // 아이템 정보 가져오기
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(EntityNotFoundException::new);
+
+        // Item을 ItemFormDto로 변환
         ItemFormDto itemFormDto = ItemFormDto.of(item);
+
+        // 카테고리 경로 설정
+        itemFormDto.setCategoryHierarchy(item.getCategoryHierarchy());
+
+        // 이미지 리스트 추가
         itemFormDto.setItemImgDtoList(itemImgDtoList);
+
         return itemFormDto;
     }
 
