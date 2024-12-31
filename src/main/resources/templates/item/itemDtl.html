@@ -124,7 +124,12 @@
 
     <input type="hidden" id="itemId" th:value="${item.id}">
 
-    <p><i class="fa-solid fa-house text-success"></i> 홈 > [[${item.categoryId}]]</p>
+    <p><i class="fa-solid fa-house text-success"></i> 홈 >
+        <!-- 카테고리 정보 표시 -->
+        <span th:text="${item.categoryHierarchy}">카테고리 경로</span>  <!-- 카테고리 경로 출력 -->
+    </p>
+
+
 
     <div class="row">
         <div class="col-md-6">
@@ -151,6 +156,14 @@
                 <h5 class="text-end">총 주문 금액</h5>
                 <h3 name="totalPrice" id="totalPrice" class="text-end"></h3>
             </div>
+
+            <div class="form-group mb-3">
+                <label>상품 상태</label>
+                <h4>
+                    <span th:text="${item.itemStatusDescription}"></span> <!-- 한글로 변환된 itemStatus 값 표시 -->
+                </h4>
+            </div>
+
 
             <h4>
                 배송비:
@@ -187,6 +200,8 @@
 
     <h5>상품 상세 설명</h5>
     <p th:text="${item.itemDetail}"></p>
+
+
 
     <h5 class="mt-5">상품 이미지</h5>
     <div class="row">
