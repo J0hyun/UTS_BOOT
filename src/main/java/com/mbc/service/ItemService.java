@@ -77,6 +77,10 @@ public class ItemService {
         // 이미지 리스트 추가
         itemFormDto.setItemImgDtoList(itemImgDtoList);
 
+        // 카테고리 조부모 ID 설정
+        Long grandparentCategoryId = item.getGrandparentCategoryId();
+        itemFormDto.setGrandparentCategoryId(grandparentCategoryId);
+
         return itemFormDto;
     }
 
