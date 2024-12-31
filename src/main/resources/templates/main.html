@@ -17,6 +17,23 @@
     <!-- Initialize Swiper -->
     <script src="/js/swiper.js"></script>
 
+    <!-- 페이지 로드 시 메시지 출력 -->
+    <script>
+        $(document).ready(function() {
+            var successMessage = "[[${successMessage}]]";
+            console.log(successMessage);  // successMessage 값 확인
+            if(successMessage) {
+                alert(successMessage);
+            }
+
+            var errorMessage = "[[${errorMessage}]]";
+            console.log(errorMessage);  // errorMessage 값 확인
+            if(errorMessage) {
+                alert(errorMessage);
+            }
+        });
+    </script>
+
 </th:block>
 
 <div layout:fragment="content">
@@ -80,5 +97,6 @@
 
         </ul>
     </div>
+
 
 </div>
