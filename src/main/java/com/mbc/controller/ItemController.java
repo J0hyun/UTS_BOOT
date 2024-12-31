@@ -95,14 +95,10 @@ public class ItemController {
 
         setCategoryAttributes(model);
 
-
         try {
             ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
+            System.out.println("ItemFormDto 상태: " + itemFormDto.toString());
             model.addAttribute("itemFormDto", itemFormDto);
-
-
-
-
 
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다.");
@@ -111,9 +107,6 @@ public class ItemController {
         }
         return "/item/itemForm";
     }
-
-
-
 
     @PostMapping(value = "/member/item/{itemId}")
     public String itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
