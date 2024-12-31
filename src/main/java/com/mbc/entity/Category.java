@@ -28,4 +28,8 @@ public class Category {
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference  // 자식 카테고리에서 부모 카테고리를 직렬화하도록 설정
     private List<Category> children;  // 하위 카테고리 목록
+
+    public Long getGrandparentId() {
+        return (parent != null && parent.getParent() != null) ? parent.getParent().getId() : null;
+    }
 }
