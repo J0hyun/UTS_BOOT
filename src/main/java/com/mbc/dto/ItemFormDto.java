@@ -3,6 +3,7 @@ package com.mbc.dto;
 import com.mbc.constant.ItemSellStatus;
 import com.mbc.constant.ItemStatus;
 import com.mbc.entity.Item;
+import com.mbc.validation.TradeLocationValid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @Getter @Setter
 @ToString
+@TradeLocationValid // 커스텀 유효성 검사 어노테이션 추가
 public class ItemFormDto {
 
     private Long id;
@@ -37,7 +39,9 @@ public class ItemFormDto {
     private ItemStatus itemStatus;
 
     @NotNull(message = "카테고리는 필수 입력 값입니다.")
-    private Long categoryId;
+    private Long categoryId;  // 소분류 ID
+    private Long parentCategoryId;  // 중분류 ID (부모 카테고리 ID)
+    private Long grandparentCategoryId;  // 대분류 ID (조부모 카테고리 ID)
 
     // 카테고리 계층을 추가하는 필드
     private String categoryHierarchy;
@@ -71,6 +75,7 @@ public class ItemFormDto {
         itemFormDto.setCategoryHierarchy(item.getCategoryHierarchy());
         // 유저의 이름을 가져와 설정
         itemFormDto.setUserName(item.getCreatedBy());
+
         return itemFormDto;
     }
 

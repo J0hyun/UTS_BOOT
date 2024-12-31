@@ -104,6 +104,7 @@ public class Item extends BaseEntity {
 
     public void addStock(int stockNumber){
         this.stockNumber += stockNumber;
+        this.itemSellStatus = ItemSellStatus.SELL;
     }
 
     // 카테고리 계층을 반환하는 메서드
@@ -122,4 +123,7 @@ public class Item extends BaseEntity {
         return categoryHierarchy.toString();  // 카테고리 경로 반환
     }
 
+    public Long getGrandparentCategoryId() {
+        return category != null ? category.getGrandparentId() : null;
+    }
 }
