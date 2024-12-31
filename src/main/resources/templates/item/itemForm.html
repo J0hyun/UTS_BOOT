@@ -80,7 +80,7 @@
                         });
 
                         // 중분류 클릭시 소분류
-                        $('.subcategory1 li').click(function() {
+                        $(document).on('click', '.subcategory1 li', function() {
                             $('.subcategory1 li').removeClass('choice');
                             $(this).addClass('choice');
                             $('.text-success b span:not(:first-of-type)').remove();
@@ -94,7 +94,7 @@
                             });
 
                             // 소분류 클릭
-                            $('.subcategory2 li').click(function() {
+                            $(document).on('click', '.subcategory2 li', function() {
                                 $('.subcategory2 li').removeClass('choice');
                                 $(this).addClass('choice');
                                 $('.text-success b span:nth-of-type(3)').remove();
@@ -142,9 +142,10 @@
             console.log("조부모카테고리 ID 값:", grandparentCategoryId); // 카테고리 ID 출력
 
             // categoryHierarchy 값 가져오기
-           // let categoryHierarchy = document.getElementById("input[name='categoryHierarchy']").value;
+            let categoryHierarchy = document.getElementById('categoryHierarchy').value;
+            console.log("카테고리:", categoryHierarchy); // 카테고리 출력
+            let categories = categoryHierarchy.split(' > ');
 
-            // 페이지 로드 시 기본적으로 '남성의류 -> 상의 -> 반팔 티셔츠' 선택하기
             function setDefaultCategory() {
                 let defaultCategoryId = grandparentCategoryId;  // '남성의류' 대분류 ID
                 let defaultSubcategoryId = parentCategoryId;  // '상의' 중분류 ID
@@ -319,6 +320,7 @@
             <input type="hidden" th:field="*{categoryId}">
             <input type="hidden" th:field="*{parentCategoryId}" />
             <input type="hidden" th:field="*{grandparentCategoryId}" />
+            <input type="hidden" th:field="*{categoryHierarchy}" />
             <p th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" class="error">Incorrect data</p>
         </div>
         <!--카테고리 끝-->
