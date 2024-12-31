@@ -39,6 +39,9 @@ public class ItemFormDto {
     @NotNull(message = "카테고리는 필수 입력 값입니다.")
     private Long categoryId;
 
+    // 카테고리 계층을 추가하는 필드
+    private String categoryHierarchy;
+
     @NotNull(message = "배송비 설정은 필수 입력 값입니다.")
     public String shipping; // 배송
 
@@ -62,11 +65,20 @@ public class ItemFormDto {
         return modelMapper.map(this, Item.class);
     }
 
-    public static ItemFormDto of(Item item){
-        ItemFormDto dto = modelMapper.map(item, ItemFormDto.class);
-        // Item 엔티티에서 유저의 이름을 가져와 설정 (예: item.getCreatedBy().getName()으로 이름을 가져오기)
-        dto.setUserName(item.getCreatedBy()); // item.getCreatedBy()가 Member 엔티티로 연결되어 있다고 가정
-        return dto;
+    public static ItemFormDto of(Item item) {
+        ItemFormDto itemFormDto = modelMapper.map(item, ItemFormDto.class);
+        // 카테고리 계층을 설정
+        itemFormDto.setCategoryHierarchy(item.getCategoryHierarchy());
+        // 유저의 이름을 가져와 설정
+        itemFormDto.setUserName(item.getCreatedBy());
+        return itemFormDto;
+    }
+
+
+    // itemStatus를 한글로 반환하는 메서드
+    public String getItemStatusDescription() {
+        return (itemStatus != null) ? itemStatus.getDescription() : "상품 상태 정보 없음";
+
     }
 
 }
