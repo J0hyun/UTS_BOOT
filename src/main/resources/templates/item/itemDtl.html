@@ -199,11 +199,16 @@
                 <button type="submit" class="btn btn-danger btn-lg">삭제</button>
             </form>
 
+            <!-- 수정하기 버튼 -->
+            <a th:href="'/member/item/'+${item.id}" class="btn btn-primary btn-lg" th:if="${isDeletable}">수정</a>
+
             <script>
                 function confirmDelete() {
                     return confirm("삭제하시겠습니까?");
                 }
             </script>
+
+
 
         </div>
     </div>

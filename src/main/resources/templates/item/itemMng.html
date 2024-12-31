@@ -15,13 +15,14 @@
         });
 
         function page(page){
+            let actionUrl = "[[${actionUrl}]]" ; // actionUrl을 Thymeleaf에서 가져옴
             let searchDateType = $("#searchDateType").val();
             let searchSellStatus = $("#searchSellStatus").val();
             let searchBy = $("#searchBy").val();
             let searchQuery = $("#searchQuery").val();
 
-            location.href="/member/items/" + page
-                + "?searchDateType=" + searchDateType
+            location.href= actionUrl + page
+            + "?searchDateType=" + searchDateType
                 + "&searchSellStatus=" + searchSellStatus
                 + "&searchBy=" + searchBy
                 + "&searchQuery=" + searchQuery;
