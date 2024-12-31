@@ -5,6 +5,7 @@ import com.mbc.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -24,4 +25,5 @@ public class CategoryService {
     public List<Category> getSubCategories(Long parentId) {
         return categoryRepository.findByParent_Id(parentId); // 부모 ID로 하위 카테고리 목록을 가져옴
     }
+
 }
