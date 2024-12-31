@@ -177,7 +177,7 @@
                 직거래 위치: <span th:text="${item.tradeLocation}"></span>
             </h4>
 
-            <h4> 판매자: <span th:text="${item.getUserName()}"></span></h4>
+            <h4>판매자: <a th:href="@{/store/{memberId}(memberId=${memberId})}" th:text="${item.userName}"></a></h4>
 
 
 
