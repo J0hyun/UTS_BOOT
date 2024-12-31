@@ -61,6 +61,10 @@ public class Item extends BaseEntity {
     private String tradeLocation; // 직거래 위치 정보
 
 
+    // OneToMany 관계 추가 (아이템에 대한 리뷰)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>(); // 아이템에 대한 리뷰 리스트
+
 
     // OneToMany 관계 추가
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
