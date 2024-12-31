@@ -72,6 +72,11 @@ public class Item extends BaseEntity {
         this.stockNumber = itemFormDto.getStockNumber();
         this.itemDetail = itemFormDto.getItemDetail();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
+        this.itemStatus = itemFormDto.getItemStatus(); // 추가된 상품 상태 반영
+        this.shipping = itemFormDto.getShipping(); // 배송비 포함 여부 반영
+        this.shippingPrice = itemFormDto.getShippingPrice(); // 배송비 반영
+        this.tradeAvailable = itemFormDto.getTradeAvailable(); // 직거래 가능 여부 반영
+        this.tradeLocation = itemFormDto.getTradeLocation(); // 직거래 위치 반영
     }
 
 //    private static ModelMapper modelMapper = new ModelMapper();
@@ -101,5 +106,20 @@ public class Item extends BaseEntity {
         this.stockNumber += stockNumber;
     }
 
+    // 카테고리 계층을 반환하는 메서드
+    public String getCategoryHierarchy() {
+        StringBuilder categoryHierarchy = new StringBuilder();
+
+        Category currentCategory = this.category;
+        while (currentCategory != null) {
+            if (categoryHierarchy.length() > 0) {
+                categoryHierarchy.insert(0, " > ");  // 구분자 " > " 삽입
+            }
+            categoryHierarchy.insert(0, currentCategory.getName());  // 카테고리 이름 삽입
+            currentCategory = currentCategory.getParent();  // 부모 카테고리로 이동
+        }
+
+        return categoryHierarchy.toString();  // 카테고리 경로 반환
+    }
 
 }

@@ -90,9 +90,18 @@ public class ItemController {
 
     @GetMapping(value = "/member/item/{itemId}")
     public String itemDtl(@PathVariable("itemId") Long itemId, Model model) {
+
+        setCategoryAttributes(model);
+
+
         try {
             ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
             model.addAttribute("itemFormDto", itemFormDto);
+
+
+
+
+
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다.");
             model.addAttribute("itemFormDto", new ItemFormDto());
@@ -101,9 +110,14 @@ public class ItemController {
         return "/item/itemForm";
     }
 
+
+
+
     @PostMapping(value = "/member/item/{itemId}")
     public String itemUpdate(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
                              @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Model model) {
+
+        setCategoryAttributes(model);
 
         if (bindingResult.hasErrors()) {
             return "/item/itemForm";
@@ -141,10 +155,14 @@ public class ItemController {
         return "item/itemMng";
     }
 
+
+
     @GetMapping(value = {"/member/items", "/member/items/{page}"})
     public String memberItemManage(ItemSearchDto itemSearchDto,
                                    @PathVariable("page") Optional<Integer> page,
                                    Model model, Principal principal) {
+
+
 
         String actionUrl = getActionUrl(principal);
         log.info("actionUrl is {}", actionUrl);
@@ -161,9 +179,13 @@ public class ItemController {
 
     @GetMapping(value = "/item/{itemId}")
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId) {
+        // 상품 상세 정보를 가져옵니다.
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
+
+        // 모델에 아이템과 카테고리 경로를 추가합니다.
         model.addAttribute("item", itemFormDto);
-        return "item/itemDtl";
+
+        return "item/itemDtl";  // 상세 페이지로 이동
     }
 
     @PostMapping("/item/delete")
