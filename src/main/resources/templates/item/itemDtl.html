@@ -137,8 +137,8 @@
             <img th:src="${item.itemImgDtoList[0].imgUrl}" class = "rounded" th:alt="${item.itemNm}">
         </div>
         <div class="col-md-6">
-            <span th:if="${item.itemSellStatus == T(com.mbc.constant.ItemSellStatus).SELL}" class="badge bg-success">판매중</span>
-            <span th:unless="${item.itemSellStatus == T(com.mbc.constant.ItemSellStatus).SELL}" class="badge bg-danger">품절</span>
+            <span th:if="${item.itemSellStatus.name() == 'SELL'}" class="badge bg-success">판매중</span>
+            <span th:unless="${item.itemSellStatus.name() == 'SELL'}" class="badge bg-danger">품절</span>
 
             <h3 th:text="${item.itemNm}"></h3>
             <h4 class="text-danger">
@@ -181,14 +181,14 @@
 
 
 
-            <div th:if="${item.itemSellStatus == T(com.mbc.constant.ItemSellStatus).SELL}" class="text-end mt-3">
+            <div th:if="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">
                 <!-- 주문하기와 장바구니 담기 버튼은 관리자가 아니면 숨기기 -->
                 <button type="button" class="btn btn-outline-success btn-lg"
                         th:if="${not isDeletable}" onclick="addCart()">장바구니 담기</button>
                 <button type="button" class="btn btn-success btn-lg"
                         th:if="${not isDeletable}" onclick="order()">주문하기</button>
             </div>
-            <div th:unless="${item.itemSellStatus == T(com.mbc.constant.ItemSellStatus).SELL}" class="text-end mt-3">
+            <div th:unless="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">
                 <button type="button" class="btn btn-danger btn-lg">품절</button>
             </div>
 
@@ -199,11 +199,16 @@
                 <button type="submit" class="btn btn-danger btn-lg">삭제</button>
             </form>
 
+            <!-- 수정하기 버튼 -->
+            <a th:href="'/member/item/'+${item.id}" class="btn btn-primary btn-lg" th:if="${isDeletable}">수정</a>
+
             <script>
                 function confirmDelete() {
                     return confirm("삭제하시겠습니까?");
                 }
             </script>
+
+
 
         </div>
     </div>
