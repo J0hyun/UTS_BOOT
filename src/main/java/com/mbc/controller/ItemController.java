@@ -5,8 +5,10 @@ import com.mbc.dto.ItemFormDto;
 import com.mbc.dto.ItemSearchDto;
 import com.mbc.entity.Category;
 import com.mbc.entity.Item;
+import com.mbc.entity.Member;
 import com.mbc.service.CategoryService;
 import com.mbc.service.ItemService;
+import com.mbc.service.MemberService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
@@ -31,10 +33,12 @@ public class ItemController {
 
     private final ItemService itemService;
     private final CategoryService categoryService;
+    private final MemberService memberService;
 
-    public ItemController(ItemService itemService, CategoryService categoryService) {
+    public ItemController(ItemService itemService, CategoryService categoryService, MemberService memberService) {
         this.itemService = itemService;
         this.categoryService = categoryService;
+        this.memberService = memberService;
     }
 
     // 공통 URL 액션 로직을 처리하는 메소드
@@ -42,7 +46,7 @@ public class ItemController {
         Authentication authentication = (Authentication) principal;
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
-        return isAdmin ? "/admin/items/" : "/member/items/";
+        return isAdmin ? "admin/items/" : "member/items/";
     }
 
     // 카테고리 설정을 위한 헬퍼 메소드
@@ -55,7 +59,7 @@ public class ItemController {
     public String itemForm(Model model) {
         setCategoryAttributes(model);
         model.addAttribute("itemFormDto", new ItemFormDto());
-        return "/item/itemForm";
+        return "item/itemForm";
     }
 
     @GetMapping(value = "/member/item/subCategories")
@@ -72,19 +76,19 @@ public class ItemController {
 
         if (itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null) {
             model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
-            return "/item/itemForm";
+            return "item/itemForm";
         }
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("errorMessage", "필수 입력값을 입력해주세요!");
-            return "/item/itemForm";
+            return "item/itemForm";
         }
 
         try {
             itemService.saveItem(itemFormDto, itemImgFileList);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");
-            return "/item/itemForm";
+            return "item/itemForm";
         }
 
         return "redirect:/";
@@ -103,9 +107,9 @@ public class ItemController {
         } catch (EntityNotFoundException e) {
             model.addAttribute("errorMessage", "존재하지 않는 상품입니다.");
             model.addAttribute("itemFormDto", new ItemFormDto());
-            return "/item/itemForm";
+            return "item/itemForm";
         }
-        return "/item/itemForm";
+        return "item/itemForm";
     }
 
     @PostMapping(value = "/member/item/{itemId}")
@@ -115,19 +119,19 @@ public class ItemController {
         setCategoryAttributes(model);
 
         if (bindingResult.hasErrors()) {
-            return "/item/itemForm";
+            return "item/itemForm";
         }
 
         if (itemImgFileList.get(0).isEmpty()) {
             model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값입니다.");
-            return "/item/itemForm";
+            return "item/itemForm";
         }
 
         try {
             itemService.updateItem(itemFormDto, itemImgFileList);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "상품 수정 중 에러가 발생하였습니다.");
-            return "/item/itemForm";
+            return "item/itemForm";
         }
 
         return "redirect:/";
@@ -173,7 +177,6 @@ public class ItemController {
     }
 
     @GetMapping(value = "/item/{itemId}")
-
     public String itemDtl(Model model, @PathVariable("itemId") Long itemId, Principal principal) {
 
         ItemFormDto itemFormDto = itemService.getItemDtl(itemId);
@@ -199,6 +202,12 @@ public class ItemController {
 
             // 관리자나 상품 소유자만 삭제 버튼을 표시
             isDeletable = isAdmin || isOwner;
+        }
+
+        Member member = memberService.getMemberByUserName(itemFormDto.getUserName());
+        if (member != null) {
+            // memberId를 model에 추가하여 화면에서 사용하도록 전달
+            model.addAttribute("memberId", member.getId());
         }
 
         model.addAttribute("isDeletable", isDeletable);

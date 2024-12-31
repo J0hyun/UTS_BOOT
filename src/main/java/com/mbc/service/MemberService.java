@@ -56,4 +56,8 @@ public class MemberService implements UserDetailsService {
 
         return member.getName();
     }
+
+    public Member getMemberByUserName(String userName) {
+        return memberRepository.findByname(userName); // memberRepository에서 이름으로 찾기
+    }
 }
