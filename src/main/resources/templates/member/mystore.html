@@ -134,7 +134,7 @@
                         <td>
                             <a th:href="'/item/'+${item.id}" th:text="${item.itemNm}"></a>
                         </td>
-                        <td th:text="${item.itemSellStatus.equals(T(com.mbc.constant.ItemSellStatus).SELL)} ? '판매중' : '품절'"></td>
+                        <td th:text="${item.itemSellStatus.name() == 'SELL'} ? '판매중' : '품절'"></td>
                         <td th:text="${item.createdBy}" sec:authorize="hasAuthority('ROLE_ADMIN')"></td> <!-- ADMIN만 볼 수 있음 -->
                         <td th:text="${#temporals.format(item.regTime, 'yyyy-MM-dd')}"></td>
                     </tr>
