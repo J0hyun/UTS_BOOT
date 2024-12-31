@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout1}">
+      layout:decorate="~{layouts/layout1}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- 사용자 CSS 추가 -->
+<th:block layout:fragment="css">
+    <style>
+        .profile-img {
+            width: 18vw;
+            height: 18vw;
+            padding: 0;
+            background-color: #eee;
+        }
+        .profile-img .img {
+            width: 90%;
+            height: 90%;
+            margin: 5%;
+            border-radius: 50%;
+            overflow: hidden;
+            background: url("/img/shop.svg") center/cover;
+        }
+        .nav-link {
+            color: #999;
+        }
+        .nav-link:hover {
+            color: #198754;
+        }
+    </style>
+</th:block>
 
 <div class="container mt-5" layout:fragment="content">
-    <h2 class="pb-2 mb-4">${ID} 상점</h2>
+    <h2 class="pb-2 mb-4" sec:authorize="isAuthenticated()">[[${#authentication.principal.username}]] 상점</h2>
 
-    <div class="row">
-        <div class="col-3">
-            <img src="/img/unknown.jpg" alt="user" style="width:100%;">
+    <div class="row justify-content-center profile">
+        <div class="col-3 profile-img">
+            <div class="img">
+<!--            <img src="/img/shop.svg" alt="user" style="width:100%;">-->
+            </div>
         </div>
         <div class="col-9">
-            <h3 class="pb-2">아이디 : </h3>
+            <h3 class="pb-2">상점명 : [[${#authentication.principal.username}]]</h3>
             <p>상점 오픈일 : </p>
             <p>상품 판매 : </p>
-
         </div>
     </div>
 
@@ -33,38 +61,35 @@
         <div class="tab-pane fade show active" id="nav-sale" role="tabpanel" aria-labelledby="nav-sale-tab"
              tabindex="0">
             <div class="d-flex justify-content-end mt-3">
-                <a href="" class="btn btn-sm btn-success mb-3">상품등록</a>
+                <a class="btn btn-sm btn-success mb-3" href="/member/item/new">상품등록</a>
             </div>
 
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">이미지</th>
-                    <th scope="col">상품명</th>
-                    <th scope="col">가격</th>
-                    <th scope="col">등록일</th>
-                    <th scope="col">수정일</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div th:if="${items.hasContent() == true}">
+                <table class="table text-center">
+                    <thead>
                     <tr>
-                        <th scope="row">상품번호</th>
-                        <td class="pimg">
-                            <a href="">
-                                이미지
-                            </a>
-                        </td>
-                        <td><a href="">상품명</a></td>
-                        <td>가격</td>
-                        <td>등록일</td>
-                        <td>수정일</td>
-
+                        <td style="width: 10%">상품번호</td>
+                        <td>상품명</td>
+                        <td style="width: 15%;">상태</td>
+                        <td sec:authorize="hasAuthority('ROLE_ADMIN')">등록자</td> <!-- ADMIN만 볼 수 있음 -->
+                        <td style="width: 20%;">등록일</td>
                     </tr>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item, status: ${items.getContent()}">
+                        <td th:text="${item.id}"></td>
+                        <td class="text-start">
+                            <a th:href="'/member/item/'+${item.id}" th:text="${item.itemNm}"></a>
+                        </td>
+                        <td th:text="${item.itemSellStatus == T(com.mbc.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
+                        <td th:text="${item.createdBy}" sec:authorize="hasAuthority('ROLE_ADMIN')"></td> <!-- ADMIN만 볼 수 있음 -->
+                        <td th:text="${#temporals.format(item.regTime, 'yyyy-MM-dd')}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <p class="text-center mt-5">판매 내역이 없습니다.</p>
+            <p class="text-center mt-5" th:if="${items.hasContent() == false}">판매 내역이 없습니다.</p>
         </div>
 
         <div class="tab-pane fade" id="nav-purchase" role="tabpanel" aria-labelledby="nav-purchase-tab" tabindex="0">
@@ -72,8 +97,6 @@
         </div>
 
         <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab" tabindex="0">
-            tkd
-
 
             <table class="table">
                 <thead>
