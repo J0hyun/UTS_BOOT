@@ -22,6 +22,13 @@ h2 {
     border-bottom: 3px solid #999;
 }
 
+.nav-link {
+    color: #777;
+}
+.nav-link:hover {
+    color: #198754;
+}
+
 .header {
     background-color: #fff;
     border-bottom: 1px solid #eee;
