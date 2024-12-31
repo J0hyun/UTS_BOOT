@@ -80,10 +80,10 @@
                         });
 
                         // 중분류 클릭시 소분류
-                        $('.subcategory1 li').click(function() {
+                        $(document).on('click', '.subcategory1 li', function() {
                             $('.subcategory1 li').removeClass('choice');
                             $(this).addClass('choice');
-                            $('.text-success b span:not(:first-of-type)').empty();
+                            $('.text-success b span:not(:first-of-type)').remove();
                             $('.text-success b').append('<span>  > ' + $(this).text() + '</span>');
                             $('input[name="categoryId"]').val('');
 
@@ -94,10 +94,10 @@
                             });
 
                             // 소분류 클릭
-                            $('.subcategory2 li').click(function() {
+                            $(document).on('click', '.subcategory2 li', function() {
                                 $('.subcategory2 li').removeClass('choice');
                                 $(this).addClass('choice');
-                                $('.text-success b span:nth-of-type(3)').empty();
+                                $('.text-success b span:nth-of-type(3)').remove();
                                 $('.text-success b').append('<span>  > ' + $(this).text() + '</span>');
                                 $('input[name="categoryId"]').val($(this).attr('data-id'));
                             });
@@ -105,6 +105,33 @@
                     }
                 });
             });
+
+            // 수정시 소분류/중분류 선택가능하도록
+            if(!location.pathname.includes('new')){
+                // 이벤트 위임 사용: 중분류 클릭 이벤트
+                $(document).on('click', '.subcategory1 li', function () {
+                    $('.subcategory1 li').removeClass('choice');
+                    $(this).addClass('choice');
+                    $('.text-success b span:not(:first-of-type)').remove();
+                    $('.text-success b').append('<span>  > ' + $(this).text() + '</span>');
+                    $('input[name="categoryId"]').val('');
+
+                    let idx = $(this).index();
+                    $('.subcategory2').empty();
+                    resArr[idx].children.forEach(function (cate) {
+                        $('.subcategory2').append(`<li data-id="${cate.id}">${cate.name}</li>`);
+                    });
+                });
+
+                // 이벤트 위임 사용: 소분류 클릭 이벤트
+                $(document).on('click', '.subcategory2 li', function () {
+                    $('.subcategory2 li').removeClass('choice');
+                    $(this).addClass('choice');
+                    $('.text-success b span:nth-of-type(3)').remove();
+                    $('.text-success b').append('<span>  > ' + $(this).text() + '</span>');
+                    $('input[name="categoryId"]').val($(this).attr('data-id'));
+                });
+            }
 
             // 스크립트에서 categoryId를 가져와 사용
             let categoryId = document.getElementById('categoryId').value;
@@ -115,22 +142,20 @@
             console.log("조부모카테고리 ID 값:", grandparentCategoryId); // 카테고리 ID 출력
 
             // categoryHierarchy 값 가져오기
-           // let categoryHierarchy = document.getElementById("input[name='categoryHierarchy']").value;
+            let categoryHierarchy = document.getElementById('categoryHierarchy').value;
+            console.log("카테고리:", categoryHierarchy); // 카테고리 출력
+            let categories = categoryHierarchy.split(' > ');
 
-            // 페이지 로드 시 기본적으로 '남성의류 -> 상의 -> 반팔 티셔츠' 선택하기
             function setDefaultCategory() {
                 let defaultCategoryId = grandparentCategoryId;  // '남성의류' 대분류 ID
                 let defaultSubcategoryId = parentCategoryId;  // '상의' 중분류 ID
                 let defaultSubsubCategoryId = categoryId;  // '반팔 티셔츠' 소분류 ID
-                let defaultCategoryText = "남성의류";  // 대분류 이름
-                let defaultSubcategoryText = "상의";  // 중분류 이름
-                let defaultSubsubCategoryText = "반팔 티셔츠";  // 소분류 이름
 
                 // 대분류 (남성의류) 선택
                 $('.maincategory li').each(function() {
                     if ($(this).attr('data-id') == defaultCategoryId) {
                         $(this).addClass('choice');
-                        $('.text-success b').html('<span>' + defaultCategoryText + '</span>');
+                        $('.text-success b').html('<span>' + $('.maincategory li.choice').text() + '</span>');
                         $('input[name="categoryId"]').val(defaultCategoryId);
 
                         // 중분류 로딩
@@ -150,7 +175,7 @@
                                 $('.subcategory1 li').each(function() {
                                     if ($(this).attr('data-id') == defaultSubcategoryId) {
                                         $(this).addClass('choice');
-                                        $('.text-success b').append('<span>  > ' + defaultSubcategoryText + '</span>');
+                                        $('.text-success b').append('<span>  > ' + $('.subcategory1 li.choice').text() + '</span>');
 
                                         // 소분류 로딩
                                         let idx = $(this).index();
@@ -163,7 +188,7 @@
                                         $('.subcategory2 li').each(function() {
                                             if ($(this).attr('data-id') == defaultSubsubCategoryId) {
                                                 $(this).addClass('choice');
-                                                $('.text-success b').append('<span>  > ' + defaultSubsubCategoryText + '</span>');
+                                                $('.text-success b').append('<span>  > ' + $('.subcategory2 li.choice').text() + '</span>');
                                                 $('input[name="categoryId"]').val(defaultSubsubCategoryId);
                                             }
                                         });
@@ -249,6 +274,7 @@
         }
         .category ul li {
             padding-left: 5px;
+            cursor: pointer;
         }
         .category .choice {
             background-color: #eee;
@@ -294,6 +320,7 @@
             <input type="hidden" th:field="*{categoryId}">
             <input type="hidden" th:field="*{parentCategoryId}" />
             <input type="hidden" th:field="*{grandparentCategoryId}" />
+            <input type="hidden" th:field="*{categoryHierarchy}" />
             <p th:if="${#fields.hasErrors('categoryId')}" th:errors="*{categoryId}" class="error">Incorrect data</p>
         </div>
         <!--카테고리 끝-->

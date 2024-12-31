@@ -4,8 +4,10 @@ import com.mbc.dto.ItemFormDto;
 import com.mbc.dto.ItemImgDto;
 import com.mbc.dto.ItemSearchDto;
 import com.mbc.dto.MainItemDto;
+import com.mbc.entity.Category;
 import com.mbc.entity.Item;
 import com.mbc.entity.ItemImg;
+import com.mbc.repository.CategoryRepository;
 import com.mbc.repository.ItemImgRepository;
 import com.mbc.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +29,7 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final ItemImgService itemImgService;
     private final ItemImgRepository itemImgRepository;
+    private final CategoryRepository categoryRepository;
 
     public Long saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList)
         throws Exception{
@@ -92,6 +95,11 @@ public class ItemService {
                 .orElseThrow(EntityNotFoundException::new);
         item.updateItem(itemFormDto);
 
+        // 카테고리 설정 (categoryId로 Category 조회)
+        Long categoryId = itemFormDto.getCategoryId();
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid category ID: " + categoryId));
+        item.setCategory(category);  // 카테고리 설정
         System.out.println("itemFormDto: " + itemFormDto.toString());
 
         List<Long> itemImgIds = itemFormDto.getItemImgIds();
