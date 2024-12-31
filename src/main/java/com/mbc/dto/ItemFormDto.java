@@ -31,24 +31,26 @@ public class ItemFormDto {
     @NotNull(message = "재고는 필수 입력 값입니다.")
     private Integer stockNumber;
 
-    private ItemSellStatus itemSellStatus;
+    private ItemSellStatus itemSellStatus = ItemSellStatus.SELL;
 
+    @NotNull(message = "상품상태는 필수 입력 값입니다.")
     private ItemStatus itemStatus;
 
     @NotNull(message = "카테고리는 필수 입력 값입니다.")
     private Long categoryId;
 
+    @NotNull(message = "배송비 설정은 필수 입력 값입니다.")
     public String shipping; // 배송
 
     public Integer shippingPrice=0; //배송비
 
-    // 직거래 가능 여부
+    @NotNull(message = "직거래 가능여부는 필수 입력 값입니다.")
     public String tradeAvailable; // "possible" 또는 "impossible"
 
     // 직거래 위치
     public String tradeLocation;  // 직거래 위치 정보
 
-
+    private String userName; // 상품을 등록한 유저의 이름
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
@@ -61,7 +63,10 @@ public class ItemFormDto {
     }
 
     public static ItemFormDto of(Item item){
-        return modelMapper.map(item, ItemFormDto.class);
+        ItemFormDto dto = modelMapper.map(item, ItemFormDto.class);
+        // Item 엔티티에서 유저의 이름을 가져와 설정 (예: item.getCreatedBy().getName()으로 이름을 가져오기)
+        dto.setUserName(item.getCreatedBy()); // item.getCreatedBy()가 Member 엔티티로 연결되어 있다고 가정
+        return dto;
     }
 
 }
