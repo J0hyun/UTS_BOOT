@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모든 리뷰 목록</title>
+</head>
+<body>
+<div class="container mt-5">
+  <h2>모든 리뷰 목록</h2>
+
+  <!-- 리뷰 목록 출력 -->
+  <ul>
+    <li th:each="review : ${reviews}">
+      <div>
+        <h4 th:text="${review.memberName}">등록자명</h4>
+        <p th:text="${review.reviewDetail}">후기 내용</p>
+      </div>
+      <hr>
+    </li>
+  </ul>
+
+  <a href="/" class="btn btn-primary">홈으로</a>
+</div>
+</body>
+</html>
