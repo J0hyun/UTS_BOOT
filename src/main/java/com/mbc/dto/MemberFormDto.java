@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -29,4 +30,6 @@ public class MemberFormDto {
 
     @NotEmpty(message = "전화번호는 필수 입력 값입니다.")
     private String phone;
+
+    private MultipartFile profileImg;
 }
