@@ -20,7 +20,7 @@ public class MainController {
 
     private final ItemService itemService;
 
-    @GetMapping(value = "/")
+    @GetMapping(value = {"/", "/{page}"})
     public String main(ItemSearchDto itemSearchDto,
                        @PathVariable("page")Optional<Integer> page, Model model) {
 
@@ -29,7 +29,7 @@ public class MainController {
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 10);
+        model.addAttribute("maxPage", 5);
 
         return "main";
     }
