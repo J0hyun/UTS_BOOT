@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,6 +34,19 @@ public class MemberController {
     @GetMapping(value = "/member/mystore") // 내 상점 페이지
     public String Mystore(ItemSearchDto itemSearchDto,
                           Model model, Principal principal) {
+
+        // 상점 정보 - 등록 날짜
+        Member member = memberService.getMemberByUserName(principal.getName());
+        LocalDateTime startdate = member.getRegTime();
+        LocalDateTime enddate = LocalDateTime.now();
+        Duration duration = Duration.between(startdate, enddate);
+        Long openDay = duration.getSeconds()/60/60/24;
+        model.addAttribute("openDay", openDay);
+
+        // 상품 등록 총 갯수
+        Long totalItem = itemService.getItemCount();
+        model.addAttribute("totalItem", totalItem);
+
         // 판매내역
         String userEmail = principal.getName();
         Pageable pageable = PageRequest.of(0, 10000);
@@ -49,10 +64,25 @@ public class MemberController {
     @GetMapping(value = "/store/{memberId}")
     public String store(@PathVariable Long memberId, ItemSearchDto itemSearchDto,
                         Model model, RedirectAttributes rttr) {
+        Member member;
         String userEmail;
+        Long openDay;
+
         try {
+            member = memberService.getStoreMember(memberId);
             // 상점 이름 가져오기
-            userEmail = memberService.getStoreMember(memberId);
+            userEmail = member.getName();
+            // 상점 정보 - 등록 날짜
+            LocalDateTime startdate = member.getRegTime();
+            LocalDateTime enddate = LocalDateTime.now();
+            Duration duration = Duration.between(startdate, enddate);
+            openDay = duration.getSeconds()/60/60/24;
+            model.addAttribute("openDay", openDay);
+
+            // 상품 등록 총 갯수
+            Long totalItem = itemService.getItemCount();
+            model.addAttribute("totalItem", totalItem);
+
         } catch (IllegalArgumentException e) {
             // 예외 발생 시 메시지 전달
             rttr.addFlashAttribute("errorMessage", e.getMessage());
