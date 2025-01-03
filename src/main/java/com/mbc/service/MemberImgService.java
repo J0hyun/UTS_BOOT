@@ -16,7 +16,7 @@ import org.thymeleaf.util.StringUtils;
 @Transactional
 public class MemberImgService {
 
-    @Value("${itemImgLocation}")
+    @Value("C:/shop/member")
     private String memberImgLocation;
 
     private final MemberImgRepository memberImgRepository;
