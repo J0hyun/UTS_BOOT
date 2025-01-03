@@ -1,8 +1,10 @@
 package com.mbc.service;
 
 import com.mbc.dto.MemberFormDto;
+import com.mbc.dto.MemberImgDto;
 import com.mbc.entity.Member;
 import com.mbc.entity.MemberImg;
+import com.mbc.repository.MemberImgRepository;
 import com.mbc.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,7 +26,7 @@ import java.io.IOException;
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
-
+    private final MemberImgRepository memberImgRepository;
     private final MemberImgService memberImgService;
     private final PasswordEncoder passwordEncoder;
 
@@ -71,16 +73,78 @@ public class MemberService implements UserDetailsService {
                 .build();
     }
 
-    public Member getStoreMember(Long id) {
+//    public Member getStoreMember(Long id) {
+//        Member member = memberRepository.findById(id).orElseThrow(
+//                () -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+//
+//        log.info(member);
+//
+//        return member;
+//    }
+
+    public MemberFormDto getStoreMember(Long id) {
         Member member = memberRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
-        log.info(member);
-
-        return member;
+        // 프로필 이미지 가져오기
+        MemberImg memberImg = memberImgRepository.findByMemberId(id);
+        MemberFormDto memberFormDto;
+        if (memberImg != null) {
+            MemberImgDto memberImgDto = MemberImgDto.of(memberImg);
+            // MemberFormDto 생성 (Builder 사용)
+            memberFormDto = MemberFormDto.builder()
+                    .memberId(member.getId())
+                    .name(member.getName())
+                    .email(member.getEmail())
+                    .address(member.getAddress())
+                    .phone(member.getPhone())
+                    .regTime(member.getRegTime())
+                    .viewPofile(memberImgDto.getImgUrl())
+                    .build();
+        }else {
+            // MemberFormDto 생성 (Builder 사용)
+            memberFormDto = MemberFormDto.builder()
+                    .memberId(member.getId())
+                    .name(member.getName())
+                    .email(member.getEmail())
+                    .address(member.getAddress())
+                    .phone(member.getPhone())
+                    .regTime(member.getRegTime())
+                    .build();
+        }
+        return memberFormDto;
     }
 
-    public Member getMemberByUserName(String userName) {
-        return memberRepository.findByname(userName); // memberRepository에서 이름으로 찾기
+    public MemberFormDto getMemberByUserName(String userName) {
+        Member member = memberRepository.findByname(userName); // memberRepository에서 이름으로 찾기
+
+        Long memberId = member.getId();
+        // 프로필 이미지 가져오기
+        MemberImg memberImg = memberImgRepository.findByMemberId(memberId);
+        MemberFormDto memberFormDto;
+        if (memberImg != null) {
+            MemberImgDto memberImgDto = MemberImgDto.of(memberImg);
+            // MemberFormDto 생성 (Builder 사용)
+            memberFormDto = MemberFormDto.builder()
+                    .memberId(member.getId())
+                    .name(member.getName())
+                    .email(member.getEmail())
+                    .address(member.getAddress())
+                    .phone(member.getPhone())
+                    .regTime(member.getRegTime())
+                    .viewPofile(memberImgDto.getImgUrl())
+                    .build();
+        }else {
+            // MemberFormDto 생성 (Builder 사용)
+            memberFormDto = MemberFormDto.builder()
+                    .memberId(member.getId())
+                    .name(member.getName())
+                    .email(member.getEmail())
+                    .address(member.getAddress())
+                    .phone(member.getPhone())
+                    .regTime(member.getRegTime())
+                    .build();
+        }
+        return memberFormDto;
     }
 }
