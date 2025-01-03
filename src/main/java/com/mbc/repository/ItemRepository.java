@@ -8,6 +8,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item>,
         ItemRepositoryCustom{
@@ -30,4 +31,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredi
 
     @Query("SELECT i FROM Item i WHERE i.category.id = :categoryId")
     List<Item> findItemsByCategoryId(@Param("categoryId") Long categoryId);
+
+
+    List<Item> findByItemNm(String itemName);
 }
