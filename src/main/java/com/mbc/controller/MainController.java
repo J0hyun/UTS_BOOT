@@ -24,12 +24,12 @@ public class MainController {
     public String main(ItemSearchDto itemSearchDto,
                        @PathVariable("page")Optional<Integer> page, Model model) {
 
-        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
 
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 5);
+        model.addAttribute("maxPage", 10);
 
         return "main";
     }

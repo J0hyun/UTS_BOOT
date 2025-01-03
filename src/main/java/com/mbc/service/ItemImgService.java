@@ -2,6 +2,7 @@ package com.mbc.service;
 
 import com.mbc.entity.ItemImg;
 import com.mbc.repository.ItemImgRepository;
+import com.mbc.repository.ItemRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,8 @@ public class ItemImgService {
     private String itemImgLocation;
 
     private final ItemImgRepository itemImgRepository;
+
+    private final ItemRepository itemRepository;
 
     private final FileService fileService;
 
@@ -41,23 +46,39 @@ public class ItemImgService {
 
     }
 
-    public void updateItemImg(Long itemImgId, MultipartFile itemImgFile) throws Exception {
-        if(!itemImgFile.isEmpty()){
-            ItemImg savedItemImg = itemImgRepository.findById(itemImgId)
-                    .orElseThrow(EntityNotFoundException::new);
+    public void updateItemImgs(Long itemId, List<MultipartFile> itemImgFileList) throws Exception {
+        // 아이템에 속한 모든 기존 이미지 삭제
+        List<ItemImg> itemImgList = itemImgRepository.findByItemIdOrderByIdAsc(itemId);
 
-            //기존 이미지 파일 삭제
-            if(!StringUtils.isEmpty(savedItemImg.getImgName())){
-                fileService.deleteFile(itemImgLocation+"/"+
-                        savedItemImg.getImgName());
+        // 기존 이미지 파일 삭제
+        for (ItemImg itemImg : itemImgList) {
+
+            fileService.deleteFile(itemImgLocation + "/" + itemImg.getImgName());
+
+            itemImgRepository.delete(itemImg);  // 기존 이미지 정보 삭제
+        }
+
+        // 새로운 이미지 파일 저장
+        for (int i = 0; i < itemImgFileList.size(); i++) {
+            MultipartFile itemImgFile = itemImgFileList.get(i);
+
+            if (!itemImgFile.isEmpty()) {
+                ItemImg newItemImg = new ItemImg();
+
+                // 대표 이미지 설정
+                if (i == 0) {
+                    newItemImg.setRepimgYn("Y");
+                } else {
+                    newItemImg.setRepimgYn("N");
+                }
+
+                // 새 이미지 추가
+                saveItemImg(newItemImg, itemImgFile);
+
+                // 아이템 ID 설정 (연관 관계 매핑)
+                newItemImg.setItem(itemRepository.findById(itemId)
+                        .orElseThrow(() -> new EntityNotFoundException("Item not found with id: " + itemId)));
             }
-
-            String oriImgName = itemImgFile.getOriginalFilename();
-            String imgName = fileService.uploadFile(itemImgLocation,
-                    oriImgName, itemImgFile.getBytes());
-            String imgUrl = "/images/item/" + imgName;
-            savedItemImg.updateItemImg(oriImgName, imgName, imgUrl);
         }
     }
-
 }
