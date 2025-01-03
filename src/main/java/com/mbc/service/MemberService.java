@@ -1,6 +1,8 @@
 package com.mbc.service;
 
+import com.mbc.dto.MemberFormDto;
 import com.mbc.entity.Member;
+import com.mbc.entity.MemberImg;
 import com.mbc.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -8,8 +10,12 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Service
 @Transactional
@@ -19,16 +25,33 @@ public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
-    public Member saveMember(Member member) {
+    private final MemberImgService memberImgService;
+    private final PasswordEncoder passwordEncoder;
+
+    public Long saveMember(MemberFormDto memberFormDto, MultipartFile profileImgFile) throws Exception {
+        Member member = Member.createMember(memberFormDto, passwordEncoder) ;
         validateDuplicateMember(member);
-        return memberRepository.save(member);   // INSERT 또는 UPDATE SQL 자동 생성
+        memberRepository.save(member);
+
+        // 프로필 이미지 저장
+        if (profileImgFile != null && !profileImgFile.isEmpty()) {
+            MemberImg memberImg = new MemberImg();
+            memberImg.setMember(member);
+            memberImgService.saveMemberImg(memberImg, profileImgFile);
+        }
+
+        return member.getId();
     }
 
     private void validateDuplicateMember(Member member) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
+        Member findMember2 = memberRepository.findByname(member.getName());
 
         if (findMember != null) {
             throw new IllegalStateException("이미 가입된 이메일입니다");
+        }
+        if (findMember2 != null) {
+            throw new IllegalStateException("이미 가입된 아이디입니다");
         }
     }
 

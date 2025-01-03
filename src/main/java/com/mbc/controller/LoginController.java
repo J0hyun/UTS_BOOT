@@ -14,6 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,14 +34,14 @@ public class LoginController {
 
     @PostMapping(value = "/signup") // 회원가입 처리
     public String memberForm(@Valid MemberFormDto memberFormdto,
-                             BindingResult bindingResult, Model model) {
+                             BindingResult bindingResult, Model model, @RequestParam("profileImg") MultipartFile profileImgFile) throws Exception
+    {
         if(bindingResult.hasErrors()) {
             return "member/memberForm";
         }
 
         try{
-            Member member = Member.createMember(memberFormdto, passwordEncoder);
-            memberService.saveMember(member);
+            memberService.saveMember(memberFormdto, profileImgFile);
         } catch (IllegalStateException e) {
             model.addAttribute("errorMessage", e.getMessage());
             return "member/memberForm";
