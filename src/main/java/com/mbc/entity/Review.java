@@ -1,6 +1,8 @@
 package com.mbc.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -28,7 +30,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "item_id")
     private Item item; // 해당 상품 (상품에 대한 외래 키)
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReviewImg> reviewImages; // 리뷰 이미지들
+
+
 
 }
