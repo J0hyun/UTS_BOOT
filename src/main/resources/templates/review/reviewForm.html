@@ -9,6 +9,44 @@
         .error {
             color: red;
         }
+
+        .star-rating {
+            display: flex;
+        }
+
+        .star {
+            appearance: none;
+            padding: 1px;
+        }
+
+        .star::after {
+            content: '☆';
+            color: hsl(60, 80%, 45%);
+            font-size: 20px;
+        }
+
+        .star:hover::after {
+            content: '★';
+        }
+
+        .star:has(~ .star:hover)::after {
+            content: '★';
+        }
+
+        .star:checked::after,
+        .star:has(~ .star:checked)::after {
+            content: '★';
+        }
+        .star:hover::after,
+        .star:has(~ .star:hover)::after,
+        .star:checked::after,
+        .star:has(~ .star:checked)::after {
+            content: '★';
+        }
+
+        .star:hover ~ .star::after {
+            content: '☆';
+        }
     </style>
 
 </head>
@@ -19,13 +57,21 @@
     <!-- 리뷰 등록 폼 시작 -->
     <form th:action="@{/review}" method="post" th:object="${reviewFormDto}" enctype="multipart/form-data">
 
-        <!-- 등록자명 -->
+        <!-- 등록자명 (자동으로 로그인한 사용자명 채워짐) -->
         <div class="form-group mb-3">
-
             <label for="memberName">등록자명</label>
-            <input type="text" th:field="*{memberName}" class="form-control" id="memberName" placeholder="등록자명을 입력하세요">
+            <input type="text" th:field="*{memberName}" class="form-control" id="memberName"  readonly/>
             <p th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" class="error text-danger">Incorrect data</p>
         </div>
+
+
+
+        <!-- 상품명 (자동으로 채워짐) -->
+        <div class="form-group mb-3">
+            <label for="itemName">상품명</label>
+            <input type="text" th:field="*{itemName}" class="form-control" id="itemName" readonly/>
+        </div>
+
 
         <!-- 후기 내용 -->
         <div class="form-group mb-3">
@@ -34,15 +80,19 @@
             <p th:if="${#fields.hasErrors('reviewDetail')}" th:errors="*{reviewDetail}" class="error text-danger">Incorrect data</p>
         </div>
 
-        <!-- 이미지 업로드 -->
-        <div class="form-group mb-3">
 
-            <label for="reviewImages">이미지 업로드 (선택)</label>
-            <input type="file" th:field="*{reviewImgDtoList[0].imgUrl}" class="form-control" id="reviewImages" name="reviewImgDtoList[0].imgUrl">
-            <input type="file" th:field="*{reviewImgDtoList[1].imgUrl}" class="form-control mt-2" id="reviewImages" name="reviewImgDtoList[1].imgUrl">
-            <input type="file" th:field="*{reviewImgDtoList[2].imgUrl}" class="form-control mt-2" id="reviewImages" name="reviewImgDtoList[2].imgUrl">
-            <p th:if="${#fields.hasErrors('reviewImgDtoList')}" th:errors="*{reviewImgDtoList}" class="error text-danger">Incorrect data</p>
+        <body>
+        <div class="star-rating">
+            <input type="radio" class="star" value="1">
+            <input type="radio" class="star" value="2">
+            <input type="radio" class="star" value="3">
+            <input type="radio" class="star" value="4">
+            <input type="radio" class="star" value="5">
         </div>
+        </body>
+
+
+
 
         <!-- 제출 버튼 -->
         <div class="text-center mt-5">
@@ -54,21 +104,14 @@
     </form>
 </div>
 
-<!-- 여기에 필요한 JS 파일을 추가할 수 있습니다 -->
 <script>
-    // 파일 필드 동적으로 추가하는 기능 (옵션)
-    let imageCount = 3;
-    function addImageField() {
-        if (imageCount < 5) { // 최대 5개의 이미지를 허용
-            let newInput = document.createElement("input");
-            newInput.type = "file";
-            newInput.name = "reviewImgDtoList[" + imageCount + "].imgUrl";
-            newInput.classList.add("form-control", "mt-2");
-            document.getElementById("reviewImages").parentNode.appendChild(newInput);
-            imageCount++;
-        }
-    }
+    $('.star_rating > .star').click(function() {
+        $(this).parent().children('span').removeClass('on');
+        $(this).addClass('on').prevAll('span').addClass('on');
+    })
 </script>
+
+
 
 </body>
 </html>
