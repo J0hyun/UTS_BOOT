@@ -138,5 +138,8 @@ public class ItemService {
         itemRepository.deleteById(itemId);  // DB에서 아이템 삭제
     }
 
-
+    // 상품 등록 갯수
+    public Long getItemCount() {
+        return itemRepository.count();
+    }
 }
