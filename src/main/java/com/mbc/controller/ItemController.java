@@ -3,6 +3,7 @@ package com.mbc.controller;
 import com.mbc.constant.ItemSellStatus;
 import com.mbc.dto.ItemFormDto;
 import com.mbc.dto.ItemSearchDto;
+import com.mbc.dto.MemberFormDto;
 import com.mbc.entity.Category;
 import com.mbc.entity.Item;
 import com.mbc.entity.Member;
@@ -46,7 +47,7 @@ public class ItemController {
         Authentication authentication = (Authentication) principal;
         boolean isAdmin = authentication.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_ADMIN"));
-        return isAdmin ? "admin/items/" : "member/items/";
+        return isAdmin ? "/admin/items/" : "/member/items/";
     }
 
     // 카테고리 설정을 위한 헬퍼 메소드
@@ -204,10 +205,10 @@ public class ItemController {
             isDeletable = isAdmin || isOwner;
         }
 
-        Member member = memberService.getMemberByUserName(itemFormDto.getUserName());
-        if (member != null) {
+        MemberFormDto memberFormDto = memberService.getMemberByUserName(itemFormDto.getUserName());
+        if (memberFormDto != null) {
             // memberId를 model에 추가하여 화면에서 사용하도록 전달
-            model.addAttribute("memberId", member.getId());
+            model.addAttribute("memberId", memberFormDto.getMemberId());
         }
 
         model.addAttribute("isDeletable", isDeletable);
