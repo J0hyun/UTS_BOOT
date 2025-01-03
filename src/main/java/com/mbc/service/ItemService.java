@@ -102,17 +102,9 @@ public class ItemService {
         item.setCategory(category);  // 카테고리 설정
         System.out.println("itemFormDto: " + itemFormDto.toString());
 
-        List<Long> itemImgIds = itemFormDto.getItemImgIds();
 
-        // 디버깅: 리스트 크기 확인
-        System.out.println("itemImgFileList size: " + itemImgFileList.size());
-        System.out.println("itemImgIds size: " + itemImgIds.size());
 
-        //이미지 등록
-        for(int i=0; i<itemImgFileList.size(); i++){
-            itemImgService.updateItemImg(itemImgIds.get(i),
-                    itemImgFileList.get(i));
-        }
+        itemImgService.updateItemImgs(item.getId(), itemImgFileList);
 
         return item.getId();
     }
@@ -138,5 +130,8 @@ public class ItemService {
         itemRepository.deleteById(itemId);  // DB에서 아이템 삭제
     }
 
-
+    // 상품 등록 갯수
+    public Long getItemCount() {
+        return itemRepository.count();
+    }
 }
