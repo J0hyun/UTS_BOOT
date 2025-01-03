@@ -7,12 +7,16 @@ import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MemberFormDto {
+
+    private Long memberId;
 
     @NotBlank(message = "아이디는 필수 입력 값입니다.")
     private String name;
@@ -32,4 +36,8 @@ public class MemberFormDto {
     private String phone;
 
     private MultipartFile profileImg;
+
+    private String viewPofile;
+
+    private LocalDateTime regTime;
 }

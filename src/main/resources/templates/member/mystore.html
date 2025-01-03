@@ -73,7 +73,6 @@
             margin: 5%;
             border-radius: 50%;
             overflow: hidden;
-            background: url("/img/shop.svg") center/cover;
         }
         .repImg{
             width:100px;
@@ -86,9 +85,8 @@
 
     <div class="row justify-content-center profile">
         <div class="col-3 profile-img">
-            <div class="img">
-<!--            <img src="/img/shop.svg" alt="user" style="width:100%;">-->
-            </div>
+            <div class="img" th:if="${imgUrl==null}" th:style="'background: url(/img/shop.svg) center/cover'"></div>
+            <div class="img" th:unless="${imgUrl==null}" th:style="'background: url('+${imgUrl}+') center/cover'"></div>
         </div>
         <div class="col-9">
             <h3 class="pb-2">상점명 : [[${userName}]]</h3>

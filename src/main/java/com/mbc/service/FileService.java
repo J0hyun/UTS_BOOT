@@ -22,7 +22,7 @@ public class FileService {
 
         log.info("파일확장자: " + extension);
 
-        String savedFileName = uuid.toString() + "." + extension;
+        String savedFileName = uuid.toString() + extension;
         String fileUploadFullUrl = uploadPath + "/" + savedFileName;
         FileOutputStream fos = new FileOutputStream(fileUploadFullUrl);
         fos.write(fileData);

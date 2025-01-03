@@ -70,7 +70,8 @@
 
 
     <div class="container mb-3">
-        <form th:action="@{${items.number}}" method="get" th:object="${itemSearchDto}">
+        <form >
+<!--                th:action="@{${items.number}}" method="get" th:object="${itemSearchDto}">-->
             <input type="hidden" name="searchQuery" th:value="${itemSearchDto.searchQuery}">
             <div th:if="${not #strings.isEmpty(itemSearchDto.searchQuery)}" class="center">
                 <p class="h3 font-weight-bold" th:text="${itemSearchDto.searchQuery} + ' 검색 결과'"></p>

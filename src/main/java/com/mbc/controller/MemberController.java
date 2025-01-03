@@ -1,10 +1,12 @@
 package com.mbc.controller;
 
 import com.mbc.dto.ItemSearchDto;
+import com.mbc.dto.MemberFormDto;
 import com.mbc.dto.OrderHistDto;
 import com.mbc.entity.Item;
 import com.mbc.entity.Member;
 import com.mbc.service.ItemService;
+import com.mbc.service.MemberImgService;
 import com.mbc.service.MemberService;
 import com.mbc.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +14,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 @Log4j2
 public class MemberController {
 
+    private final MemberImgService memberImgService;
     private final MemberService memberService;
     private final ItemService itemService;
     private final OrderService orderService;
@@ -37,9 +38,12 @@ public class MemberController {
     public String Mystore(ItemSearchDto itemSearchDto,
                           Model model, Principal principal) {
 
+        MemberFormDto memberFormDto = memberService.getMemberByUserName(principal.getName());
+        // 프로필 이미지 가져오기
+        String imgUrl = memberFormDto.getViewPofile();
+        model.addAttribute("imgUrl", imgUrl);
         // 상점 정보 - 등록 날짜
-        Member member = memberService.getMemberByUserName(principal.getName());
-        LocalDateTime startdate = member.getRegTime();
+        LocalDateTime startdate = memberFormDto.getRegTime();
         LocalDateTime enddate = LocalDateTime.now();
         Duration duration = Duration.between(startdate, enddate);
         Long openDay = duration.getSeconds()/60/60/24;
@@ -66,16 +70,19 @@ public class MemberController {
     @GetMapping(value = "/store/{memberId}")
     public String store(@PathVariable Long memberId, ItemSearchDto itemSearchDto,
                         Model model, RedirectAttributes rttr) {
-        Member member;
+        MemberFormDto memberFormDto;
         String userEmail;
         Long openDay;
 
         try {
-            member = memberService.getStoreMember(memberId);
+            memberFormDto = memberService.getStoreMember(memberId);
+            // 프로필 이미지 가져오기
+            String imgUrl = memberFormDto.getViewPofile();
+            model.addAttribute("imgUrl", imgUrl);
             // 상점 이름 가져오기
-            userEmail = member.getName();
+            userEmail = memberFormDto.getName();
             // 상점 정보 - 등록 날짜
-            LocalDateTime startdate = member.getRegTime();
+            LocalDateTime startdate = memberFormDto.getRegTime();
             LocalDateTime enddate = LocalDateTime.now();
             Duration duration = Duration.between(startdate, enddate);
             openDay = duration.getSeconds()/60/60/24;
