@@ -63,8 +63,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
         return null;
     }
 
-    private BooleanExpression itemNmLink(String searchQuery){
-        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like(searchQuery);
+    private BooleanExpression itemNmLike(String searchQuery){
+        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%" +searchQuery+ "%");
     }
 
 
@@ -104,12 +104,13 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                                 item.itemNm,
                                 item.itemDetail,
                                 itemImg.imgUrl,
-                                item.price
+                                item.price,
+                                item.itemSellStatus
                         )
                 ).from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
-                .where(itemNmLink(itemSearchDto.getSearchBy()))
+                .where(itemNmLike(itemSearchDto.getSearchQuery()))
                 .orderBy(item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -131,7 +132,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
-                .where(itemNmLink(itemSearchDto.getSearchBy()))
+                .where(itemNmLike(itemSearchDto.getSearchBy()))
                 .fetchOne();
 
         return new PageImpl<>(content, pageable, total);
