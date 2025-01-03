@@ -1,5 +1,6 @@
 package com.mbc.repository;
 
+import com.mbc.entity.Item;
 import com.mbc.entity.Order;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "where o.member.name = :name"
     )
     Long countOrders(@Param("name") String name);
+
+    List<Order> findByMemberName(String memberName);
 }

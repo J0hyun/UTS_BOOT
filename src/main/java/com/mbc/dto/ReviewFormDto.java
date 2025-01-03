@@ -20,13 +20,9 @@ public class ReviewFormDto {
 
     private String reviewDetail; //후기 내용
 
-    private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
+    private String itemName; // 상품명 추가
 
-    private static ModelMapper modelMapper = new ModelMapper();
+    private int rating; // 별점 추가 (1~5)
 
-    public static ReviewFormDto of(Review review) {
-        ReviewFormDto reviewFormDto = modelMapper.map(review, ReviewFormDto.class);
-        reviewFormDto.setReviewDetail(review.getReviewDetail());
-        return reviewFormDto;
-    }
+
 }

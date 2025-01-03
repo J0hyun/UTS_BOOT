@@ -175,7 +175,8 @@
                                     <span th:text="${orderItem.count} +'개'"></span>
                                 </div>
                                 <div class="text-end">
-                                    <a href="/review" class="btn btn-sm btn-success mt-3">리뷰 작성하기</a>
+                                    <!-- 리뷰 작성 버튼 추가 -->
+                                    <a th:href="'/review/' + ${orderItem.item.id}" class="btn btn-sm btn-success mt-3">리뷰 작성하기</a>
                                 </div>
                             </div>
                         </div>
@@ -213,6 +214,7 @@
             </table>
 
             <p class="text-center mt-5">리뷰 정보가 없습니다.</p>
+
 
         </div>
     </div>
