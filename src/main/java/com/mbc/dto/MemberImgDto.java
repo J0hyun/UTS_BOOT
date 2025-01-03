@@ -4,6 +4,7 @@ import com.mbc.entity.MemberImg;
 import lombok.Getter;
 import lombok.Setter;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
