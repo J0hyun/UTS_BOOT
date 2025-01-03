@@ -9,6 +9,7 @@ import com.mbc.service.ItemService;
 import com.mbc.service.MemberImgService;
 import com.mbc.service.MemberService;
 import com.mbc.service.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -110,5 +111,11 @@ public class MemberController {
         model.addAttribute("orders", orderHistDtoList);
 
         return "member/mystore";
+    }
+
+    @GetMapping(value = "/member/edit")
+    public String edit(Model model) {
+        model.addAttribute("memberFormDto", new MemberFormDto());
+        return "member/edit";
     }
 }
