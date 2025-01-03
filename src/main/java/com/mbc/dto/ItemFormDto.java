@@ -61,8 +61,6 @@ public class ItemFormDto {
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
-    private List<Long> itemImgIds = new ArrayList<>();
-
     private static ModelMapper modelMapper = new ModelMapper();
 
     public Item createItem(){
