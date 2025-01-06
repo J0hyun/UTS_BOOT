@@ -10,7 +10,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name="member_img")
 @Getter
 @Setter
-public class MemberImg extends BaseTimeEntity{
+public class MemberImg extends BaseTimeEntity {
 
     @Id
     @Column(name="member_img_id")
@@ -28,10 +28,18 @@ public class MemberImg extends BaseTimeEntity{
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Member member;
 
+    // 기본 생성자
+    public MemberImg() {}
+
+    // Member를 인자로 받는 생성자 추가
+    public MemberImg(Member member) {
+        this.member = member;
+    }
+
+    // 이미지를 업데이트할 때 사용할 메서드
     public void updateMemberImg(String oriImgName, String imgName, String imgUrl){
         this.oriImgName = oriImgName;
         this.imgName = imgName;
         this.imgUrl = imgUrl;
     }
-
 }

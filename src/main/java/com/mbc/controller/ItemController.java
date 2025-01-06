@@ -147,11 +147,12 @@ public class ItemController {
         log.info("actionUrl is {}", actionUrl);
         model.addAttribute("actionUrl", actionUrl);
 
-        Pageable pageable = PageRequest.of(page.orElse(0), 10);
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 5);
         Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 10);
+        model.addAttribute("maxPage", 5);
         return "item/itemMng";
     }
 
@@ -169,11 +170,12 @@ public class ItemController {
         model.addAttribute("actionUrl", actionUrl);
 
         String userEmail = principal.getName();
-        Pageable pageable = PageRequest.of(page.orElse(0), 10);
+
+        Pageable pageable = PageRequest.of(page.orElse(0), 5);
         Page<Item> items = itemService.getUserItems(userEmail, itemSearchDto, pageable);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
-        model.addAttribute("maxPage", 10);
+        model.addAttribute("maxPage", 5);
         return "item/itemMng";
     }
 

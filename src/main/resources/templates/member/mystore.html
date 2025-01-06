@@ -187,7 +187,6 @@
         </div>
 
         <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab" tabindex="0">
-
             <table class="table">
                 <thead>
                 <tr>
@@ -198,22 +197,21 @@
                     <th scope="col">작성일</th>
                 </tr>
                 </thead>
-
                 <tbody>
-                <!-- 모델에서 전달된 리뷰 목록을 반복하여 표시 -->
-                    <tr>
-                        <th scope="row">리뷰 번호</th> <!-- 리뷰 번호 -->
-                        <td>상품명</td> <!-- 상품명 -->
-                        <td>작성자 ID</td> <!-- 작성자 ID -->
-                        <td><!-- 리뷰 내용 --></td> <!-- 리뷰 내용 -->
-                        <td>작성일</td> <!-- 작성일 -->
-                    </tr>
+                <!-- 리뷰가 있을 때만 반복 -->
+                <tr th:each="review : ${reviews}" th:if="${reviews != null and not #lists.isEmpty(reviews)}">
+                    <th scope="row" th:text="${review.id}">리뷰 번호</th>
+                    <td th:text="${review.item.itemNm}">상품명</td>
+                    <td th:text="${review.memberName}">작성자 ID</td>
+                    <td th:text="${review.reviewDetail}">리뷰 내용</td>
+                    <td th:text="${#temporals.format(review.regTime, 'yyyy-MM-dd')}"></td>
+                </tr>
                 </tbody>
             </table>
 
-            <p class="text-center mt-5">리뷰 정보가 없습니다.</p>
 
-
+            <!-- 리뷰가 없을 때 메시지 표시 -->
+            <p class="text-center mt-5" th:if="${reviews == null or #lists.isEmpty(reviews)}">리뷰 정보가 없습니다.</p>
         </div>
     </div>
 </div>
