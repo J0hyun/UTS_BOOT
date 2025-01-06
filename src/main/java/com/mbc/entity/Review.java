@@ -26,6 +26,12 @@ public class Review extends BaseEntity {
     private String reviewDetail; //후기 내용
 
 
+    // 기존의 member와 관계가 설정되어 있는지 확인
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;  // 또는 Member 엔티티에서 email을 가져올 수 있도록
+
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "item_id")
     private Item item; // 해당 상품 (상품에 대한 외래 키)

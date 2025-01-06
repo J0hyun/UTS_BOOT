@@ -9,6 +9,7 @@ import com.mbc.repository.OrderItemRepository;
 import com.mbc.repository.OrderRepository;
 import com.mbc.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.List;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Log4j2
 public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ItemRepository itemRepository;
@@ -27,7 +29,6 @@ public class ReviewService {
 
     // 리뷰 등록 메서드
     public Review saveReview(ReviewFormDto reviewFormDto) {
-
         // 현재 로그인한 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String loggedInUserName = authentication.getName(); // 로그인한 사용자의 이름을 가져옵니다.
@@ -40,7 +41,6 @@ public class ReviewService {
             throw new RuntimeException("상품을 찾을 수 없습니다.");
         } else if (items.size() > 1) {
             // 상품 이름이 중복된 경우, 중복 상품을 사용자에게 전달
-            // 예를 들어, 상품 목록을 반환하거나 정확한 선택을 요청할 수 있도록 처리
             StringBuilder itemNames = new StringBuilder();
             for (Item item : items) {
                 itemNames.append(item.getItemNm()).append(" ");
@@ -70,6 +70,8 @@ public class ReviewService {
         return review;
     }
 
+
+
     // 리뷰 등록 폼을 표시할 때 자동으로 로그인한 사용자명 설정
     public ReviewFormDto getReviewFormDto() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -80,10 +82,21 @@ public class ReviewService {
         return reviewFormDto;
     }
 
-
-
     // 모든 리뷰 조회
     public List<Review> getAllReviews() {
         return reviewRepository.findAll(); // 모든 리뷰를 반환
     }
+
+    public List<Review> getReviewsByMemberName(String memberName) {
+        log.info("Fetching reviews for member: {}", memberName);
+        return reviewRepository.findByMemberName(memberName);  // memberName으로 리뷰 조회
+    }
+
+
+    // 판매자가 판매한 상품에 대한 리뷰를 조회하는 메서드
+    public List<Review> getReviewsByItemOwner(String userEmail) {
+        return reviewRepository.findByItem_CreatedBy(userEmail);  // 올바른 메서드를 호출합니다.
+    }
+
+
 }
