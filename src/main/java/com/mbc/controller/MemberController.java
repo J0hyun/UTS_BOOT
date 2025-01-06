@@ -4,9 +4,11 @@ import com.mbc.dto.ItemSearchDto;
 import com.mbc.dto.OrderHistDto;
 import com.mbc.entity.Item;
 import com.mbc.entity.Member;
+import com.mbc.entity.Review;
 import com.mbc.service.ItemService;
 import com.mbc.service.MemberService;
 import com.mbc.service.OrderService;
+import com.mbc.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.security.Principal;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,8 +33,9 @@ public class MemberController {
     private final MemberService memberService;
     private final ItemService itemService;
     private final OrderService orderService;
+    private final ReviewService reviewService;
 
-    @GetMapping(value = "/member/mystore") // 내 상점 페이지
+    @GetMapping(value = "/member/mystore")
     public String Mystore(ItemSearchDto itemSearchDto,
                           Model model, Principal principal) {
 
@@ -40,7 +44,7 @@ public class MemberController {
         LocalDateTime startdate = member.getRegTime();
         LocalDateTime enddate = LocalDateTime.now();
         Duration duration = Duration.between(startdate, enddate);
-        Long openDay = duration.getSeconds()/60/60/24;
+        Long openDay = duration.getSeconds() / 60 / 60 / 24;
         model.addAttribute("openDay", openDay);
 
         // 상품 등록 총 갯수
@@ -54,9 +58,14 @@ public class MemberController {
         model.addAttribute("userName", userEmail);
         model.addAttribute("items", items);
         model.addAttribute("itemSearchDto", itemSearchDto);
+
         // 구매내역
         Page<OrderHistDto> orderHistDtoList = orderService.getOrderList(userEmail, pageable);
         model.addAttribute("orders", orderHistDtoList);
+
+        // 판매자가 자신이 판매한 상품에 대한 리뷰를 확인할 수 있도록 수정
+        List<Review> reviews = reviewService.getReviewsByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
+        model.addAttribute("reviews", reviews);
 
         return "member/mystore";
     }
@@ -71,12 +80,12 @@ public class MemberController {
         try {
             member = memberService.getStoreMember(memberId);
             // 상점 이름 가져오기
-            userEmail = member.getName();
+            userEmail = member.getName(); // 판매자 이름
             // 상점 정보 - 등록 날짜
             LocalDateTime startdate = member.getRegTime();
             LocalDateTime enddate = LocalDateTime.now();
             Duration duration = Duration.between(startdate, enddate);
-            openDay = duration.getSeconds()/60/60/24;
+            openDay = duration.getSeconds() / 60 / 60 / 24;
             model.addAttribute("openDay", openDay);
 
             // 상품 등록 총 갯수
@@ -99,6 +108,10 @@ public class MemberController {
         // 구매내역
         Page<OrderHistDto> orderHistDtoList = orderService.getOrderList(userEmail, pageable);
         model.addAttribute("orders", orderHistDtoList);
+
+        // 판매자가 자신이 판매한 상품에 대한 리뷰를 확인할 수 있도록 수정
+        List<Review> reviews = reviewService.getReviewsByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
+        model.addAttribute("reviews", reviews);
 
         return "member/mystore";
     }
