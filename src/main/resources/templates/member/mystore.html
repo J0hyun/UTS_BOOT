@@ -104,7 +104,7 @@
                 sec:authorize="isAuthenticated()" th:if="${userName == #authentication.principal.username}">
             구매내역</button>
         <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-reviews"
-                type="button" role="tab" aria-controls="nav-reviews" aria-selected="false">리뷰정보</button>
+                type="button" role="tab" aria-controls="nav-reviews" aria-selected="false">상품후기</button>
     </div>
     </nav>
 
@@ -174,7 +174,7 @@
                                 </div>
                                 <div class="text-end">
                                     <!-- 리뷰 작성 버튼 추가 -->
-                                    <a th:href="'/review/' + ${orderItem.item.id}" class="btn btn-sm btn-success mt-3">리뷰 작성하기</a>
+                                    <a th:href="'/review/' + ${orderItem.item.id}" class="btn btn-sm btn-success mt-3">상품후기 작성</a>
                                 </div>
                             </div>
                         </div>
@@ -187,7 +187,7 @@
         </div>
 
         <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab" tabindex="0">
-            <table class="table">
+            <table class="table text-center">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
