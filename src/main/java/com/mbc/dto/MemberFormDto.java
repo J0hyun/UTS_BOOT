@@ -1,5 +1,7 @@
 package com.mbc.dto;
 
+import com.mbc.entity.Member;
+import com.mbc.entity.MemberImg;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class MemberFormDto {
 
     private Long memberId;
@@ -40,4 +43,17 @@ public class MemberFormDto {
     private String viewPofile;
 
     private LocalDateTime regTime;
+
+    // Member 객체를 기반으로 DTO 초기화
+    public MemberFormDto(Member member, MemberImg memberImg) {
+        this.name = member.getName();
+        this.email = member.getEmail();
+        this.password = member.getPassword();
+        this.address = member.getAddress();
+        this.phone = member.getPhone();
+        if (memberImg != null) {
+            this.viewPofile = memberImg.getImgUrl(); // 이미지를 표시할 URL 저장
+        }
+    }
+
 }
