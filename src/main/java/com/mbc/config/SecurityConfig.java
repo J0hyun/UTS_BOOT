@@ -41,6 +41,7 @@ public class SecurityConfig {
         ;
 
         // 이미 로그인된 사용자가 로그인 페이지에 접근하면 메인 페이지로 리다이렉트
+
         http.formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -55,4 +56,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
 }
