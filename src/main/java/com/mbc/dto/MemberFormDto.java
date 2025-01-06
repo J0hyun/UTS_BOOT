@@ -55,5 +55,4 @@ public class MemberFormDto {
             this.viewPofile = memberImg.getImgUrl(); // 이미지를 표시할 URL 저장
         }
     }
-
 }

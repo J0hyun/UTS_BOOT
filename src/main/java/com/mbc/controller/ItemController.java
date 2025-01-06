@@ -207,7 +207,6 @@ public class ItemController {
             isDeletable = isAdmin || isOwner;
         }
 
-
         MemberFormDto memberFormDto = memberService.getMemberByUserName(itemFormDto.getUserName());
         if (memberFormDto != null) {
             // memberId를 model에 추가하여 화면에서 사용하도록 전달
