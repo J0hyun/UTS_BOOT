@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.Optional;
+
 import java.io.IOException;
 
 @Service
@@ -29,9 +32,10 @@ public class MemberService implements UserDetailsService {
     private final MemberImgRepository memberImgRepository;
     private final MemberImgService memberImgService;
     private final PasswordEncoder passwordEncoder;
+    private final FileService fileService; // 파일 저장 유틸리티
 
     public Long saveMember(MemberFormDto memberFormDto, MultipartFile profileImgFile) throws Exception {
-        Member member = Member.createMember(memberFormDto, passwordEncoder) ;
+        Member member = Member.createMember(memberFormDto, passwordEncoder);
         validateDuplicateMember(member);
         memberRepository.save(member);
 
@@ -62,7 +66,7 @@ public class MemberService implements UserDetailsService {
         log.info("------loadUserByUsername 진입확인------");
         Member member = memberRepository.findByname(name);
 
-        if(member == null) {
+        if (member == null) {
             throw new UsernameNotFoundException(name);
         }
 
@@ -101,7 +105,7 @@ public class MemberService implements UserDetailsService {
                     .regTime(member.getRegTime())
                     .viewPofile(memberImgDto.getImgUrl())
                     .build();
-        }else {
+        } else {
             // MemberFormDto 생성 (Builder 사용)
             memberFormDto = MemberFormDto.builder()
                     .memberId(member.getId())
@@ -134,7 +138,7 @@ public class MemberService implements UserDetailsService {
                     .regTime(member.getRegTime())
                     .viewPofile(memberImgDto.getImgUrl())
                     .build();
-        }else {
+        } else {
             // MemberFormDto 생성 (Builder 사용)
             memberFormDto = MemberFormDto.builder()
                     .memberId(member.getId())
@@ -146,5 +150,84 @@ public class MemberService implements UserDetailsService {
                     .build();
         }
         return memberFormDto;
+    }
+
+    // 회원 정보와 프로필 이미지 정보를 DTO로 반환
+    public MemberFormDto getMemberInfo(String username) {
+        Member member = memberRepository.findByname(username);
+
+        // MemberImg 조회
+        MemberImg memberImg = memberImgRepository.findByMemberId(member.getId());
+
+        return new MemberFormDto(member, memberImg);
+    }
+
+    // 회원 정보와 프로필 이미지 업데이트
+    public void updateMember(MemberFormDto memberFormDto, MultipartFile profileImgFile) throws Exception {
+        log.info("회원 정보 업데이트 서비스 진입");
+        log.info("MemberFormDto created: " + memberFormDto);
+        log.info("멤버폼dto값:", memberFormDto.toString());
+        Member member = memberRepository.findByname(memberFormDto.getName());
+
+        log.info("회원 정보 찾기 완료");
+
+        // 회원 정보 업데이트
+        member.setEmail(memberFormDto.getEmail());
+        member.setPassword(passwordEncoder.encode(memberFormDto.getPassword())); // 암호화된 비밀번호
+        member.setAddress(memberFormDto.getAddress());
+        member.setPhone(memberFormDto.getPhone());
+
+        memberRepository.save(member);
+        log.info("회원 정보 업데이트 완료(이미지제외)");
+
+        // 프로필 이미지 업데이트
+        if (profileImgFile != null && !profileImgFile.isEmpty()) {
+            MemberImg memberImg = memberImgRepository.findByMemberId(member.getId());
+
+            if (memberImg == null) {
+                memberImg = new MemberImg(member); // 프로필 이미지가 없으면 새로 생성
+            }
+
+            // 기존 이미지 삭제 (이미지 경로가 있다면)
+            if (memberImg.getImgName() != null) {
+                String existingFilePath = "C:/shop/member/" + memberImg.getImgName();
+                File existingFile = new File(existingFilePath);
+                if (existingFile.exists()) {
+                    boolean deleted = existingFile.delete();
+                    if (deleted) {
+                        log.info("기존 프로필 이미지 삭제 완료: " + existingFilePath);
+                    } else {
+                        log.warn("기존 프로필 이미지 삭제 실패: " + existingFilePath);
+                    }
+                }
+            }
+
+            // MultipartFile에서 원본 파일명과 파일 데이터를 가져와서 uploadFile 메서드 호출
+            String profileImgUrl = fileService.uploadFile("C:/shop/member", profileImgFile.getOriginalFilename(), profileImgFile.getBytes());
+
+            memberImg.setImgUrl("/images/member/" + profileImgUrl);
+            memberImg.setOriImgName(profileImgFile.getOriginalFilename());
+            memberImg.setImgName(profileImgUrl);  // 저장된 파일 이름 설정 (UUID 포함)
+
+            memberImgRepository.save(memberImg);
+        } else {
+            // profileImgFile이 null일 경우, 기존 이미지를 삭제
+            MemberImg memberImg = memberImgRepository.findByMemberId(member.getId());
+            if (memberImg != null && memberImg.getImgName() != null) {
+                String existingFilePath = "C:/shop/member/" + memberImg.getImgName();
+                File existingFile = new File(existingFilePath);
+                if (existingFile.exists()) {
+                    boolean deleted = existingFile.delete();
+                    if (deleted) {
+                        log.info("기존 프로필 이미지 삭제 완료: " + existingFilePath);
+                    } else {
+                        log.warn("기존 프로필 이미지 삭제 실패: " + existingFilePath);
+                    }
+                }
+
+                // DB에서 이미지 정보 삭제
+                memberImgRepository.delete(memberImg);
+            }
+        }
     }
 }
