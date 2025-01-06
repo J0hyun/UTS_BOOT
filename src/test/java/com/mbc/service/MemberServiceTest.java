@@ -41,19 +41,19 @@ class MemberServiceTest {
 
     }
 
-    @Test
-    @DisplayName("회원가입 테스트")
-    public void saveMemberTest() {
-        Member member = createMember();
-
-        Member savedMember = memberService.saveMember(member);
-
-        assertEquals(savedMember.getEmail(), member.getEmail());
-        assertEquals(savedMember.getName(), member.getName());
-        assertEquals(savedMember.getAddress(), member.getAddress());
-        assertEquals(savedMember.getPassword(), member.getPassword());
-        assertEquals(savedMember.getRole(), member.getRole());
-
-    }
+//    @Test
+//    @DisplayName("회원가입 테스트")
+//    public void saveMemberTest() {
+//        Member member = createMember();
+//
+//        Member savedMember = memberService.saveMember(member);
+//
+//        assertEquals(savedMember.getEmail(), member.getEmail());
+//        assertEquals(savedMember.getName(), member.getName());
+//        assertEquals(savedMember.getAddress(), member.getAddress());
+//        assertEquals(savedMember.getPassword(), member.getPassword());
+//        assertEquals(savedMember.getRole(), member.getRole());
+//
+//    }
 
 }

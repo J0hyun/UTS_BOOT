@@ -29,6 +29,10 @@ h2 {
     color: #198754;
 }
 
+.pagination li:hover {
+    cursor: pointer;
+}
+
 .header {
     background-color: #fff;
     border-bottom: 1px solid #eee;
