@@ -1,6 +1,7 @@
 package com.mbc.controller;
 
 import com.mbc.dto.ItemSearchDto;
+import com.mbc.dto.MemberFormDto;
 import com.mbc.dto.OrderHistDto;
 import com.mbc.entity.Item;
 import com.mbc.entity.Member;
@@ -73,16 +74,16 @@ public class MemberController {
     @GetMapping(value = "/store/{memberId}")
     public String store(@PathVariable Long memberId, ItemSearchDto itemSearchDto,
                         Model model, RedirectAttributes rttr) {
-        Member member;
+        Member memberFormDto;
         String userEmail;
         Long openDay;
 
         try {
-            member = memberService.getStoreMember(memberId);
+            memberFormDto = memberService.getStoreMember(memberId);
             // 상점 이름 가져오기
-            userEmail = member.getName(); // 판매자 이름
+            userEmail = memberFormDto.getName(); // 판매자 이름
             // 상점 정보 - 등록 날짜
-            LocalDateTime startdate = member.getRegTime();
+            LocalDateTime startdate = memberFormDto.getRegTime();
             LocalDateTime enddate = LocalDateTime.now();
             Duration duration = Duration.between(startdate, enddate);
             openDay = duration.getSeconds() / 60 / 60 / 24;
