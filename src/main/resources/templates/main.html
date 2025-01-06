@@ -84,10 +84,12 @@
                         <div class="card">
                             <a th:href="'/item/' +${item.id}" class="text-dark">
                                 <div class="item-img" th:style="'background-image: url(' + ${item.imgUrl} + ')'">
+                                    <div class="cover" th:if="${item.itemSellStatus.name() == 'SOLD_OUT'}">
+                                        <img src="/img/sold_out.png" alt="sold_out">
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">[[${item.itemNm}]]</h4>
-                                    <p th:text="${item.itemSellStatus}"></p>
                                     <p class="card-text">[[${item.itemDetail}]]</p>
                                     <h3 class="card-title text-danger text-end"><span th:text="${#numbers.formatInteger(item.price, 3,'COMMA')}"></span>원</h3>
                                 </div>
@@ -126,7 +128,7 @@
             </div>
 
             <div class="row pt-3" th:object="${itemSearchDto}">
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <select th:field="*{searchDateType}" class="form-select">
@@ -151,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-lg-6">
                     <div class="row">
                         <div class="col-md-9 mb-3">
                             <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">

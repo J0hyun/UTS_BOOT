@@ -2,22 +2,41 @@ p {
     font-size: 14px;
 }
 
+.login_api li:first-of-type {
+    border-top: 1px solid #eee;
+}
+
+.login_api img:hover {
+    cursor: pointer;
+}
+
+.login_api li {
+    padding: 5px 0;
+}
+
+@media (max-width: 767px){
+    .login_api img {width: 100%}
+}
+
 @media (max-width: 575px){
-    .container form {
+    .container form,
+    .login_api {
         padding-left: 20%;
         padding-right: 20%;
     }
 }
 
 @media (min-width: 576px) and (max-width: 991px){
-    .container form {
+    .container form,
+    .login_api {
         padding-left: 25%;
         padding-right: 25%;
     }
 }
 
 @media (min-width: 992px) {
-    .container form {
+    .container form,
+    .login_api {
         padding-left: 30%;
         padding-right: 30%;
     }
