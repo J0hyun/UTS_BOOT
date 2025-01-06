@@ -110,7 +110,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 ).from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
-                .where(itemNmLike(itemSearchDto.getSearchQuery()))
+                .where(regDtsAfter(itemSearchDto.getSearchDateType()),
+                        searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        itemNmLike(itemSearchDto.getSearchQuery()))
                 .orderBy(item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -132,7 +134,9 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
-                .where(itemNmLike(itemSearchDto.getSearchBy()))
+                .where(regDtsAfter(itemSearchDto.getSearchDateType()),
+                        searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
+                        itemNmLike(itemSearchDto.getSearchQuery()))
                 .fetchOne();
 
         return new PageImpl<>(content, pageable, total);
