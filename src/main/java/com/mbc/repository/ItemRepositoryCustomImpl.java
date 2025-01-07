@@ -64,7 +64,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     }
 
     private BooleanExpression itemNmLike(String searchQuery){
-
         return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%" +searchQuery+ "%");
     }
 
@@ -111,7 +110,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 ).from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
-
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                         itemNmLike(itemSearchDto.getSearchQuery()))
@@ -136,7 +134,6 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
-
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                         itemNmLike(itemSearchDto.getSearchQuery()))
