@@ -26,7 +26,11 @@ public class MainController {
     public String main(ItemSearchDto itemSearchDto,
                        @PathVariable("page")Optional<Integer> page, Model model) {
 
+<<<<<<< HEAD
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
+=======
+        Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 4);
+>>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
 
         Page<MainItemDto> items = itemService.getMainItemPage(itemSearchDto, pageable);
         model.addAttribute("items", items);

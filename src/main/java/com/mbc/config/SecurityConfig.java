@@ -46,7 +46,12 @@ public class SecurityConfig {
                         .ignoringRequestMatchers("/item/delete") // delete 요청에 대한 CSRF 보호 비활성화
                 );
 
+<<<<<<< HEAD
         // 기존 로그인 방식 유지
+=======
+        // 이미 로그인된 사용자가 로그인 페이지에 접근하면 메인 페이지로 리다이렉트
+
+>>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
         http.formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -62,6 +67,7 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+<<<<<<< HEAD
 //    // OAuth2 클라이언트 등록 정보 저장소 (구글만 사용)
 //    @Bean
 //    public ClientRegistrationRepository clientRegistrationRepository() {
@@ -83,4 +89,6 @@ public class SecurityConfig {
 //                .build();
 //    }
 
+=======
+>>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
 }

@@ -2,6 +2,7 @@
     overflow: hidden;
 }
 
+<<<<<<< HEAD
 .cover {
     width: 100%;
     height: 100%;
@@ -11,6 +12,8 @@
     align-items: center;
 }
 
+=======
+>>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
 .card-body h4,
 .card-body p {
     overflow: hidden;

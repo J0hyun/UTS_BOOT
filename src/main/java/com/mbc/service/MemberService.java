@@ -1,6 +1,9 @@
 package com.mbc.service;
 
+<<<<<<< HEAD
 import com.mbc.constant.MemberStatus;
+=======
+>>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
 import com.mbc.dto.MemberFormDto;
 import com.mbc.dto.MemberImgDto;
 import com.mbc.entity.Member;
@@ -231,6 +234,7 @@ public class MemberService implements UserDetailsService {
             }
         }
     }
+<<<<<<< HEAD
 
     // 회원 삭제
     public void deleteMember(String username) {
@@ -248,4 +252,6 @@ public class MemberService implements UserDetailsService {
         }
     }
 
+=======
+>>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
 }
