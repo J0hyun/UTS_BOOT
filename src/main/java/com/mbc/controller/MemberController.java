@@ -3,6 +3,7 @@ package com.mbc.controller;
 import com.mbc.dto.ItemSearchDto;
 import com.mbc.dto.MemberFormDto;
 import com.mbc.dto.OrderHistDto;
+import com.mbc.dto.ReviewFormDto;
 import com.mbc.entity.Item;
 import com.mbc.entity.Member;
 import com.mbc.entity.Review;
@@ -77,11 +78,12 @@ public class MemberController {
         model.addAttribute("orders", orderHistDtoList);
 
         // 판매자가 자신이 판매한 상품에 대한 리뷰를 확인할 수 있도록 수정
-        List<Review> reviews = reviewService.getReviewsByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
+        List<Review> reviews = reviewService.getReviewsWithImagesByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
         model.addAttribute("reviews", reviews);
 
         return "member/mystore";
     }
+
 
     @GetMapping(value = "/store/{memberId}")
     public String store(@PathVariable Long memberId, ItemSearchDto itemSearchDto,
@@ -95,6 +97,7 @@ public class MemberController {
             // 프로필 이미지 가져오기
             String imgUrl = memberFormDto.getViewPofile();
             model.addAttribute("imgUrl", imgUrl);
+
             // 상점 이름 가져오기
             userEmail = memberFormDto.getName();
             // 상점 정보 - 등록 날짜
@@ -126,7 +129,7 @@ public class MemberController {
         model.addAttribute("orders", orderHistDtoList);
 
         // 판매자가 자신이 판매한 상품에 대한 리뷰를 확인할 수 있도록 수정
-        List<Review> reviews = reviewService.getReviewsByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
+        List<Review> reviews = reviewService.getReviewsWithImagesByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
         model.addAttribute("reviews", reviews);
 
         return "member/mystore";
@@ -164,4 +167,12 @@ public class MemberController {
         log.info("회원 정보 수정 처리 컨트롤러 종료");
         return "redirect:/"; // 수정 완료 후 리다이렉트
     }
+
+    // 회원 탈퇴 처리
+    @PostMapping("/member/delete")
+    public String deleteMember(@AuthenticationPrincipal UserDetails userDetails) {
+        memberService.deleteMember(userDetails.getUsername()); // 사용자 이름 또는 ID를 통해 삭제
+        return "redirect:/member/logout"; // 탈퇴 후 로그아웃
+    }
+
 }

@@ -17,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -76,7 +77,8 @@ public class ReviewController {
 
     // 리뷰 등록 (POST)
     @PostMapping("/review")
-    public String createReview(ReviewFormDto reviewFormDto) {
+    public String createReview(ReviewFormDto reviewFormDto, @RequestParam("reviewImgs")List<MultipartFile> reviewImgs) {
+        reviewFormDto.setReviewImgs(reviewImgs);
         reviewService.saveReview(reviewFormDto);  // 서비스로 데이터 저장
         return "redirect:/review";  // 등록 후 /review 페이지로 리다이렉트
     }

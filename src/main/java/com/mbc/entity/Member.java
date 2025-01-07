@@ -1,5 +1,6 @@
 package com.mbc.entity;
 
+import com.mbc.constant.MemberStatus;
 import com.mbc.constant.Role;
 import com.mbc.dto.MemberFormDto;
 import jakarta.persistence.*;
@@ -31,6 +32,9 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Enumerated(EnumType.STRING)
+    private MemberStatus status; // 회원 상태 추가 (ACTIVE, DELETED)
+
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
 
         Member member = new Member();
@@ -42,6 +46,7 @@ public class Member extends BaseEntity {
         member.setAddress(memberFormDto.getAddress());
         member.setPhone(memberFormDto.getPhone());
         member.setRole(Role.USER);
+        member.setStatus(MemberStatus.ACTIVE);
 
         return member;
     }

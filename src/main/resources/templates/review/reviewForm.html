@@ -66,6 +66,20 @@
     <!-- 리뷰 등록 폼 시작 -->
     <form th:action="@{/review}" method="post" th:object="${reviewFormDto}" enctype="multipart/form-data">
 
+        <!-- 이미지 파일 입력 부분 -->
+        <div class="form-group mb-3">
+            <div id="imageFileCountLabel" class="mb-2">상품이미지(0/12)</div>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="reviewImgFile" name="reviewImgs" multiple accept="image/jpeg, image/png, image/jpg">
+                <label class="custom-file-label" for="reviewImgFile">이미지 파일을 선택하세요</label>
+            </div>
+        </div>
+
+
+        <!-- 미리보기 이미지들이 추가될 div -->
+        <div id="imagePreviewContainer" class="d-flex flex-wrap"></div>
+
+
         <!-- 등록자명 (자동으로 로그인한 사용자명 채워짐) -->
         <div class="form-group mb-3">
             <label for="memberName">등록자명</label>

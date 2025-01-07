@@ -23,5 +23,4 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     )
     Long countOrders(@Param("name") String name);
 
-    List<Order> findByMemberName(String memberName);
 }

@@ -1,6 +1,7 @@
 package com.mbc.repository;
 
-import com.querydsl.core.BooleanBuilder;
+import com.mbc.entity.QItem;
+import com.mbc.entity.QItemImg;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -9,8 +10,6 @@ import com.mbc.dto.ItemSearchDto;
 import com.mbc.dto.MainItemDto;
 import com.mbc.dto.QMainItemDto;
 import com.mbc.entity.Item;
-import com.mbc.entity.QItem;
-import com.mbc.entity.QItemImg;
 import jakarta.persistence.EntityManager;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
