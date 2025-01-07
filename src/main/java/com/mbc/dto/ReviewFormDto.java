@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,5 +25,7 @@ public class ReviewFormDto {
 
     private int rating; // 별점 추가 (1~5)
 
+    private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
 
+    private List<MultipartFile> reviewImgs = new ArrayList<>();  // 업로드된 이미지 파일 리스트 추가
 }
