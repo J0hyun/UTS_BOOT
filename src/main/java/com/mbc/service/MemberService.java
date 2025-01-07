@@ -1,5 +1,7 @@
 package com.mbc.service;
 
+
+import com.mbc.constant.MemberStatus;
 import com.mbc.dto.MemberFormDto;
 import com.mbc.dto.MemberImgDto;
 import com.mbc.entity.Member;
@@ -230,4 +232,21 @@ public class MemberService implements UserDetailsService {
             }
         }
     }
+
+    // 회원 삭제
+    public void deleteMember(String username) {
+        Member member = memberRepository.findByname(username);
+        if (member != null) {
+            // 상태와 개인정보 삭제
+            member.setStatus(MemberStatus.DELETED);
+            member.setAddress(null);
+            member.setEmail(null);
+            member.setName(null);
+            member.setPassword(null);
+            member.setPhone(null);
+
+            memberRepository.save(member); // 변경 사항 저장
+        }
+    }
+
 }
