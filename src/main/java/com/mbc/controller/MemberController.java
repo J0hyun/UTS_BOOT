@@ -11,10 +11,7 @@ import com.mbc.service.ItemService;
 import com.mbc.service.MemberImgService;
 import com.mbc.service.MemberService;
 import com.mbc.service.OrderService;
-<<<<<<< HEAD
 import com.mbc.service.ReviewService;
-=======
->>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -169,7 +166,6 @@ public class MemberController {
         log.info("회원 정보 수정 처리 컨트롤러 종료");
         return "redirect:/"; // 수정 완료 후 리다이렉트
     }
-<<<<<<< HEAD
 
     // 회원 탈퇴 처리
     @PostMapping("/member/delete")
@@ -178,7 +174,4 @@ public class MemberController {
         return "redirect:/member/logout"; // 탈퇴 후 로그아웃
     }
 
-
-=======
->>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
 }

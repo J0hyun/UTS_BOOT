@@ -26,7 +26,7 @@
                 };
                 reader.readAsDataURL(this.files[0]);
             });
-<<<<<<< HEAD
+
 
             // 탈퇴 버튼 클릭 시 확인 팝업
             $("#deleteAccountBtn").click(function(event) {
@@ -35,8 +35,6 @@
                 }
             });
 
-=======
->>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
         });
     </script>
 </th:block>
@@ -72,11 +70,7 @@
 
         <div class="form-group mb-3">
             <label th:for="name">아이디</label>
-<<<<<<< HEAD
             <input type="text" th:field="*{name}" class="form-control" placeholder="아이디를 입력해주세요" readonly style="background-color: #f0f0f0; cursor: not-allowed;">
-=======
-            <input type="text" th:field="*{name}" class="form-control" placeholder="아이디를 입력해주세요" readonly>
->>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
         </div>
         <div class="form-group mb-3">
             <label th:for="email">이메일주소</label>
@@ -104,7 +98,7 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     </form>
 
-<<<<<<< HEAD
+
     <!-- 회원 탈퇴 버튼 -->
     <div style="text-align: center; margin-top: 20px;">
         <button type="button" id="deleteAccountBtn" class="btn btn-danger">회원 탈퇴</button>
@@ -115,8 +109,6 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     </form>
 
-=======
->>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
 </div>
 
 </html>

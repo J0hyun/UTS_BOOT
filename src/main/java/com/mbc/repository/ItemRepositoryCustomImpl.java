@@ -64,11 +64,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     }
 
     private BooleanExpression itemNmLike(String searchQuery){
-<<<<<<< HEAD
+
         return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%" +searchQuery+ "%");
-=======
-        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like(searchQuery);
->>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
     }
 
 
@@ -114,13 +111,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 ).from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
-<<<<<<< HEAD
+
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                         itemNmLike(itemSearchDto.getSearchQuery()))
-=======
-                .where(itemNmLike(itemSearchDto.getSearchQuery()))
->>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
                 .orderBy(item.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -142,13 +136,10 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .from(itemImg)
                 .join(itemImg.item, item)
                 .where(itemImg.repimgYn.eq("Y"))
-<<<<<<< HEAD
+
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
                         searchSellStatusEq(itemSearchDto.getSearchSellStatus()),
                         itemNmLike(itemSearchDto.getSearchQuery()))
-=======
-                .where(itemNmLike(itemSearchDto.getSearchBy()))
->>>>>>> d04d0425fb001ff66bb4b409f4bd974d17ab780b
                 .fetchOne();
 
         return new PageImpl<>(content, pageable, total);
