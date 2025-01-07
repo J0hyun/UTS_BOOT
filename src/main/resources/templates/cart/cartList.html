@@ -10,9 +10,11 @@
 
 <!-- 사용자 스크립트 추가 -->
 <th:block layout:fragment="script">
+    <!-- 결재창 연동 CDN -->
+    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+    <script src="/js/payment.js"></script>
 
     <script th:inline="javascript">
-
         $(document).ready(function(){
             $("input[name=cartChkBox]").change( function(){
                 getOrderTotalPrice();
@@ -27,6 +29,7 @@
                 var count = $("#count_" + cartItemId).val();
                 orderTotalPrice += price * count;
             });
+            $("#orderTotalPrice").attr('data-total', orderTotalPrice);
 
             orderTotalPrice = orderTotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             $("#orderTotalPrice").html(orderTotalPrice+'원');
@@ -162,7 +165,6 @@
                 }
             });
         }
-
     </script>
 </th:block>
 
@@ -190,7 +192,7 @@
                     <img th:src="${cartItem.imgUrl}" class = "rounded align-middle" th:alt="${cartItem.itemNm}" width="100%">
                 </div>
                 <div class="col-md-8">
-                    <p th:text="${cartItem.itemNm}" class="fs-4"></p>
+                    <p th:text="${cartItem.itemNm}" class="fs-4" id="itemNm"></p>
                     <span th:id="'price_' + ${cartItem.cartItemId}"
                           th:data-price="${cartItem.price}"
                           th:text="${#numbers.formatInteger(cartItem.price, 3,'COMMA')} + '원'" class="me-2">
@@ -225,7 +227,7 @@
     </h3>
 
     <div class="text-center mt-5">
-        <button type="button" class="btn btn-success" onclick="orders()">주문하기</button>
+        <button type="button" class="btn btn-success" onclick="handleOrderAndPayment()">결재하기</button>
     </div>
 
 </div>

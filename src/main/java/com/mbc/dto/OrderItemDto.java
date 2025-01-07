@@ -1,6 +1,7 @@
 package com.mbc.dto;
 
 import com.mbc.entity.Item;
+import com.mbc.entity.Order;
 import com.mbc.entity.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,11 @@ public class OrderItemDto {
 
     private int orderPrice;
 
+    // 결재 정보 DTO
+    private String impUid;
+
+    private String merchantUid;
+
     private String imgUrl;
 
     private Item item;  // Item 객체를 추가합니다.
@@ -23,8 +29,8 @@ public class OrderItemDto {
         this.itemNm = orderItem.getItem().getItemNm();
         this.count = orderItem.getCount();
         this.orderPrice = orderItem.getOrderPrice();
+        this.impUid = orderItem.getImpUid();
+        this.merchantUid = orderItem.getMerchantUid();
         this.imgUrl = imgUrl;
     }
-
-
 }

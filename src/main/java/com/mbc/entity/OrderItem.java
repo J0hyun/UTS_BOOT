@@ -29,6 +29,11 @@ public class OrderItem extends BaseEntity {
 
     private int count;
 
+    // 결재정보
+    private String impUid;
+
+    private String merchantUid;
+
     // private LocalDateTime regTime;
 
     // private LocalDateTime updateTime;
