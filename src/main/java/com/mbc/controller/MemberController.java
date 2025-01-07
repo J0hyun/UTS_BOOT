@@ -78,11 +78,12 @@ public class MemberController {
         model.addAttribute("orders", orderHistDtoList);
 
         // 판매자가 자신이 판매한 상품에 대한 리뷰를 확인할 수 있도록 수정
-        List<Review> reviews = reviewService.getReviewsByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
+        List<Review> reviews = reviewService.getReviewsWithImagesByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
         model.addAttribute("reviews", reviews);
 
         return "member/mystore";
     }
+
 
     @GetMapping(value = "/store/{memberId}")
     public String store(@PathVariable Long memberId, ItemSearchDto itemSearchDto,
@@ -128,7 +129,7 @@ public class MemberController {
         model.addAttribute("orders", orderHistDtoList);
 
         // 판매자가 자신이 판매한 상품에 대한 리뷰를 확인할 수 있도록 수정
-        List<Review> reviews = reviewService.getReviewsByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
+        List<Review> reviews = reviewService.getReviewsWithImagesByItemOwner(userEmail); // 판매자의 상품에 대한 리뷰 조회
         model.addAttribute("reviews", reviews);
 
         return "member/mystore";

@@ -195,6 +195,7 @@
                     <th scope="col">작성자ID</th>
                     <th scope="col">내용</th>
                     <th scope="col">작성일</th>
+                    <th scope="col">이미지</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -205,6 +206,16 @@
                     <td th:text="${review.memberName}">작성자 ID</td>
                     <td th:text="${review.reviewDetail}">리뷰 내용</td>
                     <td th:text="${#temporals.format(review.regTime, 'yyyy-MM-dd')}"></td>
+                    <td>
+                        <!-- 리뷰에 첨부된 이미지가 있을 경우, 반복문으로 이미지 출력 -->
+                        <div class="row">
+                            <div th:each="reviewImg : ${review.reviewImgs}" class="text-center col-md-6">
+                                <!-- 이미지 경로가 비어 있지 않으면 이미지를 출력 -->
+                                <img th:if="${not #strings.isEmpty(reviewImg.imgUrl)}" th:src="@{${reviewImg.imgUrl}}"
+                                     class="rounded my-2" alt="리뷰 이미지">
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 </tbody>
             </table>
