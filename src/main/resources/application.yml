@@ -32,3 +32,5 @@ logging:
         type:
           descriptor:
             sql: trace
+#    root: debug # 디버그 모드 활성화
+

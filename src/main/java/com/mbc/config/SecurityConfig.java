@@ -31,6 +31,13 @@ public class SecurityConfig {
                         .usernameParameter("name")
                         .failureUrl("/login/error")
                 )
+                // OAuth2 로그인 추가 (Spring Security 6.1 이상 방식)
+//                .oauth2Login(oauth2 -> oauth2
+//                        .loginPage("/login")
+//                        .defaultSuccessUrl("/") // OAuth2 로그인 성공 시 리디렉션
+//                        .failureUrl("/login/error") // 실패 시 리디렉션
+//                        .clientRegistrationRepository(clientRegistrationRepository()) // 클라이언트 등록 정보 추가
+//                )
                 .logout(logout -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
                         .logoutSuccessUrl("/")
@@ -38,10 +45,8 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/item/delete") // delete 요청에 대한 CSRF 보호 비활성화
                 );
-        ;
 
-        // 이미 로그인된 사용자가 로그인 페이지에 접근하면 메인 페이지로 리다이렉트
-
+        // 기존 로그인 방식 유지
         http.formLogin()
                 .loginPage("/login")
                 .permitAll()
@@ -56,5 +61,26 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    // OAuth2 클라이언트 등록 정보 저장소 (구글만 사용)
+//    @Bean
+//    public ClientRegistrationRepository clientRegistrationRepository() {
+//        return new InMemoryClientRegistrationRepository(
+//                googleClientRegistration() // 구글 OAuth2 클라이언트 등록 정보
+//        );
+//    }
+//
+//    // Google OAuth2 클라이언트 등록 정보
+//    private ClientRegistration googleClientRegistration() {
+//        return ClientRegistration.withRegistrationId("google")
+//                .clientId("YOUR_GOOGLE_CLIENT_ID") // 구글 클라이언트 ID
+//                .clientSecret("YOUR_GOOGLE_CLIENT_SECRET") // 구글 클라이언트 시크릿
+//                .scope("profile", "email")
+//                .redirectUri("http://localhost:8080/login/oauth2/code/google") // 리디렉션 URI
+//                .authorizationUri("https://accounts.google.com/o/oauth2/auth")
+//                .tokenUri("https://oauth2.googleapis.com/token")
+//                .clientName("Google")
+//                .build();
+//    }
 
 }
