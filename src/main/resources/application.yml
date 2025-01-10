@@ -93,8 +93,6 @@ spring:
     multipart:
       max-file-size: 20MB # 파일 1개당 최대 크기
       max-request-size: 100MB # 요청당 최대 파일 크기
-  config:
-    import:
 
 itemImgLocation: C:/shop/item # 상품 이미지 업로드 경로
 uploadPath: file:///C:/shop/ # 리소스 업로드 경로
@@ -111,10 +109,10 @@ logging:
 
 # iamport - 결재 API
 imp:
-  code: imp21758336
+  code: ${IMP_CODE}
   api:
-    key: 8487085842220468
-    secretkey: 5apsf6ZQwdPzTyxWdRB2aqfM4MctrovveHiAwz24oCJUs5OpWzup7gSDnkfqsKmzKa80GoHk8wacNscS
+    key: ${IMP_API_KEY}
+    secretkey: ${IMP_SECRET_KEY}
 
 #    org.springframework.security: DEBUG
 
