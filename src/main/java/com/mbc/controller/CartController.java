@@ -93,6 +93,8 @@ public class CartController {
 
         List<CartOrderDto> cartOrderDtoList =
                 cartOrderDto.getCartOrderDtoList();
+        String impUid = cartOrderDto.getImpUid();
+        String merchantUid = cartOrderDto.getMerchantUid();
 
         if (cartOrderDtoList == null || cartOrderDtoList.size() == 0) {
             return new ResponseEntity<String>("주문할 상품을 선택해주세요", HttpStatus.FORBIDDEN);
@@ -104,7 +106,7 @@ public class CartController {
             }
         }
 
-        Long orderId = cartService.orderCartItem(cartOrderDtoList, principal.getName());
+        Long orderId = cartService.orderCartItem(cartOrderDtoList, principal.getName(), impUid, merchantUid);
         return new ResponseEntity<Long>(orderId, HttpStatus.OK);
     }
 

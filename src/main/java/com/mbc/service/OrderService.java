@@ -5,6 +5,8 @@ import com.mbc.dto.OrderHistDto;
 import com.mbc.dto.OrderItemDto;
 import com.mbc.entity.*;
 import com.mbc.repository.*;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,8 +29,9 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
     private final OrderItemRepository orderItemRepository;
+    private final PaymentService paymentService;
 
-    public Long order(OrderDto orderDto, String name){
+    public Long order(OrderDto orderDto, String name, String impUid, String merchantUid){
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
         Member member = memberRepository.findByname(name);
@@ -37,7 +40,7 @@ public class OrderService {
         OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
         orderItemList.add(orderItem);
 
-        Order order = Order.createOrder(member, orderItemList);
+        Order order = Order.createOrder(member, orderItemList, impUid, merchantUid);
         orderRepository.save(order);
 
         return order.getId();
@@ -80,19 +83,51 @@ public class OrderService {
         return true;
     }
 
-    public void cancelOrder(Long orderId){
+//    ***DB에서만 주문 취소***
+//    public void cancelOrder(Long orderId){
+//        Order order = orderRepository.findById(orderId)
+//                .orElseThrow(EntityNotFoundException::new);
+//        order.cancelOrder();
+//
+//        // order_item 삭제
+//        orderItemRepository.deleteAll(order.getOrderItems());
+//
+//        // order 삭제
+//        orderRepository.delete(order);
+//    }
+
+    public String cancelOrderWithPayment(Long orderId) throws Exception {
+        // 주문 정보 가져오기
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(() -> new EntityNotFoundException("주문 정보를 찾을 수 없습니다."));
+
+        // 주문 상태를 취소로 변경하고 DB에서 주문 항목 삭제
         order.cancelOrder();
-
-        // order_item 삭제
         orderItemRepository.deleteAll(order.getOrderItems());
-
-        // order 삭제
         orderRepository.delete(order);
+
+        // 결제 취소 처리
+        String impUid = order.getImpUid(); // 결제 고유 ID
+        if (impUid == null || impUid.isEmpty()) {
+            throw new IllegalArgumentException("결제 정보가 존재하지 않아 취소할 수 없습니다.");
+        }
+
+        IamportResponse<Payment> response = paymentService.cancelPayment(impUid);
+
+        // 결제 취소 결과 확인
+        if (response == null || response.getResponse() == null) {
+            throw new Exception("결제 취소에 실패했습니다. 아임포트 서버와 통신 중 문제가 발생했습니다.");
+        }
+
+        Payment payment = response.getResponse();
+        if (!"cancelled".equals(payment.getStatus())) {
+            throw new Exception("결제 취소에 실패했습니다. 상태: " + payment.getStatus());
+        }
+
+        return "주문 및 결제가 성공적으로 취소되었습니다.";
     }
 
-    public Long orders(List<OrderDto> orderDtoList, String name) {
+    public Long orders(List<OrderDto> orderDtoList, String name, String impUid, String merchantUid) {
 
         Member member = memberRepository.findByname(name);
         List<OrderItem> orderItemList = new ArrayList<>();
@@ -105,7 +140,7 @@ public class OrderService {
             orderItemList.add(orderItem);
         }
 
-        Order order = Order.createOrder(member, orderItemList);
+        Order order = Order.createOrder(member, orderItemList, impUid, merchantUid);
         orderRepository.save(order);
 
         return order.getId();

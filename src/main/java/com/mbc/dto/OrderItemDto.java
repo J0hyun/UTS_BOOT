@@ -25,6 +25,4 @@ public class OrderItemDto {
         this.orderPrice = orderItem.getOrderPrice();
         this.imgUrl = imgUrl;
     }
-
-
 }
