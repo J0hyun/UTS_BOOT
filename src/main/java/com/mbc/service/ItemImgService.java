@@ -18,7 +18,7 @@ import java.util.List;
 @Transactional
 public class ItemImgService {
 
-    @Value("${itemImgLocation}")
+    @Value("C:/shop/item")
     private String itemImgLocation;
 
     private final ItemImgRepository itemImgRepository;

@@ -18,7 +18,7 @@
 
             if(errorMessage != null){
                 alert(errorMessage);
-                window.history.back();
+                location.href = '/orders/' + [[${page}]];
             }
 
             // message가 null이 아니면 알림
@@ -28,40 +28,42 @@
         });
 
         function cancelOrder(orderId) {
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
+            if(confirm("정말 주문 및 결제를 취소하시겠습니까?")){
+                var token = $("meta[name='_csrf']").attr("content");
+                var header = $("meta[name='_csrf_header']").attr("content");
 
-            var url = "/order/" + orderId + "/cancel";
-            var paramData = {
-                orderId: orderId,
-            };
+                var url = "/order/" + orderId + "/cancel";
+                var paramData = {
+                    orderId: orderId,
+                };
 
-            var param = JSON.stringify(paramData);
+                var param = JSON.stringify(paramData);
 
-            $.ajax({
-                url: url,
-                type: "POST",
-                contentType: "application/json",
-                data: param,
-                beforeSend: function (xhr) {
-                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
-                    xhr.setRequestHeader(header, token);
-                },
-                dataType: "json",
-                cache: false,
-                success: function (result, status) {
-                    alert("주문이 취소 되었습니다.");
-                    window.history.back();
-                },
-                error: function (jqXHR, status, error) {
-                    if (jqXHR.status == '401') {
-                        alert('로그인 후 이용해주세요');
-                        location.href = '/members/login';
-                    } else {
-                        alert(jqXHR.responseText);
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: param,
+                    beforeSend: function (xhr) {
+                        /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+                        xhr.setRequestHeader(header, token);
+                    },
+                    dataType: "json",
+                    cache: false,
+                    success: function (result, status) {
+                        alert(result.message);
+                        location.href = '/orders';
+                    },
+                    error: function (jqXHR, status, error) {
+                        if (jqXHR.status == '401') {
+                            alert('로그인 후 이용해주세요');
+                            location.href = '/members/login';
+                        } else {
+                            alert(jqXHR.responseText);
+                        }
                     }
-                }
-            });
+                });
+            }
         }
     </script>
 </th:block>
@@ -132,7 +134,7 @@
                 sec:authorize="isAuthenticated()" th:if="${userName == #authentication.principal.username}">
             구매내역</button>
         <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-reviews"
-                type="button" role="tab" aria-controls="nav-reviews" aria-selected="false">리뷰정보</button>
+                type="button" role="tab" aria-controls="nav-reviews" aria-selected="false">상품후기</button>
     </div>
     </nav>
 
@@ -202,7 +204,7 @@
                                 </div>
                                 <div class="text-end">
                                     <!-- 리뷰 작성 버튼 추가 -->
-                                    <a th:href="'/review/' + ${orderItem.item.id}" class="btn btn-sm btn-success mt-3">리뷰 작성하기</a>
+                                    <a th:href="'/review/' + ${orderItem.item.id}" class="btn btn-sm btn-success mt-3">상품후기 작성</a>
                                 </div>
                             </div>
                         </div>
@@ -215,7 +217,7 @@
         </div>
 
         <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab" tabindex="0">
-            <table class="table">
+            <table class="table text-center">
                 <thead>
                 <tr>
                     <th scope="col">#</th>

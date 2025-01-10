@@ -35,12 +35,16 @@ public class Order extends BaseEntity {
             , orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    // 결제 정보
+    String impUid;  // 아임포트 결제 uid
+    String merchantUid;  // 주문 번호
+
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
     }
 
-    public static Order createOrder(Member member, List<OrderItem> orderItemList) {
+    public static Order createOrder(Member member, List<OrderItem> orderItemList, String impUid, String merchantUid) {
         Order order = new Order();
         order.setMember(member);
         for(OrderItem orderItem : orderItemList) {
@@ -48,6 +52,8 @@ public class Order extends BaseEntity {
         }
         order.setOrderStatus(OrderStatus.ORDER);
         order.setOrderDate(LocalDateTime.now());
+        order.setImpUid(impUid);
+        order.setMerchantUid(merchantUid);
         return order;
     }
 

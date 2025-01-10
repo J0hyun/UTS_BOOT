@@ -44,6 +44,8 @@ public class MemberFormDto {
 
     private LocalDateTime regTime;
 
+    private String phoneVerificationCode; // 핸드폰 인증 번호
+
     // Member 객체를 기반으로 DTO 초기화
     public MemberFormDto(Member member, MemberImg memberImg) {
         this.name = member.getName();
