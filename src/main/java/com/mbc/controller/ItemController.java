@@ -58,6 +58,7 @@ public class ItemController {
 
     @GetMapping(value = "/member/item/new")
     public String itemForm(Model model) {
+        log.info("상품등록페이지 get컨트롤러 진입확인");
         setCategoryAttributes(model);
         model.addAttribute("itemFormDto", new ItemFormDto());
         return "item/itemForm";

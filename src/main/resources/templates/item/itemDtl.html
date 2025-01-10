@@ -29,47 +29,47 @@
             $("#totalPrice").html(totalPrice + '원');
         }
 
+        // function order(){
+        //     var token = $("meta[name='_csrf']").attr("content");
+        //     var header = $("meta[name='_csrf_header']").attr("content");
+        //
+        //     var url = "/order";
+        //     var paramData = {
+        //         itemId : $("#itemId").val(),
+        //         count : $("#count").val()
+        //     };
+        //
+        //     var param = JSON.stringify(paramData);
+        //
+        //     $.ajax({
+        //         url      : url,
+        //         type     : "POST",
+        //         contentType : "application/json",
+        //         data     : param,
+        //         beforeSend : function(xhr){
+        //             /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
+        //             xhr.setRequestHeader(header, token);
+        //         },
+        //         dataType : "json",
+        //         cache   : false,
+        //         success  : function(result, status){
+        //             alert("주문 페이지로 이동합니다.");
+        //             location.href='/order';
+        //         },
+        //         error : function(jqXHR, status, error){
+        //
+        //             if(jqXHR.status === 500){
+        //                 alert('로그인 후 이용해주세요');
+        //                 location.href='/login';
+        //             } else{
+        //                 alert(jqXHR.responseText);
+        //             }
+        //
+        //         }
+        //     });
+        // }
+
         function order(){
-            var token = $("meta[name='_csrf']").attr("content");
-            var header = $("meta[name='_csrf_header']").attr("content");
-
-            var url = "/order";
-            var paramData = {
-                itemId : $("#itemId").val(),
-                count : $("#count").val()
-            };
-
-            var param = JSON.stringify(paramData);
-
-            $.ajax({
-                url      : url,
-                type     : "POST",
-                contentType : "application/json",
-                data     : param,
-                beforeSend : function(xhr){
-                    /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
-                    xhr.setRequestHeader(header, token);
-                },
-                dataType : "json",
-                cache   : false,
-                success  : function(result, status){
-                    alert("주문이 완료 되었습니다.");
-                    location.href='/';
-                },
-                error : function(jqXHR, status, error){
-
-                    if(jqXHR.status === 500){
-                        alert('로그인 후 이용해주세요');
-                        location.href='/login';
-                    } else{
-                        alert(jqXHR.responseText);
-                    }
-
-                }
-            });
-        }
-
-        function addCart(){
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
 
@@ -93,11 +93,10 @@
                 dataType : "json",
                 cache   : false,
                 success  : function(result, status){
-                    alert("상품을 장바구니에 담았습니다.");
-                    location.href='/';
+                    alert("주문/결제 페이지로 이동합니다.");
+                    location.href='/cart';
                 },
                 error : function(jqXHR, status, error){
-
                     if(jqXHR.status === 500){
                         alert('로그인 후 이용해주세요');
                         location.href='/login';
@@ -158,18 +157,15 @@
                 <h3 name="totalPrice" id="totalPrice" class="text-end"></h3>
             </div>
 
-            <div class="form-group mb-3">
-                <label>상품 상태</label>
-                <h4>
-                    <span th:text="${item.itemStatusDescription}"></span> <!-- 한글로 변환된 itemStatus 값 표시 -->
-                </h4>
+            <div class="form-group">
+                <label>상품 상태&nbsp;&nbsp;&nbsp; : </label>
+                <span th:text="${item.itemStatusDescription}"></span> <!-- 한글로 변환된 itemStatus 값 표시 -->
             </div>
-
-
-            <h4>
-                배송비:
+            <div class="form-group">
+                <label>배 송 비&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
                 <span th:if="${item.shipping == 'free'}">무료배송</span>
                 <span th:if="${item.shipping == 'separate'}"> <span th:text="${item.shippingPrice}"></span> 원</span>
+
             </h4>
 
 
@@ -179,14 +175,19 @@
 
             <h4>판매자: <a th:href="@{/store/{memberId}(memberId=${memberId})}" th:text="${item.userName}"></a></h4>
 
+            <!-- 채팅방으로 이동하는 버튼 -->
+            <div class="text-end mt-3">
+                <a th:href="@{/chat/item/{itemId}/{memberId}(itemId=${item.id}, memberId=${memberId})}" class="btn btn-info btn-lg">대화</a>
+            </div>
+
 
 
             <div th:if="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">
                 <!-- 주문하기와 장바구니 담기 버튼은 관리자가 아니면 숨기기 -->
                 <button type="button" class="btn btn-outline-success btn-lg"
-                        th:if="${not isDeletable}" onclick="addCart()">장바구니 담기</button>
+                        th:if="${not isDeletable}" onclick="">채팅하기</button>
                 <button type="button" class="btn btn-success btn-lg"
-                        th:if="${not isDeletable}" onclick="order()">주문하기</button>
+                        th:if="${not isDeletable}" onclick="order()">바로 구매</button>
             </div>
             <div th:unless="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">
                 <button type="button" class="btn btn-danger btn-lg">품절</button>

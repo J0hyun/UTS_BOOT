@@ -175,4 +175,5 @@ public class MemberController {
         return "redirect:/member/logout"; // 탈퇴 후 로그아웃
     }
 
+
 }
