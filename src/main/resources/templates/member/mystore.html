@@ -14,9 +14,16 @@
     <script th:inline="javascript">
         $(document).ready(function(){
             var errorMessage = [[${errorMessage}]];
+            var message = [[${message}]];
+
             if(errorMessage != null){
                 alert(errorMessage);
                 window.history.back();
+            }
+
+            // message가 null이 아니면 알림
+            if(message != null){
+                alert(message);
             }
         });
 
@@ -77,6 +84,27 @@
         .repImg{
             width:100px;
         }
+
+        .review-img-row {
+            display: flex;             /* 자식 요소들을 한 줄로 나열 */
+            flex-wrap: nowrap;         /* 줄 바꿈 없이 한 줄로 배열 */
+            justify-content: flex-start; /* 왼쪽 정렬 */
+            gap: 0;                    /* 아이템 간의 간격을 없앰 */
+            margin: 0;                 /* 외부 여백을 0으로 설정 */
+        }
+
+
+        /* 이미지 크기 및 간격 */
+        .review-img {
+            width: 80px;                 /* 이미지 크기 설정 */
+            height: 80px;                /* 이미지 크기 설정 */
+            object-fit: cover;           /* 이미지가 비율에 맞게 잘리도록 설정 */
+            border-radius: 5px;          /* 이미지 모서리를 둥글게 설정 */
+            flex-shrink: 0;              /* 이미지 크기가 축소되지 않도록 설정 */
+            margin: 0;                   /* 이미지 간의 간격을 없앰 */
+            box-sizing: border-box;      /* padding이나 border가 크기에 영향을 미치지 않도록 설정 */
+        }
+
     </style>
 </th:block>
 
@@ -208,11 +236,11 @@
                     <td th:text="${#temporals.format(review.regTime, 'yyyy-MM-dd')}"></td>
                     <td>
                         <!-- 리뷰에 첨부된 이미지가 있을 경우, 반복문으로 이미지 출력 -->
-                        <div class="row">
-                            <div th:each="reviewImg : ${review.reviewImgs}" class="text-center col-md-6">
+                        <div class="review-img-row">
+                            <div th:each="reviewImg : ${review.reviewImgs}" class="d-flex justify-content-start align-items-center">
                                 <!-- 이미지 경로가 비어 있지 않으면 이미지를 출력 -->
                                 <img th:if="${not #strings.isEmpty(reviewImg.imgUrl)}" th:src="@{${reviewImg.imgUrl}}"
-                                     class="rounded my-2" alt="리뷰 이미지">
+                                     class="rounded my-2 review-img" alt="리뷰 이미지">
                             </div>
                         </div>
                     </td>

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -40,7 +41,7 @@ public class ReviewService {
         return reviews;
     }
 
-    // 리뷰 등록 메서드
+    // 리뷰 저장
     public Review saveReview(ReviewFormDto reviewFormDto) {
         // 현재 로그인한 사용자 정보 가져오기
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -60,28 +61,30 @@ public class ReviewService {
             return existingReviews.get(0); // 이미 리뷰가 있다면 해당 리뷰 반환
         }
 
+        // 새로운 리뷰 객체 생성
         Review review = new Review();
         review.setMemberName(loggedInUserName);  // 로그인한 사용자명 설정
         review.setReviewDetail(reviewFormDto.getReviewDetail()); // 후기 내용 설정
         review.setItem(item); // 상품 설정
 
         // 리뷰 저장
-        review = reviewRepository.save(review);
+        review = reviewRepository.save(review); // 리뷰를 먼저 저장하여 review_id가 생성되도록 함
 
-        // 리뷰 이미지 저장
+        // 리뷰 이미지 저장 처리
         try {
-            // Review 객체에 대한 이미지 저장 처리
             if (reviewFormDto.getReviewImgs() != null && !reviewFormDto.getReviewImgs().isEmpty()) {
-                MultipartFile reviewImgFile = reviewFormDto.getReviewImgs().get(0); // 첫 번째 이미지
-                ReviewImg reviewImg = new ReviewImg();
-                reviewImg.setReview(review); // Review와의 연관 설정
-                reviewImgService.saveReviewImg(reviewImg, reviewImgFile); // 이미지 저장 처리
+                // 여러 이미지를 처리하기 위해 List<MultipartFile> 사용
+                List<MultipartFile> reviewImgFiles = reviewFormDto.getReviewImgs();
+
+                // ReviewImg 객체 리스트 준비
+                List<ReviewImg> reviewImgs = new ArrayList<>();
+                reviewImgService.saveReviewImgs(reviewImgs, reviewImgFiles, review);  // 이미지 저장
             }
         } catch (Exception e) {
             throw new RuntimeException("이미지 업로드 실패: " + e.getMessage());
         }
 
-        return review;
+        return review; // 리뷰 반환
     }
 
 
@@ -111,6 +114,15 @@ public class ReviewService {
     public List<Review> getReviewsByItemOwner(String userEmail) {
         return reviewRepository.findByItem_CreatedBy(userEmail);  // 올바른 메서드를 호출합니다.
     }
+
+    // 특정 상품에 대해 해당 사용자가 이미 작성한 리뷰가 있는지 확인하는 메서드
+    public List<Review> getReviewsByItemAndMemberName(Long itemId, String memberName) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("해당 상품을 찾을 수 없습니다."));
+
+        return reviewRepository.findByItemAndMemberName(item, memberName);  // 리뷰 조회
+    }
+
 
 
 }
