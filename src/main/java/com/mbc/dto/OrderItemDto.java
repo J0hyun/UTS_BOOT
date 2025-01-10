@@ -15,11 +15,6 @@ public class OrderItemDto {
 
     private int orderPrice;
 
-    // 결재 정보 DTO
-    private String impUid;
-
-    private String merchantUid;
-
     private String imgUrl;
 
     private Item item;  // Item 객체를 추가합니다.
@@ -29,8 +24,6 @@ public class OrderItemDto {
         this.itemNm = orderItem.getItem().getItemNm();
         this.count = orderItem.getCount();
         this.orderPrice = orderItem.getOrderPrice();
-        this.impUid = orderItem.getImpUid();
-        this.merchantUid = orderItem.getMerchantUid();
         this.imgUrl = imgUrl;
     }
 }

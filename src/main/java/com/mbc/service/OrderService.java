@@ -28,6 +28,26 @@ public class OrderService {
     private final ItemImgRepository itemImgRepository;
     private final OrderItemRepository orderItemRepository;
 
+//    public Long addOrderDetail(OrderDto orderDto, String name){
+//        Item item = itemRepository.findById(orderDto.getItemId())
+//                .orElseThrow(EntityNotFoundException::new);
+//        Member member = memberRepository.findByname(name);
+//
+//        List<OrderItem> orderItemList = new ArrayList<>();
+//        OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
+//        orderItemList.add(orderItem);
+//        Order order = Order.createOrder(member, orderItemList);
+//
+//
+//        }
+//
+//        return item.getId();
+//    }
+//
+//    public OrderItemDto getOrderDetail(Long itemId){
+//
+//    }
+
     public Long order(OrderDto orderDto, String name){
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);

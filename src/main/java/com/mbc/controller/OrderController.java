@@ -1,10 +1,12 @@
 package com.mbc.controller;
 
-import com.mbc.dto.OrderDto;
-import com.mbc.dto.OrderHistDto;
+import com.mbc.dto.*;
+import com.mbc.entity.OrderItem;
+import com.mbc.service.CartService;
 import com.mbc.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,13 +24,51 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@Log4j2
 public class OrderController {
 
     private final OrderService orderService;
 
+//    @PostMapping(value = "/order")
+//    public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto,
+//                                              BindingResult bindingResult
+////            , Principal principal
+//    ) {
+//
+//        if(bindingResult.hasErrors()) {
+//            StringBuilder sb = new StringBuilder();
+//            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+//            for (FieldError fieldError : fieldErrors) {
+//                sb.append(fieldError.getDefaultMessage());
+//            }
+//            return new ResponseEntity<String>(sb.toString(),
+//                    HttpStatus.BAD_REQUEST);
+//        }
+//
+////        String name = principal.getName();
+//        Long orderItemId;
+//
+//        try{
+//            orderItemId = orderService.addOrderDetail(orderDto);
+//        } catch (Exception e) {
+//            return new ResponseEntity<String>(e.getMessage(),
+//                    HttpStatus.BAD_REQUEST);
+//        }
+//
+//        return new ResponseEntity<Long>(orderItemId, HttpStatus.OK);
+//    }
+//
+//    @GetMapping(value = "/order")
+//    public String orderHist(Principal principal, Model model) {
+//        OrderDetailDto orderDetail =
+//                orderService.getOrderDetail(principal.getName());
+//        model.addAttribute("orderItems", orderDetail);
+//        return "order/orderDetail";
+//    }
+
     @PostMapping(value = "/order")
-    public @ResponseBody ResponseEntity order(@RequestBody @Valid OrderDto orderDto,
-                                              BindingResult bindingResult, Principal principal ) {
+    public @ResponseBody ResponseEntity orderComplete(@RequestBody @Valid OrderDto orderDto,
+                                                      BindingResult bindingResult, Principal principal) {
 
         if(bindingResult.hasErrors()) {
             StringBuilder sb = new StringBuilder();

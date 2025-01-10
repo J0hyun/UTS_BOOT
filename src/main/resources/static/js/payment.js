@@ -32,11 +32,9 @@ function handleOrderAndPayment() {
         merchant_uid: merchant_uid, // 주문 고유 번호
         name: $('#itemNm').text(),
         amount: $("#orderTotalPrice").attr('data-total'),  // 총 결제 금액
-        buyer_email: "red0808@naver.com",
-        buyer_name: "안정운",
-        buyer_tel: "010-3305-7098",
-        buyer_addr: "경기도 수원시 권선구",
-        buyer_postcode: "16552",
+        buyer_name: $("#name").val(),
+        buyer_tel: $("#phone").val(),
+        buyer_addr: $("#address").val(),
     }, function (rsp) {
         console.log(rsp)
         if (rsp.success) {
