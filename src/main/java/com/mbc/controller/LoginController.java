@@ -6,21 +6,24 @@ import com.mbc.service.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
+@Log4j2
 public class LoginController {
 
     private final MemberService memberService;
@@ -66,6 +69,28 @@ public class LoginController {
     public String loginError(Model model) {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해 주세요");
         return "member/memberLoginForm";
+    }
+
+    @PostMapping("/get-user-name")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> getUserName(@RequestBody Map<String, String> request) {
+        log.info("컨트롤러 진입");
+        String phoneNumber = request.get("phone");
+
+        log.info("번호확인:"+ phoneNumber);
+
+        // 서비스 레이어 호출하여 사용자 이름 조회
+        String userName = memberService.getUserNameByPhoneNumber(phoneNumber);
+
+        // 결과 반환
+        Map<String, String> response = new HashMap<>();
+        if (userName != null && !userName.isEmpty()) {
+            response.put("name", userName);
+        } else {
+            response.put("name", "");  // 사용자 없음
+        }
+
+        return ResponseEntity.ok(response);
     }
 
 }
