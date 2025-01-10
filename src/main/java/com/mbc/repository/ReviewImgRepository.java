@@ -11,4 +11,8 @@ public interface ReviewImgRepository extends JpaRepository<ReviewImg, Long> {
     ReviewImg findByReviewId(Long reviewId);
 
     List<ReviewImg> findByReview(Review review);
+
+    boolean existsByReviewAndImgName(Review review, String oriImgName); // 리뷰와 이미지 이름으로 중복 체크
+
+    boolean existsByReviewAndOriImgName(Review review, String oriImgName);
 }

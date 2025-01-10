@@ -165,15 +165,22 @@
                 <label>배 송 비&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
                 <span th:if="${item.shipping == 'free'}">무료배송</span>
                 <span th:if="${item.shipping == 'separate'}"> <span th:text="${item.shippingPrice}"></span> 원</span>
+
+            </h4>
+
+
+            <h4 th:if="${item.tradeAvailable == 'possible'}">
+                직거래 위치: <span th:text="${item.tradeLocation}"></span>
+            </h4>
+
+            <h4>판매자: <a th:href="@{/store/{memberId}(memberId=${memberId})}" th:text="${item.userName}"></a></h4>
+
+            <!-- 채팅방으로 이동하는 버튼 -->
+            <div class="text-end mt-3">
+                <a th:href="@{/chat/item/{itemId}/{memberId}(itemId=${item.id}, memberId=${memberId})}" class="btn btn-info btn-lg">대화</a>
             </div>
-            <div class="form-group">
-                <label>직거래 위치 : </label>
-                <span th:text="${item.tradeLocation}"></span>
-            </div>
-            <div class="form-group">
-                <label>판 매 자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
-                <a th:href="@{/store/{memberId}(memberId=${memberId})}" th:text="${item.userName}"></a>
-            </div>
+
+
 
             <div th:if="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">
                 <!-- 주문하기와 장바구니 담기 버튼은 관리자가 아니면 숨기기 -->
