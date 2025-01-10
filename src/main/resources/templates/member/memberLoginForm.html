@@ -55,6 +55,22 @@
         <p id="idErrorMessage" class="text-danger mt-3" style="display:none;"></p>
     </div>
 
+    <div class="mt-5">
+        <h2>전화번호 인증</h2>
+
+        <!-- 전화번호 입력 폼 -->
+        <form>
+            핸드폰 번호 : <input id="phoneNumber" />
+            <button id="phoneNumberButton">핸드폰 번호 전송</button>
+        </form>
+
+        <form>
+            확인 코드 : <input id="confirmCode"/>
+            <button id="confirmCodeButton">확인 코드 전송</button>
+        </form>
+
+    </div>
+
     <div class="login_api mt-5">
         <p class="text-center pt-3">간편하게 가입하고 상품을 확인하세요</p>
         <ul>
@@ -76,68 +92,105 @@
         </ul>
     </div>
 
-</div>
 
-<!-- JavaScript 코드로 폼 제출 후 응답 처리 -->
-<script>
-    document.getElementById('passwordResetForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var email = document.getElementById('email').value;
-        var formData = new FormData();
-        formData.append('email', email);
 
-        fetch('/send/password', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message === '비밀번호 발급이 완료되었습니다.') {
-                    document.getElementById('passwordResetMessage').textContent = data.message;
-                    document.getElementById('passwordResetMessage').style.display = 'block';
-                    document.getElementById('errorMessage').style.display = 'none';
-                } else {
-                    document.getElementById('errorMessage').textContent = data.message;
-                    document.getElementById('errorMessage').style.display = 'block';
-                    document.getElementById('passwordResetMessage').style.display = 'none';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('errorMessage').textContent = '서버와의 통신에 실패했습니다.';
-                document.getElementById('errorMessage').style.display = 'block';
-            });
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
+    import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyAJMJOIAkKs1AxWwwa09ZhByQuOaxVpft0",
+        authDomain: "usedtradesite-b9784.firebaseapp.com",
+        projectId: "usedtradesite-b9784",
+        storageBucket: "usedtradesite-b9784.firebasestorage.app",
+        messagingSenderId: "1087349573118",
+        appId: "1:1087349573118:web:8b963c6bd99297265fecaf",
+        measurementId: "G-99WBLQVT44"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth();
+    auth.languageCode = 'ko';
+
+
+    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'phoneNumberButton', {
+        'size': 'invisible',
+        'callback': (response) => {
+            console.log('reCAPTCHA solved:', response);
+            // reCAPTCHA solved, allow signInWithPhoneNumber.
+            onSignInSubmit();
+        }
     });
 
-    // 아이디 찾기 폼 제출 처리
-    document.getElementById('idFindForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        var email = document.getElementById('findEmail').value;
-        var formData = new FormData();
-        formData.append('email', email);
+    document.getElementById('phoneNumberButton').
+        addEventListener('click',(event)=>{
+            event.preventDefault()
+        const phoneNumber = document.getElementById
+        ('phoneNumber').value
+        const appVerifier = window.recaptchaVerifier;
 
-        fetch('/find/id', {
-            method: 'POST',
-            body: formData
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.message.includes("아이디:")) {
-                    document.getElementById('idFindMessage').textContent = data.message;
-                    document.getElementById('idFindMessage').style.display = 'block';
-                    document.getElementById('idErrorMessage').style.display = 'none';
-                } else {
-                    document.getElementById('idErrorMessage').textContent = data.message;
-                    document.getElementById('idErrorMessage').style.display = 'block';
-                    document.getElementById('idFindMessage').style.display = 'none';
-                }
+        signInWithPhoneNumber(auth, '+82' + phoneNumber, appVerifier)
+            .then((confirmationResult) => {
+                // SMS sent. Prompt user to type the code from the message, then sign the
+                // user in with confirmationResult.confirm(code).
+                window.confirmationResult = confirmationResult;
+                console.log(confirmationResult)
+                // ...
+            }).catch((error) => {
+            console.error('Error during signInWithPhoneNumber:', error.message, error.code);
+            // Error; SMS not sent
+            // ...
+        });
+    })
+
+    document.getElementById('confirmCodeButton').addEventListener('click', (event) => {
+        event.preventDefault();
+        const code = document.getElementById('confirmCode').value;
+        confirmationResult.confirm(code).then((result) => {
+            // 인증 성공 후 사용자 정보 가져오기
+            const user = result.user;
+            const phoneNumber = (user.phoneNumber).replace('+82', '');;
+            // 전화번호에서 +82 제거
+
+            console.log("폰번호"+phoneNumber)
+
+            // 서버로 전화번호 보내기
+            fetch('/get-user-name', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ phone: phoneNumber })
             })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('idErrorMessage').textContent = '서버와의 통신에 실패했습니다.';
-                document.getElementById('idErrorMessage').style.display = 'block';
-            });
-    });
+                .then(response => response.json())
+                .then(data => {
+                    console.log("데이터값:", JSON.stringify(data, null, 2));  // 객체를 문자열로 변환하여 출력
+                    // 서버에서 반환된 사용자 이름 처리
+                    if (data.name) {
+                        alert('사용자 이름: ' + data.name);
+                    } else {
+                        alert('해당 전화번호에 대한 사용자가 없습니다.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }).catch((error) => {
+            console.log(error);
+            // 인증 실패 처리
+        });
+    })
+
+
+
 </script>
+
 
 </html>

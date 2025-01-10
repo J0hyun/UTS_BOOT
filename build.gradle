@@ -38,9 +38,6 @@ dependencies {
     //메일 기능(비밀번호 찾기)
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
-    //env 파일 환경변수 설정
-    //implementation 'io.github.cdimascio:dotenv-java:5.2.2'
-
     // Lombok for annotations like @Log4j2
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

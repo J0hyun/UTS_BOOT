@@ -309,4 +309,18 @@ public class MemberService implements UserDetailsService {
         }
     }
 
+    // 전화번호로 사용자 이름을 조회하는 메소드
+    public String getUserNameByPhoneNumber(String phoneNumber) {
+        log.info("서비스 진입");
+        // 레파지토리에서 사용자 조회
+        Member user = memberRepository.findByPhone(phoneNumber);
+
+        log.info("멤버확인:"+ user);
+        // 사용자 이름 반환
+        if (user != null) {
+            return user.getName();
+        }
+        return null;  // 사용자 없으면 null 반환
+    }
+
 }

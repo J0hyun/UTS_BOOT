@@ -45,6 +45,7 @@ public class SecurityConfig {
                 )
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/item/delete") // delete 요청에 대한 CSRF 보호 비활성화
+                        .ignoringRequestMatchers("/get-user-name") // 이 엔드포인트는 누구나 접근 가능하도록 설정
                 );
 
 //        http.formLogin()

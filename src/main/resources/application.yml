@@ -1,8 +1,10 @@
 server:
   port: 8080
+
 spring:
   config:
     import: optional:file:.env[.properties] # 보안이 중요한 정보들은 env 파일로 관리
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/used_trade_site?serverTimezone=Asia/Seoul
@@ -91,7 +93,6 @@ spring:
     multipart:
       max-file-size: 20MB # 파일 1개당 최대 크기
       max-request-size: 100MB # 요청당 최대 파일 크기
-
 
 itemImgLocation: C:/shop/item # 상품 이미지 업로드 경로
 uploadPath: file:///C:/shop/ # 리소스 업로드 경로
