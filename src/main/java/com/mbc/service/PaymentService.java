@@ -34,6 +34,22 @@ public class PaymentService {
         }
     }
 
+//    /**
+//     * 주문 정보 저장
+//     * @param orderDto
+//     * @return
+//     */
+//    public String saveOrder(OrderDto orderDto){
+//        try {
+//            orderRepository.save(orderDto.toEntity());
+//            return "주문 정보가 성공적으로 저장되었습니다.";
+//        } catch (Exception e) {
+//            log.info(e.getMessage());
+//            cancelPayment(orderDto.getImpUid());
+//            return "주문 정보 저장에 실패했습니다.";
+//        }
+//    }
+
     /**
      * 아임포트 서버로부터 결제 취소 요청
      *

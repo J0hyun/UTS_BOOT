@@ -32,6 +32,7 @@ public class PaymentController {
         return paymentService.validateIamport(imp_uid);
     }
 
+//    ***/cart/orders에서 요청 처리***
 //    @PostMapping("/order")
 //    public ResponseEntity<String> processOrder(@RequestBody OrderItemDto orderItemDto) {
 //        // 주문 정보를 로그에 출력
@@ -40,8 +41,9 @@ public class PaymentController {
 //        return ResponseEntity.ok(orderService.orders(orderItemDto));
 //    }
 
-    @PostMapping("/cancel/{imp_uid}")
-    public IamportResponse<Payment> cancelPayment(@PathVariable String imp_uid) throws IamportResponseException, IOException {
-        return paymentService.cancelPayment(imp_uid);
-    }
+//    ***orderService.cancelOrderWithPayment()에서 처리되도록 수정***
+//    @PostMapping("/cancel/{imp_uid}")
+//    public IamportResponse<Payment> cancelPayment(@PathVariable String imp_uid) throws IamportResponseException, IOException {
+//        return paymentService.cancelPayment(imp_uid);
+//    }
 }

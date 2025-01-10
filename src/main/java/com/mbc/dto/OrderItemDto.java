@@ -1,7 +1,6 @@
 package com.mbc.dto;
 
 import com.mbc.entity.Item;
-import com.mbc.entity.Order;
 import com.mbc.entity.OrderItem;
 import lombok.Getter;
 import lombok.Setter;
