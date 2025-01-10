@@ -42,8 +42,6 @@ public class ItemImgService {
             itemImg.updateItemImg(oriImgName, imgName, imgUrl);
             itemImgRepository.save(itemImg);
         }
-
-
     }
 
     public void updateItemImgs(Long itemId, List<MultipartFile> itemImgFileList) throws Exception {
