@@ -20,9 +20,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import java.io.IOException;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -247,6 +249,78 @@ public class MemberService implements UserDetailsService {
 
             memberRepository.save(member); // 변경 사항 저장
         }
+    }
+
+    @Transactional
+    public boolean emailExist(String email) {
+        return memberRepository.existsByEmail(email); // UsersRepository에 existsByEmail 메서드가 있어야 함
+    }
+
+
+    @Transactional
+    public boolean updatePasswordToken(String email) {
+        Member member = memberRepository.findByEmail(email);
+
+        // 토큰 발급 제한 시간 확인 (1시간 제한)
+        if (member.getTokenExpiration() != null && member.getTokenExpiration().isAfter(LocalDateTime.now())) {
+            return false; // 1시간 이내에 다시 요청하면 false 반환
+        }
+
+        // 새로운 토큰 생성 및 저장
+        String newToken = UUID.randomUUID().toString(); // 랜덤 토큰 생성
+        member.setPasswordResetToken(newToken);
+        member.setTokenExpiration(LocalDateTime.now().plusHours(1)); // 토큰 유효 시간 설정 (1시간)
+
+        memberRepository.save(member); // 변경된 사용자 정보 저장
+        return true; // 토큰이 성공적으로 업데이트됨
+    }
+
+
+    public String getTmpPassword() {
+        char[] charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+        StringBuilder tmpPassword = new StringBuilder();
+        for (int i = 0; i < 10; i++) { // 10자리 길이의 비밀번호 생성
+            int idx = (int) (Math.random() * charSet.length);
+            tmpPassword.append(charSet[idx]);
+        }
+        return tmpPassword.toString();
+    }
+
+
+
+    @Transactional
+    public void updatePassword(String newPassword, String email) {
+        // 이메일로 사용자 찾기
+        Member member = memberRepository.findByEmail(email);
+
+        // 비밀번호 해싱 후 저장
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        member.setPassword(hashedPassword);
+        memberRepository.save(member); // 변경된 사용자 정보 저장
+    }
+
+    // 아이디 찾기 기능 추가
+    public String findUsernameByEmail(String email) {
+        Member member = memberRepository.findByEmail(email);
+        if (member != null) {
+            return member.getName(); // 아이디 반환
+        } else {
+            return null; // 이메일에 해당하는 사용자 없을 경우 null 반환
+        }
+    }
+
+    // 전화번호로 사용자 이름을 조회하는 메소드
+    public String getUserNameByPhoneNumber(String phoneNumber) {
+        log.info("서비스 진입");
+        // 레파지토리에서 사용자 조회
+        Member user = memberRepository.findByPhone(phoneNumber);
+
+        log.info("멤버확인:"+ user);
+        // 사용자 이름 반환
+        if (user != null) {
+            return user.getName();
+        }
+        return null;  // 사용자 없으면 null 반환
     }
 
 }

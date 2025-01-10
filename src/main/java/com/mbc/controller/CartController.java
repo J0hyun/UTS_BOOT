@@ -6,6 +6,7 @@ import com.mbc.dto.CartOrderDto;
 import com.mbc.service.CartService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Log4j2
 public class CartController {
 
     private final CartService cartService;
@@ -54,6 +56,7 @@ public class CartController {
         List<CartDetailDto> cartDetailList =
                 cartService.getCartList(principal.getName());
         model.addAttribute("cartItems", cartDetailList);
+        log.info(principal);
         return "cart/cartList";
     }
 

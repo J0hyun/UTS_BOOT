@@ -37,4 +37,7 @@ out/
 .vscode/
 
 ### API ###
-.env
+.env*
+
+### firebase ###
+.firebase/

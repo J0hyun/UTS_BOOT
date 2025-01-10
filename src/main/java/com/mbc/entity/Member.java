@@ -4,16 +4,19 @@ import com.mbc.constant.MemberStatus;
 import com.mbc.constant.Role;
 import com.mbc.dto.MemberFormDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDateTime;
 
 @Entity
 //@Table(name="member")
 @Getter
 @Setter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member extends BaseEntity {
 
     @Id
@@ -22,8 +25,6 @@ public class Member extends BaseEntity {
     private Long id;
 
     private String name;
-
-    @Column(unique = true)
     private String email;
     private String password;
     private String address;
@@ -34,6 +35,15 @@ public class Member extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private MemberStatus status; // 회원 상태 추가 (ACTIVE, DELETED)
+
+    private String provider;
+    private String providerId;
+
+    // 비밀번호 재설정 토큰
+    private String passwordResetToken;
+
+    // 토큰 유효기간
+    private LocalDateTime tokenExpiration;
 
     public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder){
 
