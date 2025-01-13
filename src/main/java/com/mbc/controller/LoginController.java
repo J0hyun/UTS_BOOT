@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -91,6 +92,28 @@ public class LoginController {
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/find/id")
+    public String findIdForm() {
+        return "member/idFind";  // templates/member/idFind.html을 찾음
+    }
+
+    // 이메일로 아이디 찾기
+    @PostMapping("/find/id")
+    public String findId(@RequestParam("email") String email, Model model) {
+        List<String> userIds = memberService.findUsernameByEmail(email);
+        if (userIds == null || userIds.isEmpty()) {
+            model.addAttribute("error", "이메일에 해당하는 아이디가 없습니다.");
+            return "member/idFind";
+        }
+        model.addAttribute("userIds", userIds);  // 아이디 목록을 모델에 추가
+        return "member/idFind";  // 동일 페이지로 다시 돌아가도록
+    }
+
+    @GetMapping("/find/password")
+    public String findPasswordForm() {
+        return "member/passwordFind"; // passwordFind.html로 이동
     }
 
 }
