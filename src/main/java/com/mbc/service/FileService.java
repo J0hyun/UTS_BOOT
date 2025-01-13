@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 @Service
@@ -22,8 +24,20 @@ public class FileService {
 
         log.info("파일확장자: " + extension);
 
+        // 날짜 폴더 생성 (yyyy/MM/dd 형태)
+        String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+
+        // 날짜 폴더 경로 생성
+        String folderPath = uploadPath + "/" + datePath;
+
+        // 날짜 폴더가 없으면 새로 생성
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
         String savedFileName = uuid.toString() + extension;
-        String fileUploadFullUrl = uploadPath + "/" + savedFileName;
+        String fileUploadFullUrl = folderPath + "/" + savedFileName;
         FileOutputStream fos = new FileOutputStream(fileUploadFullUrl);
         fos.write(fileData);
         fos.close();

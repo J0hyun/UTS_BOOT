@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout1}">
 
@@ -111,6 +112,12 @@
         function confirmDelete() {
             return confirm("삭제하시겠습니까?");
         }
+
+        function alertAndRedirect() {
+            alert('로그인 후 이용해주세요');
+            location.href = '/login'; // 로그인 페이지로 이동
+        }
+
     </script>
 </th:block>
 
@@ -180,7 +187,12 @@
 
             <div th:if="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">
                 <!-- 채팅방으로 이동하는 버튼 -->
-                <a th:href="@{/chat/item/{itemId}/{memberId}(itemId=${item.id}, memberId=${memberId})}" class="btn btn-outline-success btn-lg">채팅하기</a>
+                <!-- 로그인한 사용자만 '채팅하기' 버튼 보이기 -->
+                <a sec:authorize="isAuthenticated()" th:href="@{/chat/item/{itemId}/{memberId}(itemId=${item.id}, memberId=${memberId})}" class="btn btn-outline-success btn-lg">채팅하기</a>
+
+                <!-- 비로그인 사용자만 '로그인하기' 버튼 보이기 -->
+                <a sec:authorize="!isAuthenticated()" href="#" class="btn btn-outline-success btn-lg" onclick="alertAndRedirect()">채팅하기</a>
+
                 <!-- 바로구매 버튼은 관리자가 아니면 숨기기 -->
                 <button type="button" class="btn btn-success btn-lg"
                         th:if="${not isDeletable}" onclick="order()">바로 구매</button>
