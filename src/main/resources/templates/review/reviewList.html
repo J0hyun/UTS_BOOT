@@ -1,13 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>모든 리뷰 목록</title>
-</head>
-<body>
-<div class="container mt-5">
-  <h2>모든 리뷰 목록</h2>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+
+<div class="container mt-5" layout:fragment="content">
+  <h2 class="pb-2 mb-4">모든 리뷰 목록</h2>
 
   <!-- 리뷰 목록 출력 -->
   <ul>
@@ -20,7 +17,10 @@
     </li>
   </ul>
 
-  <a href="/" class="btn btn-primary">홈으로</a>
+  <div class="text-center">
+    <a href="/" class="btn btn-success">홈으로</a>
+  </div>
+
 </div>
-</body>
+
 </html>
