@@ -7,8 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +30,10 @@ public class MailController {
 
     // 이메일과 아이디로 비밀번호 찾기
     @PostMapping("/send/password")
-    public ResponseEntity<?> sendPassword(@RequestParam("email") String email, @RequestParam("name") String name) {
+    public ResponseEntity<?> sendPassword(@RequestBody Map<String, String> paramData) {
+        String email = paramData.get("email");
+        String name = paramData.get("name");
+
         String result = memberService.updatePasswordToken(email, name);
 
         // 반환 값에 따라 적절한 메시지 처리

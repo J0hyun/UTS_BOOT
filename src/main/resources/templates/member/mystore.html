@@ -217,42 +217,43 @@
         </div>
 
         <div class="tab-pane fade" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab" tabindex="0">
-            <table class="table text-center">
-                <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">상품명</th>
-                    <th scope="col">작성자ID</th>
-                    <th scope="col">내용</th>
-                    <th scope="col">작성일</th>
-                    <th scope="col">이미지</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- 리뷰가 있을 때만 반복 -->
-                <tr th:each="review : ${reviews}" th:if="${reviews != null and not #lists.isEmpty(reviews)}">
-                    <th scope="row" th:text="${review.id}">리뷰 번호</th>
-                    <td th:text="${review.item.itemNm}">상품명</td>
-                    <td th:text="${review.memberName}">작성자 ID</td>
-                    <td th:text="${review.reviewDetail}">리뷰 내용</td>
-                    <td th:text="${#temporals.format(review.regTime, 'yyyy-MM-dd')}"></td>
-                    <td>
-                        <!-- 리뷰에 첨부된 이미지가 있을 경우, 반복문으로 이미지 출력 -->
-                        <div class="review-img-row">
-                            <div th:each="reviewImg : ${review.reviewImgs}" class="d-flex justify-content-start align-items-center">
-                                <!-- 이미지 경로가 비어 있지 않으면 이미지를 출력 -->
-                                <img th:if="${not #strings.isEmpty(reviewImg.imgUrl)}" th:src="@{${reviewImg.imgUrl}}"
-                                     class="rounded my-2 review-img" alt="리뷰 이미지">
+            <div th:if="${reviews.size() > 0}">
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <td>#</td>
+                        <td>상품명</td>
+                        <td>작성자</td>
+                        <td>내용</td>
+                        <td>작성일</td>
+                        <td>이미지</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- 리뷰가 있을 때만 반복 -->
+                    <tr th:each="review : ${reviews}" th:if="${reviews != null and not #lists.isEmpty(reviews)}">
+                        <td scope="row" th:text="${review.id}">리뷰 번호</td>
+                        <td th:text="${review.item.itemNm}">상품명</td>
+                        <td th:text="${review.memberName}">작성자 ID</td>
+                        <td th:text="${review.reviewDetail}">리뷰 내용</td>
+                        <td th:text="${#temporals.format(review.regTime, 'yyyy-MM-dd')}"></td>
+                        <td>
+                            <!-- 리뷰에 첨부된 이미지가 있을 경우, 반복문으로 이미지 출력 -->
+                            <div class="review-img-row">
+                                <div th:each="reviewImg : ${review.reviewImgs}" class="d-flex justify-content-start align-items-center">
+                                    <!-- 이미지 경로가 비어 있지 않으면 이미지를 출력 -->
+                                    <img th:if="${not #strings.isEmpty(reviewImg.imgUrl)}" th:src="@{${reviewImg.imgUrl}}"
+                                         class="rounded my-2 review-img" alt="리뷰 이미지">
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- 리뷰가 없을 때 메시지 표시 -->
-            <p class="text-center mt-5" th:if="${reviews == null or #lists.isEmpty(reviews)}">리뷰 정보가 없습니다.</p>
+            <p class="text-center mt-5" th:if="${reviews == null or #lists.isEmpty(reviews)}">작성한 상품 후기가 없습니다.</p>
         </div>
     </div>
 </div>

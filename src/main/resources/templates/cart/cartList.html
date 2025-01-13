@@ -22,6 +22,21 @@
             $("input[name=cartChkBox]").change( function(){
                 getOrderTotalPrice();
             });
+
+            $('.payment').click(function(){
+                // 배송 정보 입력 요청
+                if($('#name').val() == ''){
+                    alert('배송 정보 - 이름을 입력해주세요.');
+                }else if($('#phone').val() == ''){
+                    alert('배송 정보 - 연락처를 입력해주세요.');
+                }else if($('#address').val() == ''){
+                    alert('배송 정보 - 주소를 입력해주세요.');
+                }else if($('#address_detail').val() == ''){
+                    alert('배송 정보 - 상세주소를 입력해주세요.');
+                }else {
+                    handleOrderAndPayment();
+                }
+            });
         });
 
         function getOrderTotalPrice(){
@@ -326,7 +341,7 @@
             </table>
 
             <div class="text-center my-3">
-                <button type="button" class="btn btn-success btn-lg px-5" onclick="handleOrderAndPayment()">결재하기</button>
+                <button type="button" class="btn btn-success btn-lg px-5 payment">결재하기</button>
             </div>
         </div>
     </div>

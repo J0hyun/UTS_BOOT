@@ -108,6 +108,9 @@
             });
         }
 
+        function confirmDelete() {
+            return confirm("삭제하시겠습니까?");
+        }
     </script>
 </th:block>
 
@@ -165,27 +168,20 @@
                 <label>배 송 비&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
                 <span th:if="${item.shipping == 'free'}">무료배송</span>
                 <span th:if="${item.shipping == 'separate'}"> <span th:text="${item.shippingPrice}"></span> 원</span>
-
-            </h4>
-
-
-            <h4 th:if="${item.tradeAvailable == 'possible'}">
-                직거래 위치: <span th:text="${item.tradeLocation}"></span>
-            </h4>
-
-            <h4>판매자: <a th:href="@{/store/{memberId}(memberId=${memberId})}" th:text="${item.userName}"></a></h4>
-
-            <!-- 채팅방으로 이동하는 버튼 -->
-            <div class="text-end mt-3">
-                <a th:href="@{/chat/item/{itemId}/{memberId}(itemId=${item.id}, memberId=${memberId})}" class="btn btn-info btn-lg">대화</a>
+            </div>
+            <div class="form-group" th:if="${item.tradeAvailable == 'possible'}">
+                <label>직거래 위치 : </label>
+                <span th:text="${item.tradeLocation}"></span>
+            </div>
+            <div class="form-group">
+                <label>판 매 자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
+                <a th:href="@{/store/{memberId}(memberId=${memberId})}" th:text="${item.userName}"></a>
             </div>
 
-
-
             <div th:if="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">
-                <!-- 주문하기와 장바구니 담기 버튼은 관리자가 아니면 숨기기 -->
-                <button type="button" class="btn btn-outline-success btn-lg"
-                        th:if="${not isDeletable}" onclick="">채팅하기</button>
+                <!-- 채팅방으로 이동하는 버튼 -->
+                <a th:href="@{/chat/item/{itemId}/{memberId}(itemId=${item.id}, memberId=${memberId})}" class="btn btn-outline-success btn-lg">채팅하기</a>
+                <!-- 바로구매 버튼은 관리자가 아니면 숨기기 -->
                 <button type="button" class="btn btn-success btn-lg"
                         th:if="${not isDeletable}" onclick="order()">바로 구매</button>
             </div>
@@ -193,23 +189,22 @@
                 <button type="button" class="btn btn-danger btn-lg">품절</button>
             </div>
 
-            <!-- 삭제 폼 추가 -->
-            <form action="/item/delete" method="post" style="display:inline;" onsubmit="return confirmDelete();" th:if="${isDeletable}">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <input type="hidden" name="itemId" th:value="${item.id}">
-                <button type="submit" class="btn btn-danger btn-lg">삭제</button>
-            </form>
+            <div class="text-end mt-3">
+                <!-- 삭제 폼 추가 -->
+                <form action="/item/delete" method="post" style="display:inline;" onsubmit="return confirmDelete();" th:if="${isDeletable}">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="itemId" th:value="${item.id}">
+                    <button type="submit" class="btn btn-danger btn-lg">삭제</button>
+                </form>
 
-            <!-- 수정하기 버튼 -->
-            <a th:href="'/member/item/'+${item.id}" class="btn btn-primary btn-lg" th:if="${isDeletable}">수정</a>
-
-            <script>
-                function confirmDelete() {
-                    return confirm("삭제하시겠습니까?");
-                }
-            </script>
-
-
+                <!-- 수정하기 버튼 -->
+                <a th:href="'/member/item/'+${item.id}" class="btn btn-primary btn-lg" th:if="${isDeletable}">수정</a>
+            </div>
+<!--            <script>-->
+<!--                function confirmDelete() {-->
+<!--                    return confirm("삭제하시겠습니까?");-->
+<!--                }-->
+<!--            </script>-->
 
         </div>
     </div>
