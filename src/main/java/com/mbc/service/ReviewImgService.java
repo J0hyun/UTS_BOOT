@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,7 +37,9 @@ public class ReviewImgService {
             if (!StringUtils.isEmpty(oriImgName)) {
                 // 파일 이름을 고유하게 처리하여 중복을 방지
                 imgName = fileService.uploadFile(reviewImgLocation, oriImgName, reviewImgFile.getBytes());
-                imgUrl = "/images/review/" + imgName;  // 업로드된 이미지의 URL 설정
+                // 날짜 경로를 포함한 URL 경로로 imgUrl 설정
+                String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+                imgUrl = "/images/review/" + datePath + "/" + imgName;  // 날짜 경로 포함
 
                 // ReviewImg 객체 생성 및 업데이트
                 ReviewImg reviewImg = new ReviewImg();

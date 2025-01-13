@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -31,7 +34,9 @@ public class MemberImgService {
         // 파일 업로드
         if (!StringUtils.isEmpty(oriImgName)) {
             imgName = fileService.uploadFile(memberImgLocation, oriImgName, profileImgFile.getBytes());
-            imgUrl = "/images/member/" + imgName;
+            // 날짜 경로를 포함한 URL 경로로 imgUrl 설정
+            String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+            imgUrl = "/images/member/" + datePath + "/" + imgName;  // 날짜 경로 포함
 
             // 이미지 정보 업데이트 및 저장
             memberImg.updateMemberImg(oriImgName, imgName, imgUrl);
