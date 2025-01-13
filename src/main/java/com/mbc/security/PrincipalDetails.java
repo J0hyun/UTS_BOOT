@@ -14,21 +14,28 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private final Member member;
     private final Map<String, Object> attributes;
+    private final boolean isOAuth2User;
 
     // Constructor for normal login
     public PrincipalDetails(Member member) {
+        this.isOAuth2User = false;
         this.member = member;
         this.attributes = null; // No attributes for non-OAuth login
     }
 
     // Constructor for OAuth2 login
     public PrincipalDetails(Member member, Map<String, Object> attributes) {
+        this.isOAuth2User = true;
         this.member = member;
         this.attributes = attributes;
     }
 
     public Member getMember() {
         return member;
+    }
+
+    public boolean isOAuth2User() {
+        return isOAuth2User;
     }
 
     @Override
