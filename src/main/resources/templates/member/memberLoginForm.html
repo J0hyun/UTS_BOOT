@@ -25,51 +25,13 @@
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     </form>
 
-    <!-- 비밀번호 찾기 폼 -->
+    <!-- 아이디/비밀번호 찾기 버튼 -->
     <div class="mt-5">
-        <h4>비밀번호를 잊으셨나요?</h4>
-        <form id="passwordResetForm" method="post" action="/send/password">
-            <div class="form-group mb-3">
-                <label for="email">이메일</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="이메일을 입력해주세요" required>
-            </div>
-            <button type="submit" class="btn btn-warning">임시 비밀번호 요청</button>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        </form>
-        <p id="passwordResetMessage" class="text-success mt-3" style="display:none;"></p>
-        <p id="errorMessage" class="text-danger mt-3" style="display:none;"></p>
+        <button class="btn btn-info" onClick="location.href='/find/id'">아이디 찾기</button>
+        <button class="btn btn-warning" onClick="location.href='/find/password'">비밀번호 찾기</button>
     </div>
 
-    <!-- 아이디 찾기 폼 -->
-    <div class="mt-5">
-        <h4>아이디를 잊으셨나요?</h4>
-        <form id="idFindForm" method="post" action="/find/id">
-            <div class="form-group mb-3">
-                <label for="email">이메일</label>
-                <input type="email" id="findEmail" name="email" class="form-control" placeholder="이메일을 입력해주세요" required>
-            </div>
-            <button type="submit" class="btn btn-primary">아이디 찾기</button>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        </form>
-        <p id="idFindMessage" class="text-success mt-3" style="display:none;"></p>
-        <p id="idErrorMessage" class="text-danger mt-3" style="display:none;"></p>
-    </div>
 
-    <div class="mt-5">
-        <h2>전화번호 인증</h2>
-
-        <!-- 전화번호 입력 폼 -->
-        <form>
-            핸드폰 번호 : <input id="phoneNumber" />
-            <button id="phoneNumberButton">핸드폰 번호 전송</button>
-        </form>
-
-        <form>
-            확인 코드 : <input id="confirmCode"/>
-            <button id="confirmCodeButton">확인 코드 전송</button>
-        </form>
-
-    </div>
 
     <div class="login_api mt-5">
         <p class="text-center pt-3">간편하게 가입하고 상품을 확인하세요</p>
@@ -92,105 +54,6 @@
         </ul>
     </div>
 
-
-
-<script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js";
-    import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-    // https://firebase.google.com/docs/web/setup#available-libraries
-
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-        apiKey: "AIzaSyAJMJOIAkKs1AxWwwa09ZhByQuOaxVpft0",
-        authDomain: "usedtradesite-b9784.firebaseapp.com",
-        projectId: "usedtradesite-b9784",
-        storageBucket: "usedtradesite-b9784.firebasestorage.app",
-        messagingSenderId: "1087349573118",
-        appId: "1:1087349573118:web:8b963c6bd99297265fecaf",
-        measurementId: "G-99WBLQVT44"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth();
-    auth.languageCode = 'ko';
-
-
-    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'phoneNumberButton', {
-        'size': 'invisible',
-        'callback': (response) => {
-            console.log('reCAPTCHA solved:', response);
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-            onSignInSubmit();
-        }
-    });
-
-    document.getElementById('phoneNumberButton').
-        addEventListener('click',(event)=>{
-            event.preventDefault()
-        const phoneNumber = document.getElementById
-        ('phoneNumber').value
-        const appVerifier = window.recaptchaVerifier;
-
-        signInWithPhoneNumber(auth, '+82' + phoneNumber, appVerifier)
-            .then((confirmationResult) => {
-                // SMS sent. Prompt user to type the code from the message, then sign the
-                // user in with confirmationResult.confirm(code).
-                window.confirmationResult = confirmationResult;
-                console.log(confirmationResult)
-                // ...
-            }).catch((error) => {
-            console.error('Error during signInWithPhoneNumber:', error.message, error.code);
-            // Error; SMS not sent
-            // ...
-        });
-    })
-
-    document.getElementById('confirmCodeButton').addEventListener('click', (event) => {
-        event.preventDefault();
-        const code = document.getElementById('confirmCode').value;
-        confirmationResult.confirm(code).then((result) => {
-            // 인증 성공 후 사용자 정보 가져오기
-            const user = result.user;
-            const phoneNumber = (user.phoneNumber).replace('+82', '');;
-            // 전화번호에서 +82 제거
-
-            console.log("폰번호"+phoneNumber)
-
-            // 서버로 전화번호 보내기
-            fetch('/get-user-name', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ phone: phoneNumber })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("데이터값:", JSON.stringify(data, null, 2));  // 객체를 문자열로 변환하여 출력
-                    // 서버에서 반환된 사용자 이름 처리
-                    if (data.name) {
-                        alert('사용자 이름: ' + data.name);
-                    } else {
-                        alert('해당 전화번호에 대한 사용자가 없습니다.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        }).catch((error) => {
-            console.log(error);
-            // 인증 실패 처리
-        });
-    })
-
-
-
-</script>
-
+</div>
 
 </html>
