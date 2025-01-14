@@ -10,10 +10,13 @@
 <body>
 
 <div class="container">
+  <!-- 채팅방 제목 -->
   <h1 th:text="${room.name}">Room Name</h1>
 
+  <!-- 채팅 메시지 표시 영역 -->
   <div id="msgArea" class="col"></div>
 
+  <!-- 메시지 입력 영역 -->
   <div class="col-6">
     <div class="input-group mb-3">
       <input type="text" id="msg" class="form-control">
@@ -28,21 +31,20 @@
   /*<![CDATA[*/
   $(document).ready(function() {
 
+    // Thymeleaf 변수를 자바스크립트로 가져오기
     var roomName = [[${room.name}]];
     var roomId = [[${room.roomId}]];
     var username = [[${#authentication.principal.username}]];
 
-    console.log(roomName + ", " + roomId + ", " + username);
+    console.log("Room: " + roomName + ", RoomId: " + roomId + ", Username: " + username);
 
-    var sockJs = new SockJS("/stomp/chat");
-    //1. SockJS를 내부에 들고있는 stomp를 내어줌
-    var stomp = Stomp.over(sockJs);
+    var sockJs = new SockJS("/stomp/chat"); // SockJS 서버와 연결
+    var stomp = Stomp.over(sockJs); // STOMP 프로토콜을 SockJS와 함께 사용
 
-    //2. connection이 맺어지면 실행
     stomp.connect({}, function () {
       console.log("STOMP Connection");
 
-      //4. subscribe(path, callback)으로 메세지를 받을 수 있음
+      // 채팅방 메시지 구독
       stomp.subscribe("/sub/chat/room/" + roomId, function (chat) {
         var content = JSON.parse(chat.body);
         var message = content.message;
@@ -54,29 +56,32 @@
           str += "<div class='alert alert-secondary'>";
           str += "<b>" + writer + " : " + message + "</b>";
           str += "</div></div>";
-        }
-        else {
+        } else {
           str = "<div class='col-6'>";
           str += "<div class='alert alert-warning'>";
           str += "<b>" + writer + " : " + message + "</b>";
           str += "</div></div>";
         }
 
+        // 메시지 추가
         $("#msgArea").append(str);
       });
 
-      //3. send(path, header, message)로 메세지를 보낼 수 있음
+      // 채팅방 입장 메시지 전송
       stomp.send('/pub/chat/enter', {}, JSON.stringify({roomId: roomId, writer: username}));
     });
 
+    // 메시지 전송 버튼 클릭 시
     $("#button-send").on("click", function(e) {
       var msg = document.getElementById("msg");
 
-      console.log(username + ":" + msg.value);
+      console.log(username + ": " + msg.value);
       stomp.send('/pub/chat/message', {}, JSON.stringify({roomId: roomId, message: msg.value, writer: username}));
-      msg.value = '';
+      msg.value = ''; // 메시지 입력창 초기화
     });
   });
+  /*]]>*/
 </script>
+
 </body>
 </html>

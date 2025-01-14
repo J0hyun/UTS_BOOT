@@ -7,6 +7,7 @@ import com.mbc.dto.MemberFormDto;
 import com.mbc.entity.Category;
 import com.mbc.entity.Item;
 import com.mbc.entity.Member;
+import com.mbc.repository.MemberRepository;
 import com.mbc.service.CategoryService;
 import com.mbc.service.ItemService;
 import com.mbc.service.MemberService;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -35,11 +37,13 @@ public class ItemController {
     private final ItemService itemService;
     private final CategoryService categoryService;
     private final MemberService memberService;
+    private final MemberRepository memberRepository;
 
-    public ItemController(ItemService itemService, CategoryService categoryService, MemberService memberService) {
+    public ItemController(ItemService itemService, CategoryService categoryService, MemberService memberService, MemberRepository memberRepository) {
         this.itemService = itemService;
         this.categoryService = categoryService;
         this.memberService = memberService;
+        this.memberRepository = memberRepository;
     }
 
     // 공통 URL 액션 로직을 처리하는 메소드
@@ -58,7 +62,6 @@ public class ItemController {
 
     @GetMapping(value = "/member/item/new")
     public String itemForm(Model model) {
-        log.info("상품등록페이지 get컨트롤러 진입확인");
         setCategoryAttributes(model);
         model.addAttribute("itemFormDto", new ItemFormDto());
         return "item/itemForm";
@@ -72,9 +75,9 @@ public class ItemController {
 
     @PostMapping(value = "/member/item/new")
     public String itemNew(@Valid ItemFormDto itemFormDto, BindingResult bindingResult,
-                          Model model, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList) {
+                          Model model, @RequestParam("itemImgFile") List<MultipartFile> itemImgFileList, Principal principal) {
 
-            setCategoryAttributes(model);
+        setCategoryAttributes(model);
 
         if (itemImgFileList.get(0).isEmpty() && itemFormDto.getId() == null) {
             model.addAttribute("errorMessage", "첫번째 상품 이미지는 필수 입력 값 입니다.");
@@ -87,6 +90,16 @@ public class ItemController {
         }
 
         try {
+            // 로그인한 사용자의 정보를 가져오기
+            String userName = principal.getName(); // Principal에서 로그인한 사용자 이름을 가져옵니다.
+
+            // MemberService를 통해 MemberFormDto로 회원 정보를 가져옵니다.
+            MemberFormDto memberFormDto = memberService.getMemberByUserName(userName);
+
+            // itemFormDto에 memberId 설정
+            itemFormDto.setMemberId(memberFormDto.getMemberId());
+
+            // 아이템 저장
             itemService.saveItem(itemFormDto, itemImgFileList);
         } catch (Exception e) {
             model.addAttribute("errorMessage", "상품 등록 중 에러가 발생하였습니다.");

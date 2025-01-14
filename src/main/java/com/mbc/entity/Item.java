@@ -41,7 +41,7 @@ public class Item extends BaseEntity {
     private ItemSellStatus itemSellStatus; //상품 판매 상태
 
     @Enumerated(EnumType.STRING)
-    private ItemStatus itemStatus; 
+    private ItemStatus itemStatus;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
@@ -59,6 +59,11 @@ public class Item extends BaseEntity {
 
     @Column(nullable = true)
     private String tradeLocation; // 직거래 위치 정보
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id") // 로그인한 사용자와 연관된 필드
+    private Member member; // 아이템을 등록한 사용자
+
 
 
     // OneToMany 관계 추가 (아이템에 대한 리뷰)
