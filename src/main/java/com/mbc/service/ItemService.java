@@ -7,13 +7,16 @@ import com.mbc.dto.MainItemDto;
 import com.mbc.entity.Category;
 import com.mbc.entity.Item;
 import com.mbc.entity.ItemImg;
+import com.mbc.entity.Member;
 import com.mbc.repository.CategoryRepository;
 import com.mbc.repository.ItemImgRepository;
 import com.mbc.repository.ItemRepository;
+import com.mbc.repository.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,31 +33,37 @@ public class ItemService {
     private final ItemImgService itemImgService;
     private final ItemImgRepository itemImgRepository;
     private final CategoryRepository categoryRepository;
+    private final MemberRepository memberRepository;
 
-    public Long saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList)
-        throws Exception{
+    // 상품 등록 메서드
+    public Long saveItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList) throws Exception {
 
-        System.out.println("itemFormDto: " + itemFormDto.toString());
+        // Member 정보 설정: 판매자 (판매자의 memberId)
+        Member member = memberRepository.findById(itemFormDto.getMemberId())
+                .orElseThrow(() -> new EntityNotFoundException("판매자가 존재하지 않습니다."));
 
-        //상품 등록
-        Item item = itemFormDto.createItem();
+
+        // 상품 등록: 판매자와 구매자 정보 포함하여 상품 객체 생성
+        Item item = itemFormDto.createItem(member);  // 판매자와 구매자 정보를 전달하여 아이템 생성
+
+        // 상품 저장
         itemRepository.save(item);
 
-        //이미지 등록
-        for(int i=0; i<itemImgFileList.size(); i++){
-
+        // 이미지 등록
+        for (int i = 0; i < itemImgFileList.size(); i++) {
             ItemImg itemImg = new ItemImg();
-            itemImg.setItem(item);
-            if(i==0)
-                itemImg.setRepimgYn("Y");
+            itemImg.setItem(item);  // 이미지가 속한 상품 설정
+            if (i == 0)
+                itemImg.setRepimgYn("Y");  // 첫 번째 이미지를 대표 이미지로 설정
             else
-                itemImg.setRepimgYn("N");
-            itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));
+                itemImg.setRepimgYn("N");  // 나머지 이미지는 대표 이미지가 아님
+            itemImgService.saveItemImg(itemImg, itemImgFileList.get(i));  // 이미지 파일 저장
         }
 
+        // 등록된 상품의 ID 반환
         return item.getId();
-
     }
+
 
     @Transactional(readOnly = true)
     public ItemFormDto getItemDtl(Long itemId) {
@@ -88,7 +97,7 @@ public class ItemService {
     }
 
     public Long updateItem(ItemFormDto itemFormDto, List<MultipartFile> itemImgFileList)
-        throws Exception{
+            throws Exception{
 
         //상품 수정
         Item item = itemRepository.findById(itemFormDto.getId())

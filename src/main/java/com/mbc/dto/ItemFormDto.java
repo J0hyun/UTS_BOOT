@@ -3,6 +3,7 @@ package com.mbc.dto;
 import com.mbc.constant.ItemSellStatus;
 import com.mbc.constant.ItemStatus;
 import com.mbc.entity.Item;
+import com.mbc.entity.Member;
 import com.mbc.validation.TradeLocationValid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -61,10 +62,17 @@ public class ItemFormDto {
 
     private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
 
+    private Long memberId; // member_id 추가
+
+
+
     private static ModelMapper modelMapper = new ModelMapper();
 
-    public Item createItem(){
-        return modelMapper.map(this, Item.class);
+    // 판매자와 구매자 설정하는 메서드
+    public Item createItem(Member member) {
+        Item item = modelMapper.map(this, Item.class);
+        item.setMember(member);  // 판매자 설정
+        return item;
     }
 
     public static ItemFormDto of(Item item) {
