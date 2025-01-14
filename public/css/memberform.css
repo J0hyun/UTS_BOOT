@@ -2,10 +2,6 @@ p {
     font-size: 14px;
 }
 
-.find a {
-    text-decoration: underline;
-}
-
 .login_api p {
     border-top: 1px solid #eee;
 }
@@ -34,7 +30,6 @@ p {
 
 @media (max-width: 575px){
     .container form,
-    .find,
     .login_api {
         padding-left: 20%;
         padding-right: 20%;
@@ -43,7 +38,6 @@ p {
 
 @media (min-width: 576px) and (max-width: 991px){
     .container form,
-    .find,
     .login_api {
         padding-left: 25%;
         padding-right: 25%;
@@ -52,7 +46,6 @@ p {
 
 @media (min-width: 992px) {
     .container form,
-    .find,
     .login_api {
         padding-left: 30%;
         padding-right: 30%;

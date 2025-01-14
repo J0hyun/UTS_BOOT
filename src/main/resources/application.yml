@@ -109,10 +109,10 @@ logging:
 
 # iamport - 결재 API
 imp:
-  code: imp21758336
+  code: ${IMP_CODE}
   api:
-    key: 8487085842220468
-    secretkey: 5apsf6ZQwdPzTyxWdRB2aqfM4MctrovveHiAwz24oCJUs5OpWzup7gSDnkfqsKmzKa80GoHk8wacNscS
+    key: ${IMP_API_KEY}
+    secretkey: ${IMP_SECRET_KEY}
 
 #    org.springframework.security: DEBUG
 

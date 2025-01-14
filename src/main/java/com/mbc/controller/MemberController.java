@@ -7,6 +7,7 @@ import com.mbc.dto.ReviewFormDto;
 import com.mbc.entity.Item;
 import com.mbc.entity.Member;
 import com.mbc.entity.Review;
+import com.mbc.security.PrincipalDetails;
 import com.mbc.service.ItemService;
 import com.mbc.service.MemberImgService;
 import com.mbc.service.MemberService;
@@ -141,7 +142,15 @@ public class MemberController {
         // 현재 로그인한 사용자 정보로 회원 정보 가져오기
         String username = userDetails.getUsername();
         MemberFormDto memberFormDto = memberService.getMemberInfo(username);
+
+        // OAuth2 사용자 여부 확인
+        boolean isOAuth2User = false;
+        if (userDetails instanceof PrincipalDetails) {
+            isOAuth2User = ((PrincipalDetails) userDetails).isOAuth2User();
+        }
+
         model.addAttribute("memberFormDto", memberFormDto);
+        model.addAttribute("isOAuth2User", isOAuth2User);
         return "member/edit";
     }
 

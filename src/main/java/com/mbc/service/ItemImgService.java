@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.thymeleaf.util.StringUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,14 +38,15 @@ public class ItemImgService {
         if(!StringUtils.isEmpty(oriImgName)){
             imgName = fileService.uploadFile(itemImgLocation, oriImgName,
                     itemImgFile.getBytes());
-            imgUrl = "/images/item/" + imgName;
+
+            // 날짜 경로를 포함한 URL 경로로 imgUrl 설정
+            String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+            imgUrl = "/images/item/" + datePath + "/" + imgName;  // 날짜 경로 포함
 
             //상품 이미지 정보 저장
             itemImg.updateItemImg(oriImgName, imgName, imgUrl);
             itemImgRepository.save(itemImg);
         }
-
-
     }
 
     public void updateItemImgs(Long itemId, List<MultipartFile> itemImgFileList) throws Exception {

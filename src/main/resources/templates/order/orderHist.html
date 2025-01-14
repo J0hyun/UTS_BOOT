@@ -96,7 +96,7 @@
                             <span th:text="${orderItem.count} +'개'"></span>
                         </div>
                         <div class="text-end">
-                            <a href="/review" class="btn btn-sm btn-success mt-3">리뷰 작성하기</a>
+                            <a th:href="'/review/' + ${orderItem.item.id}" class="btn btn-sm btn-success mt-3">상품후기 작성</a>
                         </div>
                     </div>
                 </div>

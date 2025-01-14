@@ -21,10 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import java.io.IOException;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -54,13 +56,10 @@ public class MemberService implements UserDetailsService {
     }
 
     private void validateDuplicateMember(Member member) {
-        Member findMember = memberRepository.findByEmail(member.getEmail());
-        Member findMember2 = memberRepository.findByname(member.getName());
+
+        Member findMember = memberRepository.findByname(member.getName());
 
         if (findMember != null) {
-            throw new IllegalStateException("이미 가입된 이메일입니다");
-        }
-        if (findMember2 != null) {
             throw new IllegalStateException("이미 가입된 아이디입니다");
         }
     }
@@ -258,12 +257,17 @@ public class MemberService implements UserDetailsService {
 
 
     @Transactional
-    public boolean updatePasswordToken(String email) {
-        Member member = memberRepository.findByEmail(email);
+    public String updatePasswordToken(String email, String name) {
+        Member member = memberRepository.findByEmailAndName(email, name);
+
+        // 이메일 또는 아이디에 해당하는 회원 정보가 없는 경우
+        if (member == null) {
+            return "NOT_FOUND"; // 회원 정보가 없음
+        }
 
         // 토큰 발급 제한 시간 확인 (1시간 제한)
         if (member.getTokenExpiration() != null && member.getTokenExpiration().isAfter(LocalDateTime.now())) {
-            return false; // 1시간 이내에 다시 요청하면 false 반환
+            return "TOKEN_LIMIT"; // 1시간 이내 재요청
         }
 
         // 새로운 토큰 생성 및 저장
@@ -272,7 +276,7 @@ public class MemberService implements UserDetailsService {
         member.setTokenExpiration(LocalDateTime.now().plusHours(1)); // 토큰 유효 시간 설정 (1시간)
 
         memberRepository.save(member); // 변경된 사용자 정보 저장
-        return true; // 토큰이 성공적으로 업데이트됨
+        return "SUCCESS"; // 토큰이 성공적으로 업데이트됨
     }
 
 
@@ -289,9 +293,9 @@ public class MemberService implements UserDetailsService {
 
 
     @Transactional
-    public void updatePassword(String newPassword, String email) {
-        // 이메일로 사용자 찾기
-        Member member = memberRepository.findByEmail(email);
+    public void updatePassword(String newPassword, String email, String name) {
+        // 이메일과 아이디로 사용자 찾기
+        Member member = memberRepository.findByEmailAndName(email, name);
 
         // 비밀번호 해싱 후 저장
         String hashedPassword = passwordEncoder.encode(newPassword);
@@ -299,14 +303,15 @@ public class MemberService implements UserDetailsService {
         memberRepository.save(member); // 변경된 사용자 정보 저장
     }
 
-    // 아이디 찾기 기능 추가
-    public String findUsernameByEmail(String email) {
-        Member member = memberRepository.findByEmail(email);
-        if (member != null) {
-            return member.getName(); // 아이디 반환
-        } else {
-            return null; // 이메일에 해당하는 사용자 없을 경우 null 반환
+    // 이메일로 사용자 아이디 목록 찾기
+    public List<String> findUsernameByEmail(String email) {
+        List<Member> members = memberRepository.findAllByEmail(email); // 이메일에 해당하는 모든 회원 찾기
+        if (members != null && !members.isEmpty()) {
+            return members.stream()
+                    .map(Member::getName)  // 사용자 이름(아이디)만 추출
+                    .collect(Collectors.toList());
         }
+        return null; // 해당 이메일에 사용자 없을 경우
     }
 
     // 전화번호로 사용자 이름을 조회하는 메소드
