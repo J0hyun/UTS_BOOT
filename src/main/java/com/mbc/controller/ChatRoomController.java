@@ -2,17 +2,22 @@ package com.mbc.controller;
 
 
 import com.mbc.dto.ChatRoomDTO;
+import com.mbc.entity.ChatRoom;
 import com.mbc.entity.Item;
+import com.mbc.entity.Member;
+import com.mbc.repository.ChatMessageRepository;
 import com.mbc.repository.ChatRoomRepository;
 import com.mbc.repository.ItemRepository;
+import com.mbc.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,57 +25,63 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Log4j2
 public class ChatRoomController {
 
-    private final ChatRoomRepository repository;
-    private final ItemRepository itemRepository; // 상품 관련 repository 추가
+    private final ChatRoomRepository chatRoomRepository;
+    private final ChatMessageRepository chatMessageRepository;
+    private final ItemRepository itemRepository;
+    private final MemberRepository memberRepository;
 
-    // 상품 페이지에서 채팅방으로 이동 (1:1 채팅을 위해 memberId 추가)
+
     @GetMapping("/item/{itemId}/{memberId}")
     public String getItemChat(@PathVariable Long itemId, @PathVariable Long memberId, Model model) {
-        // 상품 정보 조회
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid itemId: "));
+        // itemId와 memberId를 기반으로 채팅방을 찾는 로직
+        Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findByItemIdAndMemberId(itemId, memberId);
 
-        // 상품에 연결된 채팅방 조회 (itemId와 memberId로 조회)
-        ChatRoomDTO chatRoom = repository.findRoomByItemIdAndMemberId(itemId, memberId);
-        if (chatRoom == null) {
-            // 채팅방이 없으면 새로 생성
-            chatRoom = repository.createChatRoomForItemAndMember(itemId, memberId);
+        ChatRoom chatRoom;
+
+        if (chatRoomOptional.isEmpty()) {
+            // 채팅방이 존재하지 않으면 새로 생성
+            Item item = itemRepository.findById(itemId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid itemId"));
+
+            // memberId로 member를 찾습니다.
+            Member member = memberRepository.findById(memberId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid memberId"));
+
+            // member를 포함하여 채팅방을 생성
+            chatRoom = ChatRoom.create("Chat Room for Item " + itemId, item, member);
+            chatRoomRepository.save(chatRoom);  // 생성된 채팅방 저장
+        } else {
+            chatRoom = chatRoomOptional.get();
         }
 
-        model.addAttribute("item", item);
+        // 채팅방과 메시지 데이터를 모델에 추가
         model.addAttribute("room", chatRoom);
+        model.addAttribute("messages", chatMessageRepository.findByRoomId(chatRoom.getRoomId())); // 이전 메시지 추가
 
         return "chat/room";
     }
 
+    // 채팅방 생성
+    @PostMapping("/create")
+    public String createChatRoom(@RequestParam Long itemId, @RequestParam Long memberId, @RequestParam String name, RedirectAttributes redirectAttributes) {
+        // itemId로 item을 찾고, 채팅방 생성
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid itemId"));
 
-    //채팅방 목록 조회
-    @GetMapping(value = "/rooms")
-    public ModelAndView rooms(){
+        // memberId로 member를 찾습니다.
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid memberId"));
 
-        log.info("# All Chat Rooms");
-        ModelAndView mv = new ModelAndView("chat/rooms");
+        // member와 item을 포함하여 채팅방을 생성
+        ChatRoom chatRoom = ChatRoom.create(name, item, member);
 
-        mv.addObject("list", repository.findAllRooms());
+        // 채팅방 저장
+        chatRoomRepository.save(chatRoom);
 
-        return mv;
+        // 생성된 채팅방으로 리디렉션
+        redirectAttributes.addAttribute("roomId", chatRoom.getRoomId());
+        return "redirect:/chat/item/{itemId}";
     }
 
-    //채팅방 개설
-    @PostMapping(value = "/room")
-    public String create(@RequestParam String name, RedirectAttributes rttr){
 
-        log.info("# Create Chat Room , name: " + name);
-        rttr.addFlashAttribute("roomName", repository.createChatRoomDTO(name));
-        return "redirect:/chat/rooms";
-    }
-
-    //채팅방 조회
-    @GetMapping("/room")
-    public void getRoom(String roomId, Model model){
-
-        log.info("# get Chat Room, roomID : " + roomId);
-
-        model.addAttribute("room", repository.findRoomById(roomId));
-    }
 }
