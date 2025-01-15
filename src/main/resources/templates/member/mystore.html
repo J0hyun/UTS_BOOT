@@ -70,6 +70,9 @@
 <!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
+        .table a {
+            text-decoration: underline
+        }
         .profile-img {
             width: 17vw;
             height: 17vw;
@@ -160,7 +163,7 @@
                     <tr th:each="item, status: ${items.getContent()}">
                         <td th:text="${item.id}"></td>
                         <td>
-                            <a th:href="'/item/'+${item.id}" th:text="${item.itemNm}"></a>
+                            <a th:href="'/item/'+${item.id}" th:text="${item.itemNm}" class="text-success"></a>
                         </td>
                         <td th:text="${item.itemSellStatus.name() == 'SELL'} ? '판매중' : '품절'"></td>
                         <td th:text="${item.createdBy}" sec:authorize="hasAuthority('ROLE_ADMIN')"></td> <!-- ADMIN만 볼 수 있음 -->

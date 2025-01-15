@@ -127,6 +127,9 @@
         .container img {
             width: 100%;
         }
+        .form-group a {
+            text-decoration: underline;
+        }
     </style>
 </th:block>
 
@@ -182,7 +185,8 @@
             </div>
             <div class="form-group">
                 <label>판 매 자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : </label>
-                <a th:href="@{/store/{memberId}(memberId=${memberId})}" th:text="${item.userName}"></a>
+                <i class="fa-solid fa-shop text-success"></i>
+                <a th:href="@{/store/{memberId}(memberId=${memberId})}" th:text="${item.userName}" class="text-success"></a>
             </div>
 
             <div th:if="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">

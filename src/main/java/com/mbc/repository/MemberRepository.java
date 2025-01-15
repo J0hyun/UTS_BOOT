@@ -20,4 +20,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member findByEmailAndName(String email, String name); // 이메일과 아이디로 사용자 찾기
 
+    List<Member> findAllByPhone(String phone); // 전화번호로 여러 사용자 찾기
+
+
 }
