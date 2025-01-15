@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "review")
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"member", "item", "reviewImgs"})
 public class Review extends BaseEntity {
 
     @Id
@@ -22,26 +22,25 @@ public class Review extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String memberName; //등록자명
+    private String memberName; // 등록자명
 
-    private String reviewDetail; //후기 내용
+    private String reviewDetail; // 후기 내용
 
+    private int rating;
 
-    // 기존의 member와 관계가 설정되어 있는지 확인
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY) // 지연 로딩
     @JoinColumn(name = "member_id")
-    private Member member;  // 또는 Member 엔티티에서 email을 가져올 수 있도록
+    private Member member;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // 지연 로딩
     @JoinColumn(name = "item_id")
-    private Item item; // 해당 상품 (상품에 대한 외래 키)
+    private Item item;
 
+    @OneToOne(fetch = FetchType.LAZY) // 1:1 관계
+    @JoinColumn(name = "order_id")  // Order의 외래 키
+    private Order order;
 
-    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL)
-    private List<ReviewImg> reviewImgs;
-
-
-
-
+    @OneToMany(mappedBy = "review", cascade = CascadeType.ALL) // 다대일 관계
+    private List<ReviewImg> reviewImgs = new ArrayList<>();
 }
+

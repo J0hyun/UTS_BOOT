@@ -35,6 +35,9 @@ public class Order extends BaseEntity {
             , orphanRemoval = true, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)  // cascade 추가
+    private Review review;  // 리뷰와의 관계 추가
+
     // 결제 정보
     String impUid;  // 아임포트 결제 uid
     String merchantUid;  // 주문 번호
