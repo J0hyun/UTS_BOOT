@@ -58,6 +58,9 @@ public class ChatRoomController {
         model.addAttribute("room", chatRoom);
         model.addAttribute("messages", chatMessageRepository.findByRoomId(chatRoom.getRoomId())); // 이전 메시지 추가
 
+        // 모든 채팅방 목록을 모델에 추가
+        model.addAttribute("rooms", chatRoomRepository.findAll());  // 모든 채팅방 목록
+
         return "chat/room";
     }
 
@@ -83,5 +86,32 @@ public class ChatRoomController {
         return "redirect:/chat/item/{itemId}";
     }
 
+    @GetMapping(value = "/rooms")
+    public ModelAndView rooms() {
+        log.info("# All Chat Rooms");
+
+        // 채팅방 목록을 가져옵니다
+        ModelAndView mv = new ModelAndView("chat/rooms");
+        mv.addObject("list", chatRoomRepository.findAll()); // 모든 채팅방 목록
+
+        return mv;
+    }
+
+    @GetMapping("/room")
+    public String getRoom(@RequestParam Long roomId, Model model) {
+        log.info("# get Chat Room, roomID : " + roomId);
+
+        // roomId로 채팅방을 조회합니다
+        ChatRoom chatRoom = chatRoomRepository.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid roomId"));
+
+        // 모델에 채팅방 데이터를 추가
+        model.addAttribute("room", chatRoom);
+
+        // 해당 채팅방에 관련된 메시지를 모델에 추가 (옵션)
+        model.addAttribute("messages", chatMessageRepository.findByRoomId(roomId)); // 이전 메시지 추가
+
+        return "chat/room"; // 채팅방 뷰로 이동
+    }
 
 }
