@@ -30,6 +30,7 @@ public class OrderService {
     private final ItemImgRepository itemImgRepository;
     private final OrderItemRepository orderItemRepository;
     private final PaymentService paymentService;
+    private final ReviewRepository reviewRepository;
 
     public Long order(OrderDto orderDto, String name, String impUid, String merchantUid){
         Item item = itemRepository.findById(orderDto.getItemId())
@@ -60,7 +61,10 @@ public class OrderService {
             for (OrderItem orderItem : ordersItems) {
                 ItemImg itemImg = itemImgRepository.findByItemIdAndRepimgYn(
                         orderItem.getItem().getId(),"Y");
-                OrderItemDto orderItemDto = new OrderItemDto(orderItem, itemImg.getImgUrl());
+                // 리뷰 존재 여부 확인
+                boolean reviewExists = reviewRepository.existsByItemAndMemberName(
+                        orderItem.getItem(), order.getMember().getName());
+                OrderItemDto orderItemDto = new OrderItemDto(orderItem, itemImg.getImgUrl(),reviewExists);
                 orderHistDto.addOrderItemDto(orderItemDto);
             }
 
