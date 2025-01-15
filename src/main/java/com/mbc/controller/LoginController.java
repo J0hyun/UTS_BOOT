@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,21 +75,22 @@ public class LoginController {
 
     @PostMapping("/get-user-name")
     @ResponseBody
-    public ResponseEntity<Map<String, String>> getUserName(@RequestBody Map<String, String> request) {
+    public ResponseEntity<Map<String, Object>> getUserName(@RequestBody Map<String, String> request) {
         log.info("컨트롤러 진입");
         String phoneNumber = request.get("phone");
 
         log.info("번호확인:"+ phoneNumber);
 
         // 서비스 레이어 호출하여 사용자 이름 조회
-        String userName = memberService.getUserNameByPhoneNumber(phoneNumber);
+        List<String> userNames = memberService.findUsernameByPhone(phoneNumber);
 
         // 결과 반환
-        Map<String, String> response = new HashMap<>();
-        if (userName != null && !userName.isEmpty()) {
-            response.put("name", userName);
+        Map<String, Object> response = new HashMap<>();
+        if (userNames != null && !userNames.isEmpty()) {
+            response.put("names", userNames);
         } else {
-            response.put("name", "");  // 사용자 없음
+            response.put("names", new ArrayList<>()); // 사용자 없음
+            response.put("message", "해당 전화번호로 등록된 사용자가 없습니다.");
         }
 
         return ResponseEntity.ok(response);

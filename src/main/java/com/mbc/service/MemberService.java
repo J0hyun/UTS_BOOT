@@ -238,7 +238,7 @@ public class MemberService implements UserDetailsService {
     public void deleteMember(String username) {
         Member member = memberRepository.findByname(username);
         if (member != null) {
-            // 상태와 개인정보 삭제
+            // 상태정보변경 및 개인정보 삭제
             member.setStatus(MemberStatus.DELETED);
             member.setAddress(null);
             member.setEmail(null);
@@ -314,18 +314,16 @@ public class MemberService implements UserDetailsService {
         return null; // 해당 이메일에 사용자 없을 경우
     }
 
-    // 전화번호로 사용자 이름을 조회하는 메소드
-    public String getUserNameByPhoneNumber(String phoneNumber) {
-        log.info("서비스 진입");
-        // 레파지토리에서 사용자 조회
-        Member user = memberRepository.findByPhone(phoneNumber);
-
-        log.info("멤버확인:"+ user);
-        // 사용자 이름 반환
-        if (user != null) {
-            return user.getName();
+    // 전화번호로 사용자 이름 목록 조회
+    public List<String> findUsernameByPhone(String phone) {
+        List<Member> members = memberRepository.findAllByPhone(phone); // 전화번호로 모든 회원 찾기
+        if (members != null && !members.isEmpty()) {
+            return members.stream()
+                    .map(Member::getName)  // 사용자 이름(아이디)만 추출
+                    .collect(Collectors.toList());
         }
-        return null;  // 사용자 없으면 null 반환
+        return null; // 해당 전화번호에 사용자 없을 경우
     }
+
 
 }
