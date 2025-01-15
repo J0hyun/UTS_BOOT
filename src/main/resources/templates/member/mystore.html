@@ -18,7 +18,7 @@
 
             if(errorMessage != null){
                 alert(errorMessage);
-                location.href = '/orders/' + [[${page}]];
+                // location.href = '/orders/' + [[${page}]];
             }
 
             // message가 null이 아니면 알림
@@ -203,8 +203,14 @@
                                     <span th:text="${orderItem.count} +'개'"></span>
                                 </div>
                                 <div class="text-end">
-                                    <!-- 리뷰 작성 버튼 추가 -->
-                                    <a th:href="'/review/' + ${orderItem.item.id}" class="btn btn-sm btn-success mt-3">상품후기 작성</a>
+                                    <div th:if="${orderItem.reviewExists}">
+                                        <!-- 리뷰 수정 버튼 -->
+                                        <a th:href="'/review/edit/' + ${orderItem.item.id} + '?memberName=' + ${#authentication.principal.username}" class="btn btn-sm btn-warning mt-3">상품후기 수정</a>
+                                    </div>
+                                    <div th:if="${!orderItem.reviewExists}">
+                                        <!-- 리뷰 작성 버튼 -->
+                                        <a th:href="'/review/' + ${orderItem.item.id}" class="btn btn-sm btn-success mt-3">상품후기 작성</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -253,7 +259,7 @@
             </div>
 
             <!-- 리뷰가 없을 때 메시지 표시 -->
-            <p class="text-center mt-5" th:if="${reviews == null or #lists.isEmpty(reviews)}">작성한 상품 후기가 없습니다.</p>
+            <p class="text-center mt-5" th:if="${reviews == null or #lists.isEmpty(reviews)}">작성된 상품 후기가 없습니다.</p>
         </div>
     </div>
 </div>

@@ -23,7 +23,11 @@ public class ReviewFormDto {
 
     private String itemName; // 상품명 추가
 
+    private Long itemId;
+
     private int rating; // 별점 추가 (1~5)
+
+    private Long orderId; // 주문 ID 추가
 
     private List<ReviewImgDto> reviewImgDtoList = new ArrayList<>();
 

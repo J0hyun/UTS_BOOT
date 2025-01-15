@@ -114,6 +114,31 @@
                 }
             });
         });
+
+        // 기존의 별점 불러오기
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectedRating = /*[[${reviewFormDto.rating}]]*/ 0; // 서버에서 전달된 별점 값
+
+            if (selectedRating) {
+                const stars = document.querySelectorAll('.star-rating > .star');
+                let selectedStar = stars[selectedRating - 1]; // 예: 별점 3이면 index 2에 해당하는 star 선택
+                selectedStar.checked = true;
+            }
+
+            // 별점 클릭 처리
+            document.querySelectorAll('.star-rating > .star').forEach(star => {
+                star.addEventListener('click', function() {
+                    const stars = star.parentElement.children;
+                    Array.from(stars).forEach(s => s.classList.remove('on'));
+                    star.classList.add('on');
+                    let prev = star.previousElementSibling;
+                    while (prev) {
+                        prev.classList.add('on');
+                        prev = prev.previousElementSibling;
+                    }
+                });
+            });
+        });
     </script>
 </th:block>
 
@@ -121,12 +146,23 @@
     <h2 class="pb-2 mb-4">상품 후기 등록</h2>
 
     <!-- 리뷰 등록 폼 시작 -->
-    <form th:action="@{/review}" method="post" th:object="${reviewFormDto}" enctype="multipart/form-data">
+    <form th:action="@{'/review/edit/' + ${reviewFormDto.id}}" method="post" th:object="${reviewFormDto}" enctype="multipart/form-data">
 
-        <!-- itemId를 히든 필드로 전송 -->
+    <!-- Id를 히든 필드로 전송 -->
+        <input type="hidden" th:field="*{id}" />
+
+    <!-- itemId를 히든 필드로 전송 -->
         <input type="hidden" th:field="*{itemId}" />
-        <!-- orderId를 히든 필드로 전송 -->
-        <input type="hidden" th:field="*{orderId}"/>
+
+        <!-- 리뷰 이미지 표시 -->
+        <div class="form-group mb-3" th:if="${not #lists.isEmpty(reviewFormDto.reviewImgDtoList)}">
+            <label>현재 리뷰 이미지</label>
+            <div th:each="imgDto : ${reviewFormDto.reviewImgDtoList}">
+                <div>
+                    <img th:src="@{${imgDto.imgUrl}}" alt="Review Image" class="img-thumbnail" style="max-width: 150px; max-height: 150px;" />
+                </div>
+            </div>
+        </div>
 
         <!-- 이미지 파일 입력 부분 -->
         <div class="form-group mb-3">
@@ -143,14 +179,16 @@
         <!-- 등록자명 (자동으로 로그인한 사용자명 채워짐) -->
         <div class="form-group mb-3">
             <label for="memberName">등록자명</label>
-            <input type="text" th:field="*{memberName}" class="form-control" id="memberName" readonly/>
+            <input type="text" th:field="*{memberName}" class="form-control" id="memberName" readonly
+                   style="background-color: #f8f9fa; cursor: not-allowed;" />
             <p th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}" class="error text-danger">Incorrect data</p>
         </div>
 
         <!-- 상품명 (자동으로 채워짐) -->
         <div class="form-group mb-3">
             <label for="itemName">상품명</label>
-            <input type="text" th:field="*{itemName}" class="form-control" id="itemName" readonly/>
+            <input type="text" th:field="*{itemName}" class="form-control" id="itemName" readonly
+                   style="background-color: #f8f9fa; cursor: not-allowed;" />
         </div>
 
         <!-- 후기 내용 -->
@@ -162,17 +200,16 @@
 
         <!-- 별점 -->
         <div class="star-rating">
-            <input type="radio" class="star" name="rating" value="1">
-            <input type="radio" class="star" name="rating" value="2">
-            <input type="radio" class="star" name="rating" value="3">
-            <input type="radio" class="star" name="rating" value="4">
-            <input type="radio" class="star" name="rating" value="5">
+            <input type="radio" class="star" th:field="*{rating}" value="1" th:checked="${reviewFormDto.rating == 1}">
+            <input type="radio" class="star" th:field="*{rating}" value="2" th:checked="${reviewFormDto.rating == 2}">
+            <input type="radio" class="star" th:field="*{rating}" value="3" th:checked="${reviewFormDto.rating == 3}">
+            <input type="radio" class="star" th:field="*{rating}" value="4" th:checked="${reviewFormDto.rating == 4}">
+            <input type="radio" class="star" th:field="*{rating}" value="5" th:checked="${reviewFormDto.rating == 5}">
         </div>
-
 
         <!-- 제출 버튼 -->
         <div class="text-center mt-5">
-            <button type="submit" class="btn btn-success">등록하기</button>
+            <button type="submit" class="btn btn-warning">수정하기</button>
         </div>
 
         <!-- CSRF 보호 -->
