@@ -68,13 +68,10 @@
             event.preventDefault();
             const code = document.getElementById('confirmCode').value;
             confirmationResult.confirm(code).then((result) => {
-                // 인증 성공 후 사용자 정보 가져오기
                 const user = result.user;
                 const phoneNumber = (user.phoneNumber).replace('+82', '');
-                ;
-                // 전화번호에서 +82 제거
 
-                console.log("폰번호" + phoneNumber)
+                console.log("폰번호" + phoneNumber);
 
                 // 서버로 전화번호 보내기
                 fetch('/get-user-name', {
@@ -82,14 +79,15 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({phone: phoneNumber})
+                    body: JSON.stringify({ phone: phoneNumber })
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log("데이터값:", JSON.stringify(data, null, 2));  // 객체를 문자열로 변환하여 출력
-                        // 서버에서 반환된 사용자 이름 처리
-                        if (data.name) {
-                            alert('사용자 이름: ' + data.name);
+                        const userNames = data.names;
+
+                        if (userNames && userNames.length > 0) {
+                            // 사용자 이름 배열을 콤마로 연결하여 알림 표시
+                            alert('사용자 이름: ' + userNames.join(', '));
                         } else {
                             alert('해당 전화번호에 대한 사용자가 없습니다.');
                         }
@@ -101,7 +99,8 @@
                 console.log(error);
                 // 인증 실패 처리
             });
-        })
+        });
+
 
     </script>
 </th:block>

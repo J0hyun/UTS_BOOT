@@ -98,7 +98,7 @@
         <div style="text-align: center">
             <button type="submit" class="btn btn-success">회원정보 수정</button>
             <!-- 회원 탈퇴 버튼 -->
-            <button type="button" id="deleteAccountBtn" class="btn btn-outline-danger">회원 탈퇴</button>
+            <button type="button" id="deleteAccountBtn" class="btn btn-outline-danger" th:if="${!isOAuth2User}">회원 탈퇴</button>
         </div>
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     </form>
