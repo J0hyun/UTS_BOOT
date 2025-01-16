@@ -5,47 +5,40 @@
 
 ## 📚 목차 📚
 
-01. [📂 PPT](#-PPT-)
+01. [📂 프로젝트 보고서](#-프로젝트-보고서-)
 02. [📖 프로젝트 소개](#-프로젝트-소개)
 03. [💡 기획 의도](#기획-의도)
 04. [🙋‍♀️ Team_Member](#%EF%B8%8F-team_member-%EF%B8%8F)
-05. [📋 개발 일지](#개발-일지)
-06. [📈  요구 명세서](#-요구-명세서-)
 07. [📊 Diagram](#-다이어그램-)
 08. [📹 기능 설명](#-기능-설명-)
 09. [🔨개발 환경](#-개발-환경-)
 10. [🤐개선 사항](#-개선-사항-)
 
 
-## 📂 PPT 📂
-
-
-
-<details><summary>PPT</summary>     
-
+## 📂 프로젝트 보고서 📂
+<details><summary>프로젝트 보고서</summary>     
 ### [중고거래플랫폼_프로젝트_보고서](https://github.com/user-attachments/files/18432604/_._.1.pdf)
        
-<div align="center">          
+<div align="center">         
 
-| **![1](https://github.com/NovTeamProject/Team_Project/assets/145524959/48aeac2a-f3ba-4cc4-92b7-3abfe5b2b07f)** | **![2](https://github.com/NovTeamProject/Team_Project/assets/145524959/99c3afa6-9296-4f72-8e71-aa9c18b49b46)** |
+| **![1](https://github.com/user-attachments/assets/c917e955-89c8-4750-a0e9-5d59e3cf3464)** | **![2](https://github.com/user-attachments/assets/e11c7473-aed3-475d-b183-0a8b2ed1d7fe)** |
 | :------: |  :------: |
-|  ![3](https://github.com/NovTeamProject/Team_Project/assets/145524959/c5cca349-5b02-4beb-b3e5-0bec8168e3cf) | ![4](https://github.com/NovTeamProject/Team_Project/assets/145524959/51548346-94c7-42ab-879c-f54e58726b04) |
-| ![5](https://github.com/NovTeamProject/Team_Project/assets/145524959/fabfac83-ca73-45e9-af1a-cfd44ad06325) | ![6](https://github.com/NovTeamProject/Team_Project/assets/145524959/de6daaea-7c34-4d9c-9a01-a0d7c1aeab0a)  |
-|  ![7](https://github.com/NovTeamProject/Team_Project/assets/145524959/39a6c918-5a80-4e1c-a2e7-639d1063425b) |  ![8](https://github.com/NovTeamProject/Team_Project/assets/145524959/3f27d306-3381-4827-bcb9-1944f5243037)  |
-|  ![9](https://github.com/NovTeamProject/Team_Project/assets/145524959/9ec61b5c-94d3-491b-b0d0-70329a6684d8)  |  ![10](https://github.com/NovTeamProject/Team_Project/assets/145524959/34c87fb2-5b27-4b9b-8c93-cc0ec8f5c003) |  
-| ![11](https://github.com/NovTeamProject/Team_Project/assets/145524959/b038f427-4b26-4dc2-bfad-0f8dec993e39)  | ![12](https://github.com/NovTeamProject/Team_Project/assets/145524959/4cf2135c-5c42-4a97-8db6-9dfebd6031d1)  |
-| ![13](https://github.com/NovTeamProject/Team_Project/assets/145524959/87bed763-162a-4262-8e63-d72ba2b28134) |  ![14](https://github.com/NovTeamProject/Team_Project/assets/145524959/0eb4ca61-5108-4f14-afc1-0cafd04fb108)  |
-| ![15](https://github.com/NovTeamProject/Team_Project/assets/145524959/b8d941f0-2000-49e0-8689-5a6b6808ffd3) |  ![16](https://github.com/NovTeamProject/Team_Project/assets/145524959/0ba7ae6f-ff8e-41b4-81f7-3fea5ab57774)  |
-| ![17](https://github.com/NovTeamProject/Team_Project/assets/145524959/9b7c4f8e-73b3-4434-8ec7-cf39c3489e1c) |  ![18](https://github.com/NovTeamProject/Team_Project/assets/145524959/4dd7eebf-b04c-4c3b-9636-5bd820c1fdbf)  |
-| ![19](https://github.com/NovTeamProject/Team_Project/assets/145524959/5fc78ea9-fef1-41ca-9654-d0c4a936cf23) |  ![20](https://github.com/NovTeamProject/Team_Project/assets/145524959/986255d9-eb93-41a6-819d-77e1514057ee)  |
-| ![21](https://github.com/NovTeamProject/Team_Project/assets/145524959/ad06925b-9563-4dde-9eb6-e17ac648c4f2) |  ![22](https://github.com/NovTeamProject/Team_Project/assets/145524959/f83dc490-7abf-484f-a9b5-a7495089861f)  |
-| ![23](https://github.com/NovTeamProject/Team_Project/assets/145524959/f0f7fbdf-9a7b-4a61-9dd0-8a401ad89400)  | ![24](https://github.com/NovTeamProject/Team_Project/assets/145524959/1a1d22fe-17db-409e-aabb-3d3afec3199d)  |
-| ![25](https://github.com/NovTeamProject/Team_Project/assets/145524959/f5553253-112b-4f8a-a182-f9ced0b8cdc7) | ![26](https://github.com/NovTeamProject/Team_Project/assets/145524959/1938033e-0a16-4b1d-aff3-27e4bac7e262)  |
-| ![27](https://github.com/NovTeamProject/Team_Project/assets/145524959/4feb532e-1845-4d2c-b336-d95efc60d7e9) | ![28](https://github.com/NovTeamProject/Team_Project/assets/145524959/5d3ea8b6-391d-4e87-b222-76e453861e97)  |
-|  ![29](https://github.com/NovTeamProject/Team_Project/assets/145524959/bb4e118c-7c50-401c-85c1-3bcfdd91daed)  | ![30](https://github.com/NovTeamProject/Team_Project/assets/145524959/dfe02839-85d8-4b1d-b8cf-eb233de681cf)  |
-|  ![31](https://github.com/NovTeamProject/Team_Project/assets/145524959/aed8b835-592d-48b0-84f4-71d4008c52e7)  |  ![32](https://github.com/NovTeamProject/Team_Project/assets/145524959/51a3f0ce-5882-49e8-89c9-37616d797c18)  |
-|  ![33](https://github.com/NovTeamProject/Team_Project/assets/145524959/5e741260-768e-430c-ad68-0adc846b658a)  |  ![35](https://github.com/NovTeamProject/Team_Project/assets/145524959/972d51e1-51d0-48ed-bfb7-dc076e2c0acf)   |
-
+|  ![3](https://github.com/user-attachments/assets/9baaa170-c8d0-48f0-a8e7-62e532036a16) | ![4](https://github.com/user-attachments/assets/3b91da9e-dba0-4231-a497-8c2a06e6991b) |
+| ![5](https://github.com/user-attachments/assets/667fdf1d-e8c1-4897-90bb-9230f0b18148) | ![6](https://github.com/user-attachments/assets/8b49ddda-2862-4312-806f-5f70c94c755f)  |
+|  ![7](https://github.com/user-attachments/assets/54a97cd8-5ced-46da-8060-a2f56f2391eb) |  ![8](https://github.com/user-attachments/assets/0a3cc2ed-a9e3-49fa-ac10-d7340e7dabb1)  |
+|  ![9](https://github.com/user-attachments/assets/8ed8b86b-a338-4679-b737-fdfc750e8613)  |  ![10](https://github.com/user-attachments/assets/720a83de-f80e-40be-b07b-fae5d3ef87d6) |  
+| ![11](https://github.com/user-attachments/assets/ed3f5bcf-5dad-451e-bb03-30bf8fb2a9a9)  | ![12](https://github.com/user-attachments/assets/10ab09c7-3f68-4201-9423-a7c2f6c085fd)  |
+| ![13](https://github.com/user-attachments/assets/2a22b275-d582-426a-b4c7-86164df2e7d5) |  ![14](https://github.com/user-attachments/assets/d8fd937b-9c05-4998-91fc-8b421085aaf9)  |
+| ![15](https://github.com/user-attachments/assets/7affe66e-c745-40cb-9c37-085cccadee94) |  ![16](https://github.com/user-attachments/assets/f1fff94a-bc06-4c78-8327-19ee9b9950f6)  |
+| ![17](https://github.com/user-attachments/assets/7633c8d7-ab9c-4d04-bead-a204e5d9dab1) |  ![18](https://github.com/user-attachments/assets/9db48938-5159-4515-97d3-3068f278554a)  |
+| ![19](https://github.com/user-attachments/assets/4a7b8b5d-371c-4352-a711-b6831fccf741) |  ![20](https://github.com/user-attachments/assets/8653920b-4887-4f6a-a9c6-2200a4bcf29c)  |
+| ![21](https://github.com/user-attachments/assets/fc7d7cea-0f6b-47b0-a193-2643a177341c) |  ![22](https://github.com/user-attachments/assets/56ea88b5-2f4c-4680-afe3-7fe892f7e1ef)  |
+| ![23](https://github.com/user-attachments/assets/ff2c66c8-8acf-45e6-ba13-9eb45d573fb3)  | ![24](https://github.com/user-attachments/assets/735fd962-b526-48cd-bc3a-19e438253855)  |
+| ![25](https://github.com/user-attachments/assets/3c9ff154-3cf8-4b21-9e92-5fbbec0a4a72) | ![26](https://github.com/user-attachments/assets/ef70382b-f0be-4b27-a1c0-cc10519f88af)  |
+| ![27](https://github.com/user-attachments/assets/3aeba8b7-7730-46d7-aae2-fbeda645ab63) | ![28](https://github.com/user-attachments/assets/c1c9a536-378d-4a78-b5ce-da172c1c17d5)  |
+|  ![29](https://github.com/user-attachments/assets/7dd8d017-fd08-4821-b0d8-2b2043380a28)  | ![30](https://github.com/user-attachments/assets/623c154d-3db3-4731-94de-88edf41e8653)  |
+|  ![31](https://github.com/user-attachments/assets/807a9703-6487-4e5f-bdb9-80c5e29cc385)  |  ![32](https://github.com/user-attachments/assets/86e1af05-01e9-45a5-9a20-3345978047cd)  |
+|  ![33](https://github.com/user-attachments/assets/077c8adc-d27c-4217-8e3b-4080bb828939)  |  ![34](https://github.com/user-attachments/assets/41372c9d-9849-460a-84c3-20da5146c4c8)  |  ![35]((https://github.com/user-attachments/assets/30ec7e84-020f-4e22-baad-5a096fd5ee76))  |  ![36](https://github.com/user-attachments/assets/0605be47-465f-4970-b0aa-a04522beb376)  |  ![37](https://github.com/user-attachments/assets/5672da8f-f115-4c08-9c68-3fab55f08850)  |  ![38](https://github.com/user-attachments/assets/05a5accb-4c5b-460e-9208-97d601b16a3f)  |  ![39](https://github.com/user-attachments/assets/043561f6-26a1-46c8-9270-18ae16007a23)  |  ![40](https://github.com/user-attachments/assets/5984cfd5-75b4-453d-bf12-112b6bcb6695)  |  ![41](https://github.com/user-attachments/assets/57a94a26-297d-4e49-a81a-0195b506f07c)  |  ![42](https://github.com/user-attachments/assets/f8da4c13-8bc9-4f1e-bda9-2665f06f72a4)  |
 </div>            
 </details>            
       
@@ -80,73 +73,40 @@
 </div>
 
 
-## 📋개발 일지📋
-<details><summary>개발 일지</summary>
-   
-![image](https://github.com/NovTeamProject/Team_Project/assets/145524959/98c68f24-d8dd-4d63-bfeb-3aaac34fad82)
+</div>
 
-</details>
-
-## 📈 요구 명세서 📈
-
-<details><summary>요구 명세서</summary>
-      
-![2023-12-08 09 36 26](https://github.com/NovTeamProject/Team_Project/assets/145963611/e8ec2fb7-9680-4603-8470-39389275448c)
-
-      
-</details>
-  
+ 
 
 ## 📊 다이어그램 📊
 
 <details><summary>Usecase</summary>
       
-![스크린샷 2023-12-06 142455](https://github.com/NovTeamProject/Team_Project/assets/145963611/b943fdb3-2e12-4aae-b0c6-42545e25c6d7)
+![usecase](https://github.com/user-attachments/assets/27e792e0-8f54-4523-b2de-1f938a019fe4)
 
-</details>
-
-<details><summary>Class</summary>
-
-![클래스다이어그램](https://github.com/NovTeamProject/Team_Project/assets/145524959/486e1e58-677c-4171-bd4d-27857887b0fd)
-
-
-</details>
-
-<details><summary>Sequence</summary>
-<br/>
-
-1. 비회원 시퀀스 다이어그램    
-![비회원시퀀스](https://github.com/NovTeamProject/Team_Project/assets/145524959/166fdbd3-ce41-4a98-a44a-37714a465a3b)
-
-
-
-2. 학생 시퀀스 다이어그램   
-![학생시퀀스](https://github.com/NovTeamProject/Team_Project/assets/145524959/596656a8-3a36-4a63-9c6c-ed9efab58222)
-
-
-
-3. 선생님 시퀀스 다이어그램        
-![선생님시퀀스](https://github.com/NovTeamProject/Team_Project/assets/145524959/b96161d2-32fb-4485-abb9-c58a20d3cb7a)
-
-
-</details>
-
-
-
-<details><summary>Block</summary>
-
-![image](https://github.com/NovTeamProject/Team_Project/assets/145963790/9d167256-abeb-4056-8f2b-1515affe0681)
-
-
-    
 </details>
 
 <details><summary>ERD</summary>
       
-![image](https://github.com/NovTeamProject/Team_Project/assets/145963790/28ea304e-af0e-4809-ad74-59fd76712b97)
+![used_trade_site_ERD](https://github.com/user-attachments/assets/b13bddf5-ddf7-4959-a893-f9af93b3dbc1)
 
-    
 </details>
+
+<details><summary>Class Diagram</summary>
+
+1. Member
+![Member](https://github.com/user-attachments/assets/e198d9f1-2abe-4793-b0d4-2cb04ff53ed3)
+
+2. Item
+![Item](https://github.com/user-attachments/assets/d44b8266-e71d-4146-b406-d13790da1aa8)
+
+3. Review
+![Review](https://github.com/user-attachments/assets/484cff66-750d-41b1-bcac-e2c98ed36ddf)
+
+4. Chat
+![Chat](https://github.com/user-attachments/assets/049a3f9c-1f7d-4bca-9a1c-dc9ebf0e7dbb)
+
+</details>
+
 
 ## 📹 기능 설명 📹
 
