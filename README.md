@@ -17,7 +17,7 @@
 
 ## 📂 프로젝트 보고서 📂
 <details><summary>프로젝트 보고서</summary>     
-### [중고거래플랫폼_프로젝트_보고서](https://github.com/user-attachments/files/18432604/_._.1.pdf)
+### [프로젝트 보고서](https://github.com/user-attachments/files/18432604/_._.1.pdf)
        
 <div align="center">         
 
@@ -63,6 +63,7 @@
 | **김원준** | **이종현** | **안정운** |
 | :------: |  :------: | :------: |
 | [<img src="https://github.com/user-attachments/assets/9447c30f-f941-4c4f-b6bf-27a17cfb369c" height=166 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://github.com/user-attachments/assets/c6f3e2cd-2a1b-4573-8497-804a524c653f" height=166 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://github.com/user-attachments/assets/57c92b8b-9d19-41bd-9c8a-7924e733db98" height=166 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
+
 | Spring Security 로그인<br>회원정보 등록/수정/탈퇴<br>상품 등록/수정/삭제<br>이미지(상품,프로필,상품후기) 등록/수정<br>Google, Naver, Kakao로그인API<br>비밀번호찾기–메일서비스<br>전화번호인증 | 리뷰등록 및 조건구현<br>WebSocket, Stomp로 실시간양방향 채팅구현 |  전체적인 프론트엔드<br>내상점 페이지 요청처리<br>상품등록 카테고리 ajax<br>메인/상품관리페이지페이징및검색<br>결제API(포트원) 적용<br>주소API 적용 |
 
 </div>
