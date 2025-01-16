@@ -16,8 +16,9 @@
 
 
 ## 📂 프로젝트 보고서 📂
-<details><summary>프로젝트 보고서</summary>     
-### [프로젝트 보고서](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
+<details><summary>프로젝트 보고서</summary>
+
+### [보고서 뷰어](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
        
 <div align="center">         
 
@@ -285,7 +286,7 @@ https://github.com/NovTeamProject/Team_Project/assets/145524959/44ee29cc-996b-4b
 <div>
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=fff"/>
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=fff"/>
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=fff"/><br>
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=333"/><br>
 <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=fff"/>
 <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=fff"/>
 <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=fff"/>
