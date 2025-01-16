@@ -17,12 +17,11 @@
 
 ## 📂 프로젝트 보고서 📂
 <details><summary>프로젝트 보고서</summary>
-     
+
 ### [보고서 뷰어](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
 
-[보고서 뷰어](https://github.com/user-attachments/files/18435127/_._.1.pdf)
-       
-<div align="center">         
+<div align="center">
+  
 
 | **![1](https://github.com/user-attachments/assets/c917e955-89c8-4750-a0e9-5d59e3cf3464)** | **![2](https://github.com/user-attachments/assets/e11c7473-aed3-475d-b183-0a8b2ed1d7fe)** |
 | :------: |  :------: |
@@ -181,35 +180,29 @@ https://github.com/user-attachments/assets/a1231d22-90f0-4554-ac4c-12cdb337f274
 
 ## 🔨 개발 환경 🔨
 
-**Back-End** 
 <div>
+
+**Back-End**<br>
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=fff">
+<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=fff">
 <br>
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=fff">
-<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=fff">
-</div>
 <br>
 
-**Front-End** 
-<div>
+**Front-End**<br>
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=fff"/>
 <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=fff"/>
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=fff"/><br>
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=333"/><br>
 <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=fff"/>
 <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=fff"/>
 <img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=fff"/>
-</div> 
 <br>
 
-**Tools** 
-<div>
+**Tools**<br>
 <img src="https://img.shields.io/badge/IntelliJIDEA-000000?style=for-the-badge&logo=intellijidea&logoColor=fff">
-
-</div>  
 <br>
 
-**Collaboration** 
-<div>
+**Collaboration**<br>
 <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=fff">
 <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=fff">
 <br>
