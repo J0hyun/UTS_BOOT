@@ -76,7 +76,7 @@
 | **김원준** | **이종현** | **안정운** |
 | :------: |  :------: | :------: |
 | [<img src="https://github.com/user-attachments/assets/bc978a09-9607-4132-9e84-a6692df41c9e" height=150 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://github.com/user-attachments/assets/b8c1b68f-3998-4eb4-bdc9-b47893de44c1" height=150 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://github.com/user-attachments/assets/4ce3300c-95d9-4b0a-9827-cfe162111d7c" height=150 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
-| 로그인, 회원가입<br>명예의 전당<br>정답 서비스<br>기능 구현<br>Git Hub 관리 | DB 설계 및 Query 작성 <br> MyBatis구축 <br> 학생, 선생님 강의 시스템 <br> 기능 구현 <br> AWS 배포 |  Query 작성<br> 질의 응답 게시판<br>기능 구현<br>발표 자료 준비<br>DB 관리 | 나의 강의실<br> 강의 상세 페이지<br> 기능 구현<br>웹 디자인 설계 <br>노션 관리 <br>| 
+| 로그인 API<br> 아이디, 비밀번호 찾기 <br>회원,상품 등록/수정/삭제 <br>Git Hub 관리 | 리뷰 등록/수정/삭제 <br> 실시간 양방향 채팅 (WebSocket, Stomp) |  프론트엔드 <br> 결제 API <br> 배송 정보에 주소 API <br>발표 자료 준비
 
 </div>
 
