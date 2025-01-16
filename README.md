@@ -20,7 +20,7 @@
      
 ### [보고서 뷰어](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
 
-[중고거래플랫폼_프로젝트_보고서 (1).pdf](https://github.com/user-attachments/files/18435127/_._.1.pdf)
+[보고서 뷰어](https://github.com/user-attachments/files/18435127/_._.1.pdf)
        
 <div align="center">         
 
