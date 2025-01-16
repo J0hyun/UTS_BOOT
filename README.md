@@ -16,8 +16,9 @@
 
 
 ## 📂 프로젝트 보고서 📂
-<details><summary>프로젝트 보고서</summary>     
-[보고서 뷰어](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
+<details><summary>프로젝트 보고서</summary>
+     
+###[보고서 뷰어](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
        
 <div align="center">         
 
