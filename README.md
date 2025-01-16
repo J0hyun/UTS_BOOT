@@ -114,7 +114,7 @@
 <details><summary>메인화면</summary>
 <br/>
 
-https://github.com/user-attachments/assets/4aecaaaf-e23e-4038-98b6-240bddcd2c67
+https://github.com/user-attachments/assets/4b8ccec3-08dc-4850-8ba7-21c8cabd53a1
 
 </details>
 
