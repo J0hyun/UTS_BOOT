@@ -16,8 +16,11 @@
 
 
 ## 📂 프로젝트 보고서 📂
-<details><summary>프로젝트 보고서</summary>     
-[보고서 뷰어](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
+<details><summary>프로젝트 보고서</summary>
+     
+### [보고서 뷰어](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
+
+[보고서 뷰어](https://github.com/user-attachments/files/18435127/_._.1.pdf)
        
 <div align="center">         
 
@@ -112,19 +115,32 @@
 
 <details><summary>메인화면</summary>
 <br/>
+
+https://github.com/user-attachments/assets/4b8ccec3-08dc-4850-8ba7-21c8cabd53a1
+
 </details>
 
 <details><summary>로그인/회원가입</summary>
 <br/>
+
+https://github.com/user-attachments/assets/a642dad2-1948-4533-a039-177480cad9a6
+
+
 ### [로그인 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherJoinController.java#L25C5-L59C2)
 </details>
 
 <details><summary>아이디/비밀번호찾기</summary>
 <br/>
+
+https://github.com/user-attachments/assets/6b43e36f-528d-4899-8d7a-59bb7c394628
+
 </details>
 
 <details><summary>회원정보 수정/탈퇴</summary>
 <br/>
+
+https://github.com/user-attachments/assets/a1231d22-90f0-4554-ac4c-12cdb337f274
+
 </details>
 
 <details><summary>실시간 채팅하기</summary>
