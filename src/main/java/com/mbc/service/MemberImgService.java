@@ -5,6 +5,7 @@ import com.mbc.repository.ItemRepository;
 import com.mbc.repository.MemberImgRepository;
 import com.mbc.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.Date;
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Log4j2
 public class MemberImgService {
 
     @Value("C:/shop/member")
@@ -40,6 +42,7 @@ public class MemberImgService {
 
             // 이미지 정보 업데이트 및 저장
             memberImg.updateMemberImg(oriImgName, imgName, imgUrl);
+            log.info("이미지경로: " + imgUrl);
             memberImgRepository.save(memberImg);
         }
     }
