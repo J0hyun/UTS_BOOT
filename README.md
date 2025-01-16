@@ -75,8 +75,8 @@
 
 | **김원준** | **이종현** | **안정운** |
 | :------: |  :------: | :------: |
-| [<img src="https://github.com/user-attachments/assets/bc978a09-9607-4132-9e84-a6692df41c9e" height=150 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://github.com/user-attachments/assets/b8c1b68f-3998-4eb4-bdc9-b47893de44c1" height=150 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://github.com/user-attachments/assets/4ce3300c-95d9-4b0a-9827-cfe162111d7c" height=150 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
-| 로그인 API<br> 아이디, 비밀번호 찾기 <br>회원,상품 등록/수정/삭제 <br>Git Hub 관리 | 리뷰 등록/수정/삭제 <br> 실시간 양방향 채팅 (WebSocket, Stomp) |  프론트엔드 <br> 결제 API <br> 배송 정보에 주소 API <br>발표 자료 준비
+| [<img src="https://github.com/user-attachments/assets/bc978a09-9607-4132-9e84-a6692df41c9e" height=166 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://github.com/user-attachments/assets/b8c1b68f-3998-4eb4-bdc9-b47893de44c1" height=166 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://github.com/user-attachments/assets/4ce3300c-95d9-4b0a-9827-cfe162111d7c" height=166 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
+| Spring Security 로그인<br>회원정보 등록/수정/탈퇴<br>상품 등록/수정/삭제<br>이미지(상품,프로필,상품후기) 등록/수정<br>Google, Naver, Kakao로그인API<br>비밀번호찾기–메일서비스<br>전화번호인증 | 리뷰등록 및 조건구현<br>WebSocket, Stomp로 실시간양방향 채팅구현 |  전체적인 프론트엔드<br>내상점 페이지 요청처리<br>상품등록 카테고리 ajax<br>메인/상품관리페이지페이징및검색<br>결제API(포트원) 적용<br>주소API 적용 |
 
 </div>
 
