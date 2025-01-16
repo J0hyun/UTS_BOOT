@@ -19,9 +19,8 @@
 <details><summary>프로젝트 보고서</summary>
 
 ### [보고서 뷰어](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
-       
-<div align="center">         
 
+<div align="center">
 | **![1](https://github.com/user-attachments/assets/c917e955-89c8-4750-a0e9-5d59e3cf3464)** | **![2](https://github.com/user-attachments/assets/e11c7473-aed3-475d-b183-0a8b2ed1d7fe)** |
 | :------: |  :------: |
 |  ![3](https://github.com/user-attachments/assets/9baaa170-c8d0-48f0-a8e7-62e532036a16) | ![4](https://github.com/user-attachments/assets/3b91da9e-dba0-4231-a497-8c2a06e6991b) |
