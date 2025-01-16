@@ -17,7 +17,7 @@
 
 ## 📂 프로젝트 보고서 📂
 <details><summary>프로젝트 보고서</summary>     
-### [프로젝트 보고서](https://github.com/user-attachments/files/18432604/_._.1.pdf)
+### [프로젝트 보고서](https://drive.google.com/file/d/1QlWM33as3ze0NUqn15ajyK0he1h-0C4c/view)
        
 <div align="center">         
 
@@ -44,17 +44,23 @@
       
 ## 📖 프로젝트 소개📖
 
-- 
-- 
-- 
-- 
+아나바다 - 누구나 쉽게 중고 거래를 시작할 수 있는 플랫폼
+
+아나바다는 개인 간 중고 물품 거래를 쉽게 연결해주는 온라인 마켓입니다. 
+사용자는 간단한 회원 가입 후 물품을 판매하거나 구매할 수 있으며, 거래가 안전하고 편리하게 이루어질 수 있도록 다양한 기능을 제공합니다.
+
+- 판매자는 물품을 등록하고 판매할 수 있으며, 판매 중인 물품에 대해 관심을 표명한 구매자와 소통할 수 있습니다.
+- 구매자는 원하는 물품을 검색하고, 원하는 가격에 맞는 물품을 찾아 안전하게 거래할 수 있습니다.
+- 게시판을 통해 물품에 대한 질문 및 거래와 관련된 커뮤니케이션을 쉽게 할 수 있습니다.
 
 ## 💡기획 의도💡
 
-- 
-- 
--
-- 
+- 중고거래 시장의 성장: 최근 몇 년간 중고거래 시장은 급격히 성장했으며, 개인 간 거래가 활성화되고 있습니다. 
+  특히, 경제적인 이유나 환경적 요인으로 중고 거래에 대한 수요가 높아지고 있습니다.
+- 안전하고 편리한 거래 환경 제공: 구매자와 판매자 간의 신뢰를 쌓을 수 있는 안전한 거래 환경을 제공하는 것이 중요합니다. 
+  이를 위해 중고거래에서 발생할 수 있는 여러 문제를 해결할 수 있는 기능들을 제공하고자 합니다.
+- 다양한 연령층을 위한 플랫폼: 중고거래는 청년층부터 노년층까지 다양한 연령층에서 이루어지고 있습니다. 
+  따라서 누구나 쉽게 접근할 수 있는 직관적인 UI/UX와 사용 편리성을 제공하는 것이 중요합니다.
 
 ## 🙋‍♀️ Team_Member 🙋‍♀️
 
@@ -62,9 +68,9 @@
 
 | **김원준** | **이종현** | **안정운** |
 | :------: |  :------: | :------: |
-| [<img src="https://github.com/user-attachments/assets/9447c30f-f941-4c4f-b6bf-27a17cfb369c" height=166 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://github.com/user-attachments/assets/c6f3e2cd-2a1b-4573-8497-804a524c653f" height=166 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://github.com/user-attachments/assets/57c92b8b-9d19-41bd-9c8a-7924e733db98" height=166 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
-
-| Spring Security 로그인<br>회원정보 등록/수정/탈퇴<br>상품 등록/수정/삭제<br>이미지(상품,프로필,상품후기) 등록/수정<br>Google, Naver, Kakao로그인API<br>비밀번호찾기–메일서비스<br>전화번호인증 | 리뷰등록 및 조건구현<br>WebSocket, Stomp로 실시간양방향 채팅구현 |  전체적인 프론트엔드<br>내상점 페이지 요청처리<br>상품등록 카테고리 ajax<br>메인/상품관리페이지페이징및검색<br>결제API(포트원) 적용<br>주소API 적용 |
+| [<img src="https://github.com/user-attachments/assets/bc978a09-9607-4132-9e84-a6692df41c9e" height=166 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://github.com/user-attachments/assets/b8c1b68f-3998-4eb4-bdc9-b47893de44c1" height=166 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://github.com/user-attachments/assets/4ce3300c-95d9-4b0a-9827-cfe162111d7c" height=166 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
+| 로그인 API <br> 회원정보 등록/수정/탈퇴 <br> 상품 등록/수정/삭제 <br> 아이디/비밀번호찾기 <br> | 리뷰 등록/수정/삭제 <br> 실시간양방향 채팅 <br> (WebSocket, Stomp) |  프론트엔드 <br> 상품등록 카테고리 ajax <br> 페이징및검색 <br> 결제,주소API |
+</div>
 
 </div>
 
@@ -263,35 +269,40 @@ https://github.com/NovTeamProject/Team_Project/assets/145524959/44ee29cc-996b-4b
 </details>
 
 ## 🔨 개발 환경 🔨
+
+**Back-End** 
 <div>
-<img src="https://img.shields.io/badge/JAVA-C01818?style=flat-square&logo=coffeescript&logoColor=white" />
-<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=fff"/>
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=JavaScript&logoColor=000"/>
-     
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=fff">
 <br>
-<img src="https://img.shields.io/badge/bootstrap-7952B3?style=flat&logo=bootstrap&logoColor=white"/>
-<img src="https://img.shields.io/badge/jquery-0769AD?style=flat&logo=jquery&logoColor=white"/>
-<img src="https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=CSS3&logoColor=fff"/>
-<br>
-
-<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white" />
-<img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=MariaDB&logoColor=white" />
-<img src="https://img.shields.io/badge/Mybatis-000000?style=flat&logo=Fluentd&logoColor=white"/>
-<br>
-<img src="https://img.shields.io/badge/IntelliJ-000000?style=flat-square&logo=intellijidea&logoColor=white" />
-<img src="https://img.shields.io/badge/bitly-EE6123?style=flat-square&logo=bitly&logoColor=blue" />  
-<img src="https://img.shields.io/badge/StarUML-E25A1C?style=flat-square&logo=apachespark&logoColor=white" />
-<br>
-<img src="https://img.shields.io/badge/Slack-4A154B?style=flat-square&logo=slack&logoColor=white" />
-<img src="https://img.shields.io/badge/notion-000000?style=flat-square&logo=notion&logoColor=blue" />  
-
-<img src="https://img.shields.io/badge/amazonaws-232F3E?style=flat-square&logo=amazonaws&logoColor=blue" />
-<br>
-<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white" />
-<img src="https://img.shields.io/badge/Git-F05032?style=flat-square&logo=git&logoColor=white" />
-<img src="https://img.shields.io/badge/Sourcetree-0052CC?style=flat-square&logo=Sourcetree&logoColor=blue" />
-<img src="https://img.shields.io/badge/gitkraken-179287?style=flat-square&logo=gitkraken&logoColor=white">
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=fff">
+<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=fff">
 </div>
+<br>
 
+**Front-End** 
+<div>
+<img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=fff"/>
+<img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=fff"/>
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=fff"/><br>
+<img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=fff"/>
+<img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=fff"/>
+<img src="https://img.shields.io/badge/jquery-0769AD?style=for-the-badge&logo=jquery&logoColor=fff"/>
+</div> 
+<br>
+
+**Tools** 
+<div>
+<img src="https://img.shields.io/badge/IntelliJIDEA-000000?style=for-the-badge&logo=intellijidea&logoColor=fff">
+
+</div>  
+<br>
+
+**Collaboration** 
+<div>
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=fff">
+<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=fff">
+<br>
+<img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=fff">
+</div>
 
 
