@@ -23,7 +23,7 @@
 
 <details><summary>PPT</summary>     
 
-### [PPT링크](https://www.canva.com/design/DAF1bF8O3K4/o3hvGmrF9Yobsmu2Vh_Nzg/view?utm_content=DA[…]3K4&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+### [중고거래플랫폼_프로젝트_보고서](https://github.com/user-attachments/files/18432604/_._.1.pdf)
        
 <div align="center">          
 
@@ -67,9 +67,9 @@
 
 <div align="center">
 
-| **남원우** | **변재혁** | **유지호** | **차소영** |
-| :------: |  :------: | :------: | :------: | 
-| [<img src="https://avatars.githubusercontent.com/u/145524959?v=4" height=150 width=150> <br/> @wwnoov](https://github.com/wwnoov) | [<img src="https://avatars.githubusercontent.com/u/145942491?v=4" height=150 width=150> <br/> @jaehyukpyon2](https://github.com/jaehyukpyon2) | [<img src="https://avatars.githubusercontent.com/u/145963790?v=4" height=150 width=150> <br/> @jiho-96](https://github.com/jiho-96) | [<img src="https://avatars.githubusercontent.com/u/145963611?v=4" height=150 width=150> <br/> @Eumnya415](https://github.com/Eumnya415) |
+| **김원준** | **이종현** | **안정운** |
+| :------: |  :------: | :------: |
+| [<img src="https://avatars.githubusercontent.com/u/145524959?v=4" height=150 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://avatars.githubusercontent.com/u/145942491?v=4" height=150 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://avatars.githubusercontent.com/u/145963790?v=4" height=150 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
 | 로그인, 회원가입<br>명예의 전당<br>정답 서비스<br>기능 구현<br>Git Hub 관리 | DB 설계 및 Query 작성 <br> MyBatis구축 <br> 학생, 선생님 강의 시스템 <br> 기능 구현 <br> AWS 배포 |  Query 작성<br> 질의 응답 게시판<br>기능 구현<br>발표 자료 준비<br>DB 관리 | 나의 강의실<br> 강의 상세 페이지<br> 기능 구현<br>웹 디자인 설계 <br>노션 관리 <br>| 
 
 </div>
