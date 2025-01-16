@@ -273,7 +273,7 @@ https://github.com/NovTeamProject/Team_Project/assets/145524959/44ee29cc-996b-4b
 
 ## 🔨 개발 환경 🔨
 
-<div align="center">
+<div>
 
 **Back-End**<br>
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=fff">
