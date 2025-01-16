@@ -5,12 +5,10 @@
 
 ## 📚 목차 📚
 
-01. [📂 PPT](#-PPT-)
+01. [📂 프로젝트 보고서](#-프로젝트-보고서-)
 02. [📖 프로젝트 소개](#-프로젝트-소개)
 03. [💡 기획 의도](#기획-의도)
 04. [🙋‍♀️ Team_Member](#%EF%B8%8F-team_member-%EF%B8%8F)
-05. [📋 개발 일지](#개발-일지)
-06. [📈  요구 명세서](#-요구-명세서-)
 07. [📊 Diagram](#-다이어그램-)
 08. [📹 기능 설명](#-기능-설명-)
 09. [🔨개발 환경](#-개발-환경-)
@@ -21,7 +19,7 @@
 <details><summary>프로젝트 보고서</summary>     
 ### [중고거래플랫폼_프로젝트_보고서](https://github.com/user-attachments/files/18432604/_._.1.pdf)
        
-<div align="center">          
+<div align="center">         
 
 | **![1](https://github.com/user-attachments/assets/c917e955-89c8-4750-a0e9-5d59e3cf3464)** | **![2](https://github.com/user-attachments/assets/e11c7473-aed3-475d-b183-0a8b2ed1d7fe)** |
 | :------: |  :------: |
@@ -64,79 +62,43 @@
 
 | **김원준** | **이종현** | **안정운** |
 | :------: |  :------: | :------: |
-| [<img src="https://avatars.githubusercontent.com/u/145524959?v=4" height=150 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://avatars.githubusercontent.com/u/145942491?v=4" height=150 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://avatars.githubusercontent.com/u/145963790?v=4" height=150 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
-| 로그인, 회원가입<br>명예의 전당<br>정답 서비스<br>기능 구현<br>Git Hub 관리 | DB 설계 및 Query 작성 <br> MyBatis구축 <br> 학생, 선생님 강의 시스템 <br> 기능 구현 <br> AWS 배포 |  Query 작성<br> 질의 응답 게시판<br>기능 구현<br>발표 자료 준비<br>DB 관리 | 나의 강의실<br> 강의 상세 페이지<br> 기능 구현<br>웹 디자인 설계 <br>노션 관리 <br>| 
+| [<img src="https://github.com/user-attachments/assets/9447c30f-f941-4c4f-b6bf-27a17cfb369c" height=166 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://github.com/user-attachments/assets/c6f3e2cd-2a1b-4573-8497-804a524c653f" height=166 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://github.com/user-attachments/assets/57c92b8b-9d19-41bd-9c8a-7924e733db98" height=166 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
+| Spring Security 로그인<br>회원정보 등록/수정/탈퇴<br>상품 등록/수정/삭제<br>이미지(상품,프로필,상품후기) 등록/수정<br>Google, Naver, Kakao로그인API<br>비밀번호찾기–메일서비스<br>전화번호인증 | 리뷰등록 및 조건구현<br>WebSocket, Stomp로 실시간양방향 채팅구현 |  전체적인 프론트엔드<br>내상점 페이지 요청처리<br>상품등록 카테고리 ajax<br>메인/상품관리페이지페이징및검색<br>결제API(포트원) 적용<br>주소API 적용 |
 
 </div>
 
-
-## 📋개발 일지📋
-<details><summary>개발 일지</summary>
-   
-![image](https://github.com/NovTeamProject/Team_Project/assets/145524959/98c68f24-d8dd-4d63-bfeb-3aaac34fad82)
-
-</details>
-
-## 📈 요구 명세서 📈
-
-<details><summary>요구 명세서</summary>
-      
-![2023-12-08 09 36 26](https://github.com/NovTeamProject/Team_Project/assets/145963611/e8ec2fb7-9680-4603-8470-39389275448c)
-
-      
-</details>
-  
+ 
 
 ## 📊 다이어그램 📊
 
 <details><summary>Usecase</summary>
       
-![스크린샷 2023-12-06 142455](https://github.com/NovTeamProject/Team_Project/assets/145963611/b943fdb3-2e12-4aae-b0c6-42545e25c6d7)
+![usecase](https://github.com/user-attachments/assets/27e792e0-8f54-4523-b2de-1f938a019fe4)
 
-</details>
-
-<details><summary>Class</summary>
-
-![클래스다이어그램](https://github.com/NovTeamProject/Team_Project/assets/145524959/486e1e58-677c-4171-bd4d-27857887b0fd)
-
-
-</details>
-
-<details><summary>Sequence</summary>
-<br/>
-
-1. 비회원 시퀀스 다이어그램    
-![비회원시퀀스](https://github.com/NovTeamProject/Team_Project/assets/145524959/166fdbd3-ce41-4a98-a44a-37714a465a3b)
-
-
-
-2. 학생 시퀀스 다이어그램   
-![학생시퀀스](https://github.com/NovTeamProject/Team_Project/assets/145524959/596656a8-3a36-4a63-9c6c-ed9efab58222)
-
-
-
-3. 선생님 시퀀스 다이어그램        
-![선생님시퀀스](https://github.com/NovTeamProject/Team_Project/assets/145524959/b96161d2-32fb-4485-abb9-c58a20d3cb7a)
-
-
-</details>
-
-
-
-<details><summary>Block</summary>
-
-![image](https://github.com/NovTeamProject/Team_Project/assets/145963790/9d167256-abeb-4056-8f2b-1515affe0681)
-
-
-    
 </details>
 
 <details><summary>ERD</summary>
       
-![image](https://github.com/NovTeamProject/Team_Project/assets/145963790/28ea304e-af0e-4809-ad74-59fd76712b97)
+![used_trade_site_ERD](https://github.com/user-attachments/assets/b13bddf5-ddf7-4959-a893-f9af93b3dbc1)
 
-    
 </details>
+
+<details><summary>Class Diagram</summary>
+
+1. Member
+![Member](https://github.com/user-attachments/assets/e198d9f1-2abe-4793-b0d4-2cb04ff53ed3)
+
+2. Item
+![Item](https://github.com/user-attachments/assets/d44b8266-e71d-4146-b406-d13790da1aa8)
+
+3. Review
+![Review](https://github.com/user-attachments/assets/484cff66-750d-41b1-bcac-e2c98ed36ddf)
+
+4. Chat
+![Chat](https://github.com/user-attachments/assets/049a3f9c-1f7d-4bca-9a1c-dc9ebf0e7dbb)
+
+</details>
+
 
 ## 📹 기능 설명 📹
 
