@@ -129,12 +129,12 @@ https://github.com/user-attachments/assets/a642dad2-1948-4533-a039-177480cad9a6
 
 <details><summary>아이디/비밀번호찾기</summary>
 <br/>
-https://github.com/user-attachments/assets/9fad46d4-ffa2-4fba-8ce8-862b0c4fadc1
+https://github.com/user-attachments/assets/6b43e36f-528d-4899-8d7a-59bb7c394628
 </details>
 
 <details><summary>회원정보 수정/탈퇴</summary>
 <br/>
-https://github.com/user-attachments/assets/84b93fc2-8520-4425-bffe-f6c77723929b
+https://github.com/user-attachments/assets/a1231d22-90f0-4554-ac4c-12cdb337f274
 </details>
 
 <details><summary>실시간 채팅하기</summary>
