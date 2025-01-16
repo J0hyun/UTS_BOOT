@@ -125,7 +125,6 @@ https://github.com/user-attachments/assets/4b8ccec3-08dc-4850-8ba7-21c8cabd53a1
 https://github.com/user-attachments/assets/a642dad2-1948-4533-a039-177480cad9a6
 
 
-### [로그인 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherJoinController.java#L25C5-L59C2)
 </details>
 
 <details><summary>아이디/비밀번호찾기</summary>
@@ -140,6 +139,10 @@ https://github.com/user-attachments/assets/6b43e36f-528d-4899-8d7a-59bb7c394628
 
 https://github.com/user-attachments/assets/a1231d22-90f0-4554-ac4c-12cdb337f274
 
+</details>
+
+<details><summary>상품 등록/수정하기</summary>
+<br/>
 </details>
 
 <details><summary>실시간 채팅하기</summary>
