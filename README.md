@@ -51,17 +51,23 @@
       
 ## 📖 프로젝트 소개📖
 
-- 
-- 
-- 
-- 
+아나바다 - 누구나 쉽게 중고 거래를 시작할 수 있는 플랫폼
+
+아나바다는 개인 간 중고 물품 거래를 쉽게 연결해주는 온라인 마켓입니다. 
+사용자는 간단한 회원 가입 후 물품을 판매하거나 구매할 수 있으며, 거래가 안전하고 편리하게 이루어질 수 있도록 다양한 기능을 제공합니다.
+
+- 판매자는 물품을 등록하고 판매할 수 있으며, 판매 중인 물품에 대해 관심을 표명한 구매자와 소통할 수 있습니다.
+- 구매자는 원하는 물품을 검색하고, 원하는 가격에 맞는 물품을 찾아 안전하게 거래할 수 있습니다.
+- 게시판을 통해 물품에 대한 질문 및 거래와 관련된 커뮤니케이션을 쉽게 할 수 있습니다.
 
 ## 💡기획 의도💡
 
-- 
-- 
--
-- 
+- 중고거래 시장의 성장: 최근 몇 년간 중고거래 시장은 급격히 성장했으며, 개인 간 거래가 활성화되고 있습니다. 
+  특히, 경제적인 이유나 환경적 요인으로 중고 거래에 대한 수요가 높아지고 있습니다.
+- 안전하고 편리한 거래 환경 제공: 구매자와 판매자 간의 신뢰를 쌓을 수 있는 안전한 거래 환경을 제공하는 것이 중요합니다. 
+  이를 위해 중고거래에서 발생할 수 있는 여러 문제를 해결할 수 있는 기능들을 제공하고자 합니다.
+- 다양한 연령층을 위한 플랫폼: 중고거래는 청년층부터 노년층까지 다양한 연령층에서 이루어지고 있습니다. 
+  따라서 누구나 쉽게 접근할 수 있는 직관적인 UI/UX와 사용 편리성을 제공하는 것이 중요합니다.
 
 ## 🙋‍♀️ Team_Member 🙋‍♀️
 
@@ -69,8 +75,8 @@
 
 | **김원준** | **이종현** | **안정운** |
 | :------: |  :------: | :------: |
-| [<img src="https://avatars.githubusercontent.com/u/145524959?v=4" height=150 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://avatars.githubusercontent.com/u/145942491?v=4" height=150 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://avatars.githubusercontent.com/u/145963790?v=4" height=150 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
-| 로그인, 회원가입<br>명예의 전당<br>정답 서비스<br>기능 구현<br>Git Hub 관리 | DB 설계 및 Query 작성 <br> MyBatis구축 <br> 학생, 선생님 강의 시스템 <br> 기능 구현 <br> AWS 배포 |  Query 작성<br> 질의 응답 게시판<br>기능 구현<br>발표 자료 준비<br>DB 관리 | 나의 강의실<br> 강의 상세 페이지<br> 기능 구현<br>웹 디자인 설계 <br>노션 관리 <br>| 
+| [<img src="https://github.com/user-attachments/assets/bc978a09-9607-4132-9e84-a6692df41c9e" height=150 width=150> <br/> @kWJ30](https://github.com/kWJ30) | [<img src="https://github.com/user-attachments/assets/b8c1b68f-3998-4eb4-bdc9-b47893de44c1" height=150 width=150> <br/> @J0hyun](https://github.com/J0hyun) | [<img src="https://github.com/user-attachments/assets/4ce3300c-95d9-4b0a-9827-cfe162111d7c" height=150 width=150> <br/> @jungwoonAn](https://github.com/jungwoonAn) |
+| 로그인 API<br> 아이디, 비밀번호 찾기 <br>회원,상품 등록/수정/삭제 <br>Git Hub 관리 | 리뷰 등록/수정/삭제 <br> 실시간 양방향 채팅 (WebSocket, Stomp) |  프론트엔드 <br> 결제 API <br> 배송 정보에 주소 API <br>발표 자료 준비
 
 </div>
 
