@@ -188,7 +188,8 @@
             <div th:if="${item.itemSellStatus.name() == 'SELL'}" class="text-end mt-3">
                 <!-- 채팅방으로 이동하는 버튼 -->
                 <!-- 로그인한 사용자만 '채팅하기' 버튼 보이기 -->
-                <a sec:authorize="isAuthenticated()" th:href="@{/chat/item/{itemId}/{memberId}(itemId=${item.id}, memberId=${memberId})}" class="btn btn-outline-success btn-lg">채팅하기</a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/chat/item/{itemId}/{memberId}(itemId=${item.id}, memberId=${memberId})}"
+                   class="btn btn-outline-success btn-lg">채팅하기</a>
 
                 <!-- 비로그인 사용자만 '로그인하기' 버튼 보이기 -->
                 <a sec:authorize="!isAuthenticated()" href="#" class="btn btn-outline-success btn-lg" onclick="alertAndRedirect()">채팅하기</a>
