@@ -120,21 +120,21 @@ https://github.com/user-attachments/assets/4b8ccec3-08dc-4850-8ba7-21c8cabd53a1
 
 <details><summary>로그인/회원가입</summary>
 <br/>
-https://github.com/user-attachments/assets/c889d125-3f34-48a9-9836-898b36a02de9
-(https://github.com/user-attachments/assets/34365771-076b-497d-9830-6a5c2a9ef5f0)
+
+https://github.com/user-attachments/assets/a642dad2-1948-4533-a039-177480cad9a6
+
+
 ### [로그인 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherJoinController.java#L25C5-L59C2)
 </details>
 
 <details><summary>아이디/비밀번호찾기</summary>
 <br/>
-https://github.com/user-attachments/assets/7b3a42ec-05ac-4ac7-839f-609e5ce718fa
-(https://github.com/user-attachments/assets/8298fa72-991c-48a9-af6e-b851b46c4f86)
+https://github.com/user-attachments/assets/9fad46d4-ffa2-4fba-8ce8-862b0c4fadc1
 </details>
 
 <details><summary>회원정보 수정/탈퇴</summary>
 <br/>
-https://github.com/user-attachments/assets/00a0e84d-5598-46bc-ac53-953bd16a4edc
-(https://github.com/user-attachments/assets/85ce11f6-85b8-4171-86a6-89e7ba8426c9)
+https://github.com/user-attachments/assets/84b93fc2-8520-4425-bffe-f6c77723929b
 </details>
 
 <details><summary>실시간 채팅하기</summary>
