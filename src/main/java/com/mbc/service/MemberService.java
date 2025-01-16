@@ -20,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -207,8 +209,9 @@ public class MemberService implements UserDetailsService {
 
             // MultipartFile에서 원본 파일명과 파일 데이터를 가져와서 uploadFile 메서드 호출
             String profileImgUrl = fileService.uploadFile("C:/shop/member", profileImgFile.getOriginalFilename(), profileImgFile.getBytes());
+            String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
 
-            memberImg.setImgUrl("/images/member/" + profileImgUrl);
+            memberImg.setImgUrl("/images/member/" + datePath + "/" + profileImgUrl);
             memberImg.setOriImgName(profileImgFile.getOriginalFilename());
             memberImg.setImgName(profileImgUrl);  // 저장된 파일 이름 설정 (UUID 포함)
 

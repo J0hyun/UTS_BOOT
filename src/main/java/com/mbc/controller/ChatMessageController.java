@@ -20,7 +20,7 @@ public class ChatMessageController {
     private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository chatMessageRepository;
 
-    // 채팅방 입장 메시지 처리
+    // 채팅방 메시지 처리
     @MessageMapping(value = "/chat/enter")
     public void enter(ChatMessageDTO messageDTO) {
         Long roomId = messageDTO.getRoomId();
