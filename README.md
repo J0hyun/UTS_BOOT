@@ -23,7 +23,7 @@
 
 <details><summary>PPT</summary>     
 
-### [PPT링크](https://www.canva.com/design/DAF1bF8O3K4/o3hvGmrF9Yobsmu2Vh_Nzg/view?utm_content=DA[…]3K4&utm_campaign=designshare&utm_medium=link&utm_source=editor)
+### [중고거래플랫폼_프로젝트_보고서](https://github.com/user-attachments/files/18432604/_._.1.pdf)
        
 <div align="center">          
 
