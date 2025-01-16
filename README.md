@@ -1,18 +1,4 @@
-#  💻 CODE TAB 💻
-
-
-<!--![256컬러](https://github.com/NovTeamProject/Team_Project/assets/145524959/3298851f-7534-4304-99b3-55106605b887)-->
-<div align="center">
-
- ![title001](https://github.com/NovTeamProject/Team_Project/assets/145963611/c9aa4e57-dd0e-456a-8631-ace01e80288e)
-
-
-
-
-
-| **![awsaws](https://github.com/NovTeamProject/Team_Project/assets/145963611/c33a2433-81d8-4137-88d6-c7c7c350a030)** | **![kakao](https://github.com/NovTeamProject/Team_Project/assets/145963611/ed61908a-6f7c-43f1-b56a-287fc8f6ab8c)** | **![notion2](https://github.com/NovTeamProject/Team_Project/assets/145963611/8e1e720e-e202-4ad8-9767-0befe6dcf529)** |
-| :------: |  :------: | :------: |
-| [주소](http://15.164.36.58/Team_Project-1.0-SNAPSHOT/index.do)  |  만료  |  만료 |
+#  💻 아나바다 💻
 
 
 </div>
@@ -65,17 +51,17 @@
       
 ## 📖 프로젝트 소개📖
 
-- 코드탭 - 코드를 배우고 싶은 사람들을 위한 인터넷 강의사이트
-- 코드를 배우고 싶어하는 누구든지 두드리면서 함께 배워나가자는 의미로 코드탭이라는 이름을 지음
-- 선생님은 강의를 올릴 수 있고 코드 학습에 필요한 질문을 할 수 있도록 게시판을 구현
-- 각 강의마다 게시판을 구현하면서 선생님과 학생간의 커뮤니케이션을 할 수 있도록 구현
+- 
+- 
+- 
+- 
 
 ## 💡기획 의도💡
 
-- 코로나 이후 온라인 플랫폼 시장이 크게 성장함
-- 2025년부터 초중학교의 코딩교육이 의무화 됨에 따라 교육분야에서 관심이 높아짐
-- 초중고 학생의 수가 감소하는 추세에 따라 전 연령층을 대상으로하는 교육이 필요
-- 코딩이 일상적으로 사용되는 시대에 맞춰 학생 뿐만 아니라 성인들도 배울 수 있는 강의와 양방향 커뮤니케이션을 할 수 있는 사이트를 제작
+- 
+- 
+-
+- 
 
 ## 🙋‍♀️ Team_Member 🙋‍♀️
 
@@ -163,15 +149,12 @@
 <details><summary>메인화면</summary>
 <br/>
 
-https://github.com/NovTeamProject/Team_Project/assets/145524959/506a9e4e-71b8-4072-8a95-cd954fea215e
 
 
 </details>
 
 <details><summary>로그인</summary>
 <br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/c26d468e-2da1-4310-8325-a83cff4bba20
 
 ### [로그인 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherJoinController.java#L25C5-L59C2)
 
@@ -182,10 +165,6 @@ https://github.com/NovTeamProject/Team_Project/assets/145524959/c26d468e-2da1-43
 <details><summary>회원가입</summary>
 <br/>
 
-https://github.com/NovTeamProject/Team_Project/assets/145524959/3dc13eac-2342-4cbe-bf40-672a653f5e30
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/21eaa843-b469-44ba-9011-04a819514617
-
 ### [회원가입 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherJoinController.java#L25C5-L59C2)    
 
 </details>
@@ -193,16 +172,12 @@ https://github.com/NovTeamProject/Team_Project/assets/145524959/21eaa843-b469-44
 <details><summary>유효성검사</summary>
 <br/>
 
-https://github.com/NovTeamProject/Team_Project/assets/145524959/ae0d3691-afdd-4798-9d94-a9a362915f9f
-
 ### [유효성검사 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/webapp/membership/views/joinTeacher.jsp#L46C1-L117C6)
 
 </details>
 
 <details><summary>정보변경</summary>
 <br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/0a4d58d7-c5ef-4201-89a1-61c36856afb1
     
 ### [정보변경 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherEditController.java#L28C1-L51C41)      
 </details>
