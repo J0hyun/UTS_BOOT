@@ -113,19 +113,23 @@
 
 <details><summary>메인화면</summary>
 <br/>
+https://github.com/user-attachments/assets/f4d7c7bb-5d60-49e7-a112-cd466478f71a
 </details>
 
 <details><summary>로그인/회원가입</summary>
 <br/>
+https://github.com/user-attachments/assets/c889d125-3f34-48a9-9836-898b36a02de9
 ### [로그인 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherJoinController.java#L25C5-L59C2)
 </details>
 
 <details><summary>아이디/비밀번호찾기</summary>
 <br/>
+https://github.com/user-attachments/assets/7b3a42ec-05ac-4ac7-839f-609e5ce718fa
 </details>
 
 <details><summary>회원정보 수정/탈퇴</summary>
 <br/>
+https://github.com/user-attachments/assets/00a0e84d-5598-46bc-ac53-953bd16a4edc
 </details>
 
 <details><summary>실시간 채팅하기</summary>
