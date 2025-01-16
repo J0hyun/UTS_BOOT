@@ -113,7 +113,12 @@
 
 <details><summary>메인화면</summary>
 <br/>
-(https://github.com/user-attachments/assets/36437d50-7e5d-4367-b8d7-53a67ace7e69)
+
+<video controls>
+  <source src="https://github.com/user-attachments/assets/f4d7c7bb-5d60-49e7-a112-cd466478f71a" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 </details>
 
 <details><summary>로그인/회원가입</summary>
