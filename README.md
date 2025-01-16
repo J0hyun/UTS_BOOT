@@ -114,127 +114,34 @@
 <br/>
 </details>
 
-<details><summary>로그인</summary>
+<details><summary>로그인/회원가입</summary>
 <br/>
 ### [로그인 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherJoinController.java#L25C5-L59C2)
-### [주소API Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/webapp/membership/views/joinTeacher.jsp#L119C1-L178C10)
 </details>
 
-<details><summary>회원가입</summary>
+<details><summary>아이디/비밀번호찾기</summary>
 <br/>
-### [회원가입 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherJoinController.java#L25C5-L59C2)    
 </details>
 
-<details><summary>유효성검사</summary>
+<details><summary>회원정보 수정/탈퇴</summary>
 <br/>
-https://github.com/user-attachments/assets/c426b6ff-013d-429c-9f48-ec39b791c212
-### [유효성검사 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/webapp/membership/views/joinTeacher.jsp#L46C1-L117C6)
-
 </details>
-<details><summary>정보변경</summary>
+
+<details><summary>실시간 채팅하기</summary>
 <br/>
-### [정보변경 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/teacher/controller/TeacherEditController.java#L28C1-L51C41)      
 </details>
 
-<details><summary>비밀번호 암호화</summary>
+<details><summary>구매 및 취소 </summary>
 <br/>
-![image](https://github.com/NovTeamProject/Team_Project/assets/145524959/8412591f-cf2b-4b8a-8990-33994af9a71e)
-    
-### [암호화 Code](https://github.com/NovTeamProject/Team_Project/blob/1efd4c1a62baa5839587f4be174ccc67b2e7eafb/src/main/java/com/example/team_project/utils/Encrypt.java#L9C4-L26C6)    
 </details>
 
-
-<details><summary>전체 강의 목록</summary>
+<details><summary>리뷰 작성/수정하기</summary>
 <br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/eb04da5a-d46a-49a4-a73e-0c3cc6ce450c
-
-### [Code](#)
 </details>
 
-<details><summary>새 강의 등록</summary>
-<br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/ac8f624a-e0ff-43dd-9fb1-c0bf3e3fa9d5
-
-### [Code](#)
-</details>
-
-<details><summary>강의 수정</summary>
-<br/>
-
-https://github.com/NovTeamProject/Code_tab/assets/145942491/f090eb50-da0b-40d0-8b92-d40f02d5f050
 
 
-### [Code](#)
-</details>
 
-<details><summary>수강등록</summary>
-<br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/89bf72f1-320b-4336-9b3f-fb34bacff7e3
-
-### [Code](#)
-</details>
-
-<details><summary>학생질문하기</summary>
-<br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/be9b279a-62fd-4381-96fa-5c8ffc48739d
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/b1f5ed85-95c9-457a-be3a-59a0fdcad3dc
-
-### [Controller](https://github.com/NovTeamProject/Team_Project/blob/22f54acaaad585f495930f0e74eb2704d1bea297/src/main/java/com/example/team_project/board/controller/WriteController.java#L29C6-L47C1)
-### [DAO](https://github.com/NovTeamProject/Team_Project/blob/22f54acaaad585f495930f0e74eb2704d1bea297/src/main/java/com/example/team_project/board/dao/BoardDAO.java#L29C1-L41C6)
-### [View](https://github.com/NovTeamProject/Team_Project/blob/22f54acaaad585f495930f0e74eb2704d1bea297/src/main/webapp/board/Write.jsp#L39C12-L55C87)
-</details>
-
-<details><summary>선생님답변하기</summary>
-<br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/7aad637d-e790-4d20-b3ca-e905b4fa1830
-
-### [Controller](https://github.com/NovTeamProject/Team_Project/blob/22f54acaaad585f495930f0e74eb2704d1bea297/src/main/java/com/example/team_project/comment/controller/CommentController.java#L38C9-L47C59)  
-### [DAO](https://github.com/NovTeamProject/Team_Project/blob/22f54acaaad585f495930f0e74eb2704d1bea297/src/main/java/com/example/team_project/comment/dao/CommentDAO.java#L23C1-L35C6)
-### [View](https://github.com/NovTeamProject/Team_Project/blob/22f54acaaad585f495930f0e74eb2704d1bea297/src/main/webapp/board/View.jsp#L102C32-L108C45)
-</details>
-
-<details><summary>나의 강의실-학생</summary>
-<br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/00faefff-f91a-4f37-a2a7-fb8f2d493159
-
-https://github.com/NovTeamProject/Team_Project/assets/145963611/757078d8-211d-4241-996a-8fb15cf3aff6
-
-### [Controller](https://github.com/NovTeamProject/Team_Project/blob/5150f94280872456f8426fbbfa5bcaf5ff2722b1/src/main/java/com/example/team_project/student/controller/StudentMyClassController.java#L19-L68)
-### [DAO](https://github.com/NovTeamProject/Team_Project/blob/5dfc9762cb3ee584199fb8d333a6cec18c902a81/src/main/java/com/example/team_project/class_gangui/dao/ClassDAO.java#L171C5-L293C6)
-### [View(강의 목록)](https://github.com/NovTeamProject/Team_Project/blob/5dfc9762cb3ee584199fb8d333a6cec18c902a81/src/main/webapp/myClass/views/myClassList.jsp#L32C1-L82C11)
-### [View(강의 상세 페이지)](https://github.com/NovTeamProject/Team_Project/blob/fabd044075c986aba53158123e5f499889edb03d/src/main/webapp/student/views/studentClassDetail.jsp#L29C1-L96C19)
-</details>
-
-<details><summary>선생님 강의실 (내가 올린 강의 목록)</summary>
-<br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/e4a82356-c569-4784-9a74-b2597c4e31e5
-
-### [선생님 강의실 Code]()
-</details>
-
-<details><summary>명예의전당</summary>
-<br/>
-
-https://github.com/NovTeamProject/Team_Project/assets/145524959/36ee0f3e-2062-4ed5-adec-0785f29e274a
-
-### [명예의전당 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/resources/mybatis/mapperxml/class_gangui/ClassMapper.xml#L125C1-L136C14)      
-</details>
-
-<details><summary>정답서비스</summary>
-<br/>
-      
-https://github.com/NovTeamProject/Team_Project/assets/145524959/44ee29cc-996b-4bdf-9ed6-1818ae39bbc8
-
-### [정답서비스 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/java/com/example/team_project/exam/controller/ExamController.java#L32C1-L40C6)
-</details>
 
 ## 🤐 개선 사항 🤐
 
