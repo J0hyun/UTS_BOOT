@@ -172,6 +172,8 @@
 <details><summary>유효성검사</summary>
 <br/>
 
+https://github.com/user-attachments/assets/c426b6ff-013d-429c-9f48-ec39b791c212
+
 ### [유효성검사 Code](https://github.com/NovTeamProject/Team_Project/blob/c431c8cf1b65235d922cd6ea7fdba3a699816c18/src/main/webapp/membership/views/joinTeacher.jsp#L46C1-L117C6)
 
 </details>
