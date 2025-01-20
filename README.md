@@ -115,14 +115,14 @@
 <details><summary>메인화면</summary>
 <br/>
 
-https://github.com/user-attachments/assets/4b8ccec3-08dc-4850-8ba7-21c8cabd53a1
+https://github.com/user-attachments/assets/8c990eea-288a-46ea-b6e9-b794517d49cb
 
 </details>
 
 <details><summary>로그인/회원가입</summary>
 <br/>
 
-https://github.com/user-attachments/assets/a642dad2-1948-4533-a039-177480cad9a6
+https://github.com/user-attachments/assets/e4831f2e-7556-4f1d-bb77-f0052b7c69e7
 
 
 </details>
@@ -130,14 +130,14 @@ https://github.com/user-attachments/assets/a642dad2-1948-4533-a039-177480cad9a6
 <details><summary>아이디/비밀번호찾기</summary>
 <br/>
 
-https://github.com/user-attachments/assets/6b43e36f-528d-4899-8d7a-59bb7c394628
+https://github.com/user-attachments/assets/e63f87a2-39cc-4af6-8baa-8b40a5f5628f
 
 </details>
 
 <details><summary>회원정보 수정/탈퇴</summary>
 <br/>
 
-https://github.com/user-attachments/assets/a1231d22-90f0-4554-ac4c-12cdb337f274
+https://github.com/user-attachments/assets/4795b44a-bb97-464e-8715-6ad82af60f64
 
 </details>
 
@@ -150,14 +150,23 @@ https://github.com/user-attachments/assets/8519381d-9f5a-448e-a8f7-967b84592087
 
 <details><summary>실시간 채팅하기</summary>
 <br/>
+
+https://github.com/user-attachments/assets/75ac5285-479b-48ad-a9b4-2b34954f6fe2
+
 </details>
 
 <details><summary>구매 및 취소 </summary>
 <br/>
+
+https://github.com/user-attachments/assets/8eee3790-4ee3-4ccf-8d9c-e32d0422fa1d
+
 </details>
 
 <details><summary>리뷰 작성/수정하기</summary>
 <br/>
+
+https://github.com/user-attachments/assets/24011f61-e775-4ae8-8463-51a4b94873a4
+
 </details>
 
 
