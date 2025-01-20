@@ -143,6 +143,9 @@ https://github.com/user-attachments/assets/a1231d22-90f0-4554-ac4c-12cdb337f274
 
 <details><summary>상품 등록/수정하기</summary>
 <br/>
+
+https://github.com/user-attachments/assets/8519381d-9f5a-448e-a8f7-967b84592087
+
 </details>
 
 <details><summary>실시간 채팅하기</summary>
